@@ -4,7 +4,7 @@
 
 #define GLM_FORCE_RADIANS
 //Define the string to appear in the top left corner of the window
-#define WINDOW_TITLE "OpenGl Earth & Moon"
+#define WINDOW_TITLE "Crimson Racing"
 
 struct lightColour4
 {
