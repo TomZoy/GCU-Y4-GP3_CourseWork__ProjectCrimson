@@ -15,6 +15,7 @@ cSound::cSound()
 	m_OALLength = 0;		  // Length
 	m_OALBuffer = 0;         // Buffer
 
+	isPlaying = false;
 }
 
 cSound::~cSound()
@@ -64,12 +65,16 @@ void cSound::playAudio(ALboolean sndLoop)
 
 	//play
 	alSourcePlay(m_OALSource);
+
+	isPlaying = true;
 }
 
 void cSound::stopAudio()
 {
 	//to stop
 	alSourceStop(m_OALSource);
+
+	isPlaying = false;
 }
 
 void cSound::cleanUp()

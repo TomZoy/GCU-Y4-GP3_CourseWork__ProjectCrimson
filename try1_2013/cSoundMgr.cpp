@@ -97,42 +97,53 @@ void cSoundMgr::updateSound()
 
 	if (m_InputMgr->isKeyDown(VK_NUMPAD1))
 	{
-		currentSnd->stopAudio();
-		currentSnd = getSnd("BGM1");
-		currentSnd->playAudio(AL_LOOPING);
+		switchSound("BGM1");
 	};
 	if (m_InputMgr->isKeyDown(VK_NUMPAD2))
 	{
-		currentSnd->stopAudio();
-		currentSnd = getSnd("BGM2");
-		currentSnd->playAudio(AL_LOOPING);
+		switchSound("BGM2");
 	};
 
 	if (m_InputMgr->isKeyDown(VK_NUMPAD3))
 	{
-		currentSnd->stopAudio();
-		currentSnd = getSnd("BGM3");
-		currentSnd->playAudio(AL_LOOPING);
+		switchSound("BGM3");
 	};
 
 	if (m_InputMgr->isKeyDown(VK_NUMPAD4))
 	{
-		currentSnd->stopAudio();
-		currentSnd = getSnd("BGM4");
-		currentSnd->playAudio(AL_LOOPING);
+		switchSound("BGM4");
 	};
 
 	if (m_InputMgr->isKeyDown(VK_NUMPAD5))
 	{
+		switchSound("BGM5");
+	};
+
+	if (m_InputMgr->isKeyDown(VK_NUMPAD0))
+	{
 		currentSnd->stopAudio();
-		currentSnd = getSnd("BGM5");
-		currentSnd->playAudio(AL_LOOPING);
 	};
 
 }
 
 
-
+void cSoundMgr::switchSound(LPCSTR sndName)
+{
+	cSound *newsound = getSnd(sndName);
+	if (newsound != currentSnd)
+	{
+		currentSnd->stopAudio();
+		currentSnd = getSnd(sndName);
+		currentSnd->playAudio(AL_LOOPING);
+	}
+	else
+	{
+		if (currentSnd->isPlaying == false)
+		{
+			currentSnd->playAudio(AL_LOOPING);
+		}
+	}
+}
 
 cSoundMgr::~cSoundMgr()
 {

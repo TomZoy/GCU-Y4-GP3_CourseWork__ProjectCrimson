@@ -29,6 +29,8 @@ protected:
 	cSound *currentSnd;
 	bool firstCall = true;
 	void createContext();
+	void switchSound(LPCSTR sndName);
+
 
 public:
 	void add(LPCSTR sndName, LPCSTR fileName);
@@ -36,8 +38,8 @@ public:
 	void deleteSnd();
 	static cSoundMgr* getInstance();
 	void attachInputMgr(cInputMgr* inputMgr);
-
 	void updateSound();
+
 
 };
 #endif

@@ -33,6 +33,8 @@ private:
 	ALboolean    m_OALbEAX;			  // for EAX 2.0 support
 	ALboolean    m_alLoop;			  //loop
 
+
+
 	struct FMTCHUNK {
 		short format;
 		short channels;
@@ -47,6 +49,8 @@ private:
 public:
 	cSound();
 	~cSound();
+
+	bool	isPlaying;
 
 	void loadWAVFile(LPCSTR filename);
 	void playAudio( ALboolean sndLoop);
