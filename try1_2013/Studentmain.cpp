@@ -119,19 +119,37 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// load game sounds
 	// Load Sound
 	LPCSTR gameSounds[3] = { "Audio/who10Edit.wav", "Audio/shot007.wav", "Audio/explosion2.wav" };
+	LPCSTR BGM[5] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav","Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav","Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav","Audio/BGM/wav/radio4_-.wav","Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav" };
 
-	theSoundMgr->add("Theme", gameSounds[0]);
+	//theSoundMgr->add("Theme", gameSounds[0]);
+	//theSoundMgr->add("Shot", gameSounds[1]);
+	//theSoundMgr->add("Explosion", gameSounds[2]);
+
+	theSoundMgr->add("BGM1", BGM[0]);
+	theSoundMgr->add("BGM2", BGM[1]);
+	theSoundMgr->add("BGM3", BGM[2]);
+	theSoundMgr->add("BGM4", BGM[3]);
+	theSoundMgr->add("BGM5", BGM[4]);
 	theSoundMgr->add("Shot", gameSounds[1]);
 	theSoundMgr->add("Explosion", gameSounds[2]);
 
 	// Create a camera
-	cCamera theCamera;
-	theCamera.setTheCameraPos(glm::vec3(0.0f, 0.0f, 75.0f));
-	theCamera.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
-	theCamera.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
-	theCamera.setTheCameraAspectRatio(windowWidth, windowHeight);
-	theCamera.setTheProjectionMatrix(45.0f, theCamera.getTheCameraAspectRatio(), 0.1f, 300.0f);
-	theCamera.update();
+	cCamera camera1;
+	camera1.setTheCameraPos(glm::vec3(0.0f, 0.0f, 75.0f));
+	camera1.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
+	camera1.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
+	camera1.setTheCameraAspectRatio(windowWidth, windowHeight);
+	camera1.setTheProjectionMatrix(45.0f, camera1.getTheCameraAspectRatio(), 0.1f, 300.0f);
+	camera1.update();
+
+	// Create another camera
+	cCamera camera2;
+	camera2.setTheCameraPos(glm::vec3(0.0f, 0.0f, 5.0f));
+	camera2.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
+	camera2.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
+	camera2.setTheCameraAspectRatio(windowWidth, windowHeight);
+	camera2.setTheProjectionMatrix(45.0f, camera2.getTheCameraAspectRatio(), 0.1f, 300.0f);
+	camera2.update();
 
 	//Clear key buffers
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
@@ -160,11 +178,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	thePlayer.setMdlDimensions(tardisMdl.getModelDimensions());
 	thePlayer.attachInputMgr(theInputMgr);
 	thePlayer.attachSoundMgr(theSoundMgr);
+	theSoundMgr->attachInputMgr(theInputMgr);
 
 	float tCount = 0.0f;
 	string outputMsg;
 
-	theSoundMgr->getSnd("Theme")->playAudio(AL_LOOPING);
+	//theSoundMgr->getSnd("BGM1")->playAudio(AL_LOOPING);
 
 	std::vector<cLaser*> laserList;
 	std::vector<cLaser*>::iterator index;
@@ -177,13 +196,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
         //We get the time that passed since the last frame
 		float elapsedTime = pgmWNDMgr->getElapsedSeconds();
 		
-		// Lab code goes here
+		theSoundMgr->updateSound();
+
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		theOGLWnd.initOGL(windowWidth,windowHeight);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		glLoadMatrixf((GLfloat*)&theCamera.getTheViewMatrix());
+		glLoadMatrixf((GLfloat*)&camera2.getTheViewMatrix());
 
 		theStarField.render(0.0f);
 		sunMaterial.useMaterial();

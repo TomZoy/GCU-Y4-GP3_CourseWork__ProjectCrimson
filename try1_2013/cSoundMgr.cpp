@@ -5,6 +5,7 @@ cSoundMgr.cpp
 */
 
 #include "cSoundMgr.h"
+#include "GameConstants.h"
 
 cSoundMgr* cSoundMgr::pInstance = NULL;
 
@@ -29,6 +30,7 @@ cSoundMgr* cSoundMgr::getInstance()
 	{
 		pInstance = new cSoundMgr();
 	}
+
 	return cSoundMgr::pInstance;
 }
 
@@ -43,6 +45,13 @@ void cSoundMgr::createContext()
 		//Set active context
 		alcMakeContextCurrent(m_OALContext);
 	}
+
+}
+
+
+void cSoundMgr::attachInputMgr(cInputMgr* inputMgr)
+{
+	m_InputMgr = inputMgr;
 }
 
 void cSoundMgr::add(LPCSTR sndName, LPCSTR fileName)
@@ -75,6 +84,54 @@ void cSoundMgr::deleteSnd()
 		delete snd->second;
 	}
 }
+
+
+void cSoundMgr::updateSound()
+{
+	if (firstCall)
+	{
+		currentSnd = getSnd("BGM1");
+		currentSnd->playAudio(AL_LOOPING);
+		firstCall = false;
+	};
+
+	if (m_InputMgr->isKeyDown(VK_NUMPAD1))
+	{
+		currentSnd->stopAudio();
+		currentSnd = getSnd("BGM1");
+		currentSnd->playAudio(AL_LOOPING);
+	};
+	if (m_InputMgr->isKeyDown(VK_NUMPAD2))
+	{
+		currentSnd->stopAudio();
+		currentSnd = getSnd("BGM2");
+		currentSnd->playAudio(AL_LOOPING);
+	};
+
+	if (m_InputMgr->isKeyDown(VK_NUMPAD3))
+	{
+		currentSnd->stopAudio();
+		currentSnd = getSnd("BGM3");
+		currentSnd->playAudio(AL_LOOPING);
+	};
+
+	if (m_InputMgr->isKeyDown(VK_NUMPAD4))
+	{
+		currentSnd->stopAudio();
+		currentSnd = getSnd("BGM4");
+		currentSnd->playAudio(AL_LOOPING);
+	};
+
+	if (m_InputMgr->isKeyDown(VK_NUMPAD5))
+	{
+		currentSnd->stopAudio();
+		currentSnd = getSnd("BGM5");
+		currentSnd->playAudio(AL_LOOPING);
+	};
+
+}
+
+
 
 
 cSoundMgr::~cSoundMgr()

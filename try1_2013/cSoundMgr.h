@@ -10,7 +10,7 @@ cSoundMgr.h
 // OpenGL Headers
 #include "GameConstants.h"
 #include "cSound.h"
-
+#include "cInputMgr.h"
 
 using namespace std;
 
@@ -20,11 +20,14 @@ private:
 	static cSoundMgr* pInstance;
 	ALCcontext *m_OALContext;
 	ALCdevice *m_OALDevice;
+	cInputMgr* m_InputMgr;
 
 protected:
 	cSoundMgr();
 	~cSoundMgr();
 	map <LPCSTR, cSound*> gameSnds;
+	cSound *currentSnd;
+	bool firstCall = true;
 	void createContext();
 
 public:
@@ -32,5 +35,9 @@ public:
 	cSound* getSnd(LPCSTR sndName);
 	void deleteSnd();
 	static cSoundMgr* getInstance();
+	void attachInputMgr(cInputMgr* inputMgr);
+
+	void updateSound();
+
 };
 #endif
