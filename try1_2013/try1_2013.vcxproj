@@ -65,6 +65,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cBackground.cpp" />
+    <ClCompile Include="cBullet.cpp" />
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCameraMgr.cpp" />
     <ClCompile Include="cColours.cpp" />
@@ -89,12 +90,14 @@
     <ClCompile Include="cTriangle.cpp" />
     <ClCompile Include="cWNDManager.cpp" />
     <ClCompile Include="GameConstants.cpp" />
+    <ClCompile Include="shootingRangeGame.cpp" />
     <ClCompile Include="Studentmain.cpp" />
     <ClCompile Include="tardisWarsGame.cpp" />
     <ClCompile Include="windowOGL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cBackground.h" />
+    <ClInclude Include="cBullet.h" />
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cCameraMgr.h" />
     <ClInclude Include="cColours.h" />
@@ -120,6 +123,7 @@
     <ClInclude Include="cWNDManager.h" />
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="shootingRangeGame.h" />
     <ClInclude Include="tardisWarsGame.h" />
     <ClInclude Include="wglext.h" />
     <ClInclude Include="windowOGL.h" />

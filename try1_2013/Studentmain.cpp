@@ -29,25 +29,27 @@
 
 #include "cBackground.h"
 #include "cCameraMgr.h"
+#include "cBullet.h"
+#include "shootingRangeGame.h"
 
 
 cCamera *activeCamera;
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
-                   HINSTANCE hPrevInstance,
-                   LPSTR cmdLine,
-                   int cmdShow)
+				   HINSTANCE hPrevInstance,
+				   LPSTR cmdLine,
+				   int cmdShow)
 {
 
-    //Set our window settings
-    const int windowWidth = 1024;
-    const int windowHeight = 768;
-    const int windowBPP = 16;
+	//Set our window settings
+	const int windowWidth = 1024;
+	const int windowHeight = 768;
+	const int windowBPP = 16;
 
 
 
-    //This is our window
+	//This is our window
 	static cWNDManager* pgmWNDMgr = cWNDManager::getInstance();
 
 	// This is the input manager
@@ -63,9 +65,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	static cCameraMgr* theCameraMgr = cCameraMgr::getInstance();
 	
 	//The example OpenGL code
-    windowOGL theOGLWnd;
+	windowOGL theOGLWnd;
 
-    //Attach our example to our window
+	//Attach our example to our window
 	pgmWNDMgr->attachOGLWnd(&theOGLWnd);
 
 	// Attach the keyboard manager
@@ -76,30 +78,36 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 
-    //Attempt to create the window
+	//Attempt to create the window
 	if (!pgmWNDMgr->createWND(windowWidth, windowHeight, windowBPP))
-    {
-        //If it fails
+	{
+		//If it fails
 
-        MessageBox(NULL, "Unable to create the OpenGL Window", "An error occurred", MB_ICONERROR | MB_OK);
+		MessageBox(NULL, "Unable to create the OpenGL Window", "An error occurred", MB_ICONERROR | MB_OK);
 		pgmWNDMgr->destroyWND(); //Reset the display and exit
-        return 1;
-    }
+		return 1;
+	}
 
 	if (!theOGLWnd.initOGL(windowWidth, windowHeight)) //Initialize our example
-    {
-        MessageBox(NULL, "Could not initialize the application", "An error occurred", MB_ICONERROR | MB_OK);
+	{
+		MessageBox(NULL, "Could not initialize the application", "An error occurred", MB_ICONERROR | MB_OK);
 		pgmWNDMgr->destroyWND(); //Reset the display and exit
-        return 1;
-    }
+		return 1;
+	}
 
 	// Create Texture map
 	cTexture tardisTexture;
 	tardisTexture.createTexture("Models/tardis.png");
 	cTexture spaceShipTexture;
 	spaceShipTexture.createTexture("Models/SpaceShip/sh3.jpg");
+
+
 	cTexture laserTexture;
 	laserTexture.createTexture("Models/laser.tga");
+
+	cTexture bulletTexture;
+	bulletTexture.createTexture("Models/Crimson/bullet_rife/Brass.jpg");
+
 	cTexture starTexture;
 	starTexture.createTexture("Images/star.png");
 
@@ -144,6 +152,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// Load Sound
 	LPCSTR gameSounds[3] = { "Audio/who10Edit.wav", "Audio/shot007.wav", "Audio/explosion2.wav" };
 	LPCSTR BGM[5] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav","Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav","Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav","Audio/BGM/wav/radio4_-.wav","Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav" };
+	LPCSTR SFX[6] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav" };
 
 	//theSoundMgr->add("Theme", gameSounds[0]);
 	//theSoundMgr->add("Shot", gameSounds[1]);
@@ -154,6 +163,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("BGM3", BGM[2]);
 	theSoundMgr->add("BGM4", BGM[3]);
 	theSoundMgr->add("BGM5", BGM[4]);
+
+
+	theSoundMgr->add("fireGunSFX", SFX[0]);
+	theSoundMgr->add("reloadSFX", SFX[1]);
+	theSoundMgr->add("ricochet1SFX", SFX[2]);
+	theSoundMgr->add("ricochet2SFX", SFX[3]);
+	theSoundMgr->add("ricochet3SFX", SFX[4]);
+	theSoundMgr->add("targetHitSFX", SFX[4]);
+
+
+
 	theSoundMgr->add("Shot", gameSounds[1]);
 	theSoundMgr->add("Explosion", gameSounds[2]);
 
@@ -202,6 +222,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cModelLoader theLaser;
 	theLaser.loadModel("Models/laser.obj", laserTexture);
 
+	cModelLoader theBullet;
+	theBullet.loadModel("Models/Crimson/bullet_rife/50_Barrett.obj", bulletTexture);
+
 	for (int loop = 0; loop < 5; loop++)
 	{
 		theEnemy.push_back(new cEnemy);
@@ -221,17 +244,20 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	float tCount = 0.0f;
 	string outputMsg;
 
-	//theSoundMgr->getSnd("BGM1")->playAudio(AL_LOOPING);
 
 	std::vector<cLaser*> laserList;
 	std::vector<cLaser*>::iterator index;
 
+	std::vector<cBullet*> bulletList;
+	std::vector<cBullet*>::iterator index2;
+
+
    //This is the mainloop, we render frames until isRunning returns false
 	while (pgmWNDMgr->isWNDRunning())
-    {
+	{
 		pgmWNDMgr->processWNDEvents(); //Process any window events
 
-        //We get the time that passed since the last frame
+		//We get the time that passed since the last frame
 		float elapsedTime = pgmWNDMgr->getElapsedSeconds();
 		
 		theSoundMgr->updateSound();
@@ -276,7 +302,16 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				(*laserIterartor)->update(elapsedTime);
 			}
 		}
-
+		
+		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
+		{
+			if ((*bulletIterartor)->isActive())
+			{
+				theBullet.renderMdl((*bulletIterartor)->getPosition(), (*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
+				(*bulletIterartor)->update(elapsedTime);
+			}
+		}
+		
 		outputMsg = to_string(theEnemy.size()); // convert float to string
 		
 		glPushMatrix();
@@ -297,5 +332,5 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theOGLWnd.shutdown(); //Free any resources
 	pgmWNDMgr->destroyWND(); //Destroy the program window
 
-    return 0; //Return success
+	return 0; //Return success
 }

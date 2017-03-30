@@ -20,6 +20,8 @@ void cPlayer::update(float elapsedTime)
 	//{
 	//	translationX -= 1.0f;
 	//}
+
+
 	if (m_InputMgr->isKeyDown('A'))
 	{
 		translationZ += 1.0f;
@@ -31,6 +33,9 @@ void cPlayer::update(float elapsedTime)
 
 	if (m_InputMgr->isKeyDown(VK_SPACE))
 	{
+		/*laser*/
+
+		/*
 		glm::vec3 mdlLaserDirection;
 		mdlLaserDirection.x = -(float)glm::sin(glm::radians(this->getRotation()));
 		mdlLaserDirection.y = 0.0f;
@@ -50,6 +55,33 @@ void cPlayer::update(float elapsedTime)
 		theTardisLasers[numLasers]->update(elapsedTime);
 		// play the firing sound
 		m_SoundMgr->getSnd("Shot")->playAudio(AL_TRUE);
+		*/
+
+		/*bullet*/
+		
+		glm::vec3 mdlBulletDirection;
+		mdlBulletDirection.x = -(float)glm::sin(glm::radians(this->getRotation()));
+		mdlBulletDirection.y = 0.0f;
+		mdlBulletDirection.z = (float)glm::cos(glm::radians(this->getRotation()));
+		mdlBulletDirection *= -1;
+
+		// Add new bullet sprite to the vector array
+		theBullets.push_back(new cBullet);
+		int numBullets = theBullets.size() - 1;
+		theBullets[numBullets]->setDirection(mdlBulletDirection);
+		theBullets[numBullets]->setRotation(0.0f);
+		theBullets[numBullets]->setScale(glm::vec3(1, 1, 1));
+		theBullets[numBullets]->setSpeed(5.0f);
+		theBullets[numBullets]->setPosition(this->getPosition() + mdlBulletDirection);
+		theBullets[numBullets]->setIsActive(true);
+		//theTardisLasers[numLasers]->setMdlDimensions(theLaser.getModelDimensions());
+		theBullets[numBullets]->update(elapsedTime);
+		// play the firing sound
+		m_SoundMgr->getSnd("fireGunSFX")->playAudio(AL_TRUE);
+
+		
+
+
 	}
 
 	/*

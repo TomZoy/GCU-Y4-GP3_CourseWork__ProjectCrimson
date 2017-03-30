@@ -3,6 +3,7 @@
 
 #include "GameConstants.h"
 #include "tardisWarsGame.h"
+#include "shootingRangeGame.h"
 #include "cModel.h"
 #include "cInputMgr.h"
 

@@ -99,6 +99,12 @@
     <ClCompile Include="cCameraMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cBullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shootingRangeGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCamera.h">
@@ -186,6 +192,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cCameraMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shootingRangeGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
