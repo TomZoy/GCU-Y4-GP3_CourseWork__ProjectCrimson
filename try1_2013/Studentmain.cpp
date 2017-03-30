@@ -114,6 +114,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cTexture background;
 	background.createTexture("Images/gun-range.jpg");
 
+	cTexture targetTexture;
+	targetTexture.createTexture("Models/Crimson/target/textures/texture.jpg");
+
 	cTexture rifleTexture;
 	rifleTexture.createTexture("Models/Crimson/rifle/texture/steel.jpg");
 	cTexture pistolTexture;
@@ -204,8 +207,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	// Model
-	cModelLoader tardisMdl;
-	tardisMdl.loadModel("Models/tardis1314.obj", tardisTexture); // Player
+	//cModelLoader tardisMdl;
+	//tardisMdl.loadModel("Models/tardis1314.obj", tardisTexture); // Player
 
 	//// riffle
 	//cModelLoader rifleMdl;
@@ -216,8 +219,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	pistolMdl.loadModel("Models/Crimson/pistol/Handgun_obj.obj", rifleTexture); // Player
 
 
-	cModelLoader spaceShipMdl;
-	spaceShipMdl.loadModel("Models/SpaceShip/Sample_Ship.obj", spaceShipTexture); // Enemy
+	//cModelLoader spaceShipMdl;
+	//spaceShipMdl.loadModel("Models/SpaceShip/Sample_Ship.obj", spaceShipTexture); // Enemy
 	
 	cModelLoader theLaser;
 	theLaser.loadModel("Models/laser.obj", laserTexture);
@@ -225,11 +228,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cModelLoader theBullet;
 	theBullet.loadModel("Models/Crimson/bullet_rife/50_Barrett.obj", bulletTexture);
 
+	cModelLoader targetMdl;
+	targetMdl.loadModel("Models/Crimson/target/target2.obj", targetTexture);
+
+
 	for (int loop = 0; loop < 5; loop++)
 	{
 		theEnemy.push_back(new cEnemy);
-		theEnemy[loop]->randomise();
-		theEnemy[loop]->setMdlDimensions(spaceShipMdl.getModelDimensions());
+		//theEnemy[loop]->randomise();
+		theEnemy[loop]->setMdlDimensions(targetMdl.getModelDimensions());
 		theEnemy[loop]->setScale(glm::vec3(5, 5, 5));
 	}
 
@@ -288,14 +295,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		{
 			if ((*enemyIterator)->isActive())
 			{
-				spaceShipMdl.renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
+				targetMdl.renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
 				(*enemyIterator)->update(elapsedTime);
 			}
 		}
 
-		//tardisMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
-		//rifleMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+		
+		// target Y should be between 5.0f - 30.0f
+		targetMdl.renderMdl(glm::vec3(0.0f, 0.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 		thePlayer.update(elapsedTime);

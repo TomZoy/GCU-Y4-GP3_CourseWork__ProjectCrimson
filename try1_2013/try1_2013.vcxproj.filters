@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="depricated">
+      <UniqueIdentifier>{0be70b5d-375a-4373-a7ca-d4f55c228950}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cCamera.cpp">
@@ -34,9 +37,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cInputMgr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cLaser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cLight.cpp">
@@ -105,6 +105,9 @@
     <ClCompile Include="shootingRangeGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cLaser.cpp">
+      <Filter>depricated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCamera.h">
@@ -126,9 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cInputMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cLaser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cLight.h">
@@ -199,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="shootingRangeGame.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cLaser.h">
+      <Filter>depricated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

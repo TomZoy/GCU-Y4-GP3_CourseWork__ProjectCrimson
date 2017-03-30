@@ -65,16 +65,16 @@ void cPlayer::update(float elapsedTime)
 			mdlLaserDirection *= -1;
 
 			// Add new bullet sprite to the vector array
-			theTardisLasers.push_back(new cLaser);
-			int numLasers = theTardisLasers.size() - 1;
-			theTardisLasers[numLasers]->setDirection(mdlLaserDirection);
-			theTardisLasers[numLasers]->setRotation(0.0f);
-			theTardisLasers[numLasers]->setScale(glm::vec3(1, 1, 1));
-			theTardisLasers[numLasers]->setSpeed(5.0f);
-			theTardisLasers[numLasers]->setPosition(this->getPosition() + mdlLaserDirection);
-			theTardisLasers[numLasers]->setIsActive(true);
-			//theTardisLasers[numLasers]->setMdlDimensions(theLaser.getModelDimensions());
-			theTardisLasers[numLasers]->update(elapsedTime);
+			theBullets.push_back(new cLaser);
+			int numLasers = theBullets.size() - 1;
+			theBullets[numLasers]->setDirection(mdlLaserDirection);
+			theBullets[numLasers]->setRotation(0.0f);
+			theBullets[numLasers]->setScale(glm::vec3(1, 1, 1));
+			theBullets[numLasers]->setSpeed(5.0f);
+			theBullets[numLasers]->setPosition(this->getPosition() + mdlLaserDirection);
+			theBullets[numLasers]->setIsActive(true);
+			//theBullets[numLasers]->setMdlDimensions(theLaser.getModelDimensions());
+			theBullets[numLasers]->update(elapsedTime);
 			// play the firing sound
 			m_SoundMgr->getSnd("Shot")->playAudio(AL_TRUE);
 			*/
@@ -113,32 +113,32 @@ void cPlayer::update(float elapsedTime)
 	| Check for collisions
 	==============================================================
 	*/
-	for (vector<cLaser*>::iterator laserIterartor = theTardisLasers.begin(); laserIterartor != theTardisLasers.end(); ++laserIterartor)
+	for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
 	{
-		(*laserIterartor)->update(elapsedTime);
+		(*bulletIterartor)->update(elapsedTime);
 		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
 		{
-			if ((*enemyIterator)->SphereSphereCollision((*laserIterartor)->getPosition(), (*laserIterartor)->getMdlRadius()))
+			if ((*enemyIterator)->SphereSphereCollision((*bulletIterartor)->getPosition(), (*bulletIterartor)->getMdlRadius()))
 			{
 				// if a collision set the bullet and spaceship to false
 				(*enemyIterator)->setIsActive(false);
-				(*laserIterartor)->setIsActive(false);
+				(*bulletIterartor)->setIsActive(false);
 				// play the explosion sound.
-				m_SoundMgr->getSnd("Explosion")->playAudio(AL_TRUE);
+				m_SoundMgr->getSnd("targetHitSFX")->playAudio(AL_TRUE);
 			}
 		}
 	}
 
-	vector<cLaser*>::iterator laserIterartor = theTardisLasers.begin();
-	while (laserIterartor != theTardisLasers.end())
+	vector<cBullet*>::iterator bulletIterartor = theBullets.begin();
+	while (bulletIterartor != theBullets.end())
 	{
-		if ((*laserIterartor)->isActive() == false)
+		if ((*bulletIterartor)->isActive() == false)
 		{
-			laserIterartor = theTardisLasers.erase(laserIterartor);
+			bulletIterartor = theBullets.erase(bulletIterartor);
 		}
 		else
 		{
-			++laserIterartor;
+			++bulletIterartor;
 		}
 	}
 
