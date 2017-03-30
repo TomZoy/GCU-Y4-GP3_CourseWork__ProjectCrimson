@@ -31,7 +31,7 @@
 #include "cCameraMgr.h"
 
 
-cCamera activeCamera;
+cCamera *activeCamera;
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -166,6 +166,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	camera1.setTheProjectionMatrix(45.0f, camera1.getTheCameraAspectRatio(), 0.1f, 300.0f);
 	camera1.update();
 
+	theCameraMgr->add("camera1",&camera1);
+
 	// Create another camera
 	cCamera camera2;
 	camera2.setTheCameraPos(glm::vec3(0.0f, 0.0f, 5.0f));
@@ -175,7 +177,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	camera2.setTheProjectionMatrix(45.0f, camera2.getTheCameraAspectRatio(), 0.1f, 300.0f);
 	camera2.update();
 
-	activeCamera = camera1;
+	theCameraMgr->add("camera2", &camera2);
+	//activeCamera = &camera1;
 
 	//Clear key buffers
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
@@ -239,7 +242,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		glLoadMatrixf((GLfloat*)&activeCamera.getTheViewMatrix());
+
+		theCameraMgr->updateCamera();
+		//glLoadMatrixf((GLfloat*)&activeCamera->getTheViewMatrix());//.getTheViewMatrix());
+		glLoadMatrixf((GLfloat*)&(theCameraMgr->getCurrentCamera())->getTheViewMatrix());//.getTheViewMatrix());
 
 		theStarField.render(0.0f);
 		sunMaterial.useMaterial();

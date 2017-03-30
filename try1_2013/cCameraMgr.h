@@ -22,7 +22,8 @@ private:
 protected:
 	cCameraMgr();
 	~cCameraMgr();
-
+	cCamera* cCameraMgr::getCamera(LPCSTR sndName);
+	bool firstCall = true;
 	cCamera *currentCamera;
 	map <LPCSTR, cCamera*> gameGameras;
 
