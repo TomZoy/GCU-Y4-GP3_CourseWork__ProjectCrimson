@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClCompile Include="cBackground.cpp" />
     <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCameraMgr.cpp" />
     <ClCompile Include="cColours.cpp" />
     <ClCompile Include="cCube.cpp" />
     <ClCompile Include="cEnemy.cpp" />
@@ -95,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="cBackground.h" />
     <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cCameraMgr.h" />
     <ClInclude Include="cColours.h" />
     <ClInclude Include="cCube.h" />
     <ClInclude Include="cEnemy.h" />

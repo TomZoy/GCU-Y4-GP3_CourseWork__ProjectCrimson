@@ -96,6 +96,9 @@
     <ClCompile Include="cBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cCameraMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCamera.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cBackground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cCameraMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

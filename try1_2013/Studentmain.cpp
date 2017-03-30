@@ -28,6 +28,11 @@
 #include "tardisWarsGame.h"
 
 #include "cBackground.h"
+#include "cCameraMgr.h"
+
+
+cCamera activeCamera;
+
 
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
@@ -53,6 +58,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// This is the sound manager
 	static cSoundMgr* theSoundMgr = cSoundMgr::getInstance();
+
+	// Camera manager
+	static cCameraMgr* theCameraMgr = cCameraMgr::getInstance();
 	
 	//The example OpenGL code
     windowOGL theOGLWnd;
@@ -62,6 +70,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Attach the keyboard manager
 	pgmWNDMgr->attachInputMgr(theInputMgr);
+
+	// Attach the keyboard manager
+	theCameraMgr->attachInputMgr(theInputMgr);
+
 
 
     //Attempt to create the window
@@ -163,6 +175,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	camera2.setTheProjectionMatrix(45.0f, camera2.getTheCameraAspectRatio(), 0.1f, 300.0f);
 	camera2.update();
 
+	activeCamera = camera1;
+
 	//Clear key buffers
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
@@ -225,7 +239,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		glLoadMatrixf((GLfloat*)&camera2.getTheViewMatrix());
+		glLoadMatrixf((GLfloat*)&activeCamera.getTheViewMatrix());
 
 		theStarField.render(0.0f);
 		sunMaterial.useMaterial();
