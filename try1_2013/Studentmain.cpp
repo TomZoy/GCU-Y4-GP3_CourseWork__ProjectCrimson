@@ -146,6 +146,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	theFontMgr->addFont("SevenSeg", gameFonts[0], 55);
 	theFontMgr->addFont("Text", gameFonts[1], 50);
+	theFontMgr->addFont("TextSmall", gameFonts[1], 25);
 	theFontMgr->addFont("drWho", gameFonts[2], 50);
 
 
@@ -244,6 +245,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	
 	string outputMsg;
+	string autoFollowBulletText;
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
 	//std::vector<cLaser*> laserList;
 	//std::vector<cLaser*>::iterator index;
@@ -320,6 +322,16 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);//to_string(theEnemy.size()); // convert float to string
+		if (autoFollowBullet)
+		{
+			autoFollowBulletText = "Follow bullet ENABLED";
+		}
+		else
+		{
+			autoFollowBulletText = "Follow bullet DISABLED";
+		}
+
+
 		//glDisable(GL_LIGHTING);
 		glPushMatrix();
 		theOGLWnd.setOrtho2D(windowWidth, windowHeight);
@@ -327,6 +339,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theFontMgr->getFont("Text")->printText("Crimson shooting", FTPoint(10, 50, 0.0f), textColor);
 		theFontMgr->getFont("Text")->printText("Bullets: ", FTPoint(690, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(900, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+		theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		glPopMatrix();
 
 		//glEnable(GL_LIGHTING);

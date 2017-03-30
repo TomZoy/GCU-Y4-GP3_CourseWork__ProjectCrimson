@@ -4,6 +4,8 @@ cPlayer::cPlayer() : cModel()
 {
 	magazineSize = 6;
 	bulletsLeft = magazineSize;
+
+	autoFollowBullet = true;
 }
 
 void cPlayer::attachInputMgr(cInputMgr* inputMgr)
@@ -21,6 +23,18 @@ void cPlayer::update(float elapsedTime)
 	//{
 	//	translationX -= 1.0f;
 	//}
+
+	if (m_InputMgr->isKeyDown('F'))
+	{
+		if (autoFollowBullet)
+		{
+			autoFollowBullet = false;
+		}
+		else
+		{
+			autoFollowBullet = true;
+		}
+	}
 
 
 	if (m_InputMgr->isKeyDown('A'))
