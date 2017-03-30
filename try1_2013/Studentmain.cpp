@@ -27,6 +27,8 @@
 #include "cLaser.h"
 #include "tardisWarsGame.h"
 
+#include "cBackground.h"
+
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
                    LPSTR cmdLine,
@@ -89,8 +91,18 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cTexture starTexture;
 	starTexture.createTexture("Images/star.png");
 
+	cTexture background;
+	background.createTexture("Images/gun-range.jpg");
+
+	cTexture rifleTexture;
+	rifleTexture.createTexture("Models/Crimson/rifle/texture/steel.jpg");
+	cTexture pistolTexture;
+	pistolTexture.createTexture("Models/Crimson/pistol/textures/handgun_C.jpg");
+
+
+
 	// the starfield
-	cStarfield theStarField(starTexture.getTexture(), glm::vec3(50.0f, 50.0f, 50.0f));
+	cStarfield theStarField(starTexture.getTexture(), glm::vec3(5.0f, 5.0f, 5.0f));
 
 	// Create Materials for lights
 	cMaterial sunMaterial(lightColour4(0.0f, 0.0f, 0.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(0, 0, 0, 1.0f), 5.0f);
@@ -158,6 +170,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cModelLoader tardisMdl;
 	tardisMdl.loadModel("Models/tardis1314.obj", tardisTexture); // Player
 
+	//// riffle
+	//cModelLoader rifleMdl;
+	//rifleMdl.loadModel("Models/Crimson/rifle/hunting_rifle.obj", rifleTexture); // Player
+
+	//// pistol
+	cModelLoader pistolMdl;
+	pistolMdl.loadModel("Models/Crimson/pistol/Handgun_obj.obj", rifleTexture); // Player
+
+
 	cModelLoader spaceShipMdl;
 	spaceShipMdl.loadModel("Models/SpaceShip/Sample_Ship.obj", spaceShipTexture); // Enemy
 	
@@ -174,8 +195,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 	cPlayer thePlayer;
-	thePlayer.initialise(glm::vec3(0, 0, 0), 0.0f, glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 5.0f, true);
-	thePlayer.setMdlDimensions(tardisMdl.getModelDimensions());
+	thePlayer.initialise(glm::vec3(0, 0, 0), 90.0f, glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 5.0f, true);
+	thePlayer.setMdlDimensions(pistolMdl.getModelDimensions());
 	thePlayer.attachInputMgr(theInputMgr);
 	thePlayer.attachSoundMgr(theSoundMgr);
 	theSoundMgr->attachInputMgr(theInputMgr);
@@ -222,7 +243,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 		}
 
-		tardisMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+		//tardisMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+		//rifleMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		thePlayer.update(elapsedTime);
 		
 		for (vector<cLaser*>::iterator laserIterartor = theTardisLasers.begin(); laserIterartor != theTardisLasers.end(); ++laserIterartor)

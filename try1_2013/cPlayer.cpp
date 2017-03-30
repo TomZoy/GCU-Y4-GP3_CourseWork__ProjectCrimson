@@ -12,21 +12,21 @@ void cPlayer::attachInputMgr(cInputMgr* inputMgr)
 
 void cPlayer::update(float elapsedTime)
 {
-	if (m_InputMgr->isKeyDown(VK_RIGHT))
+	//if (m_InputMgr->isKeyDown('W'))
+	//{
+	//	translationX += 1.0f;
+	//}
+	//if (m_InputMgr->isKeyDown('S'))
+	//{
+	//	translationX -= 1.0f;
+	//}
+	if (m_InputMgr->isKeyDown('A'))
 	{
-		rotationAngle += 5.0f;
+		translationZ += 1.0f;
 	}
-	if (m_InputMgr->isKeyDown(VK_LEFT))
+	if (m_InputMgr->isKeyDown('D'))
 	{
-		rotationAngle -= 5.0f;
-	}
-	if (m_InputMgr->isKeyDown(VK_UP))
-	{
-		translationZ += 5.0f;
-	}
-	if (m_InputMgr->isKeyDown(VK_DOWN))
-	{
-		translationZ -= 5.0f;
+		translationZ -= 1.0f;
 	}
 
 	if (m_InputMgr->isKeyDown(VK_SPACE))
