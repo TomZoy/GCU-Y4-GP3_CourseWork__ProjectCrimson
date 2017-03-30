@@ -8,3 +8,6 @@ ShootingRangeGame.cpp
 
 //vector<cEnemy*> theEnemy;
 vector<cBullet*> theBullets;
+
+int magazineSize;
+int bulletsLeft;

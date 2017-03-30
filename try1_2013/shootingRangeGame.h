@@ -8,4 +8,7 @@
 //extern vector<cEnemy*> theEnemy;
 extern vector<cBullet*> theBullets;
 
+extern int magazineSize;
+extern int bulletsLeft;
+
 #endif

@@ -142,17 +142,18 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// load game fonts
 	// Load Fonts
-	LPCSTR gameFonts[3] = { "Fonts/digital-7.ttf", "Fonts/space age.ttf", "Fonts/doctor_who.ttf" };
+	LPCSTR gameFonts[3] = { "Fonts/digital-7.ttf", "Fonts/gunplay-rg.ttf","Fonts/doctor_who.ttf" };
 
-	theFontMgr->addFont("SevenSeg", gameFonts[0], 24);
-	theFontMgr->addFont("Space", gameFonts[1], 24);
-	theFontMgr->addFont("DrWho", gameFonts[2], 48);
+	theFontMgr->addFont("SevenSeg", gameFonts[0], 55);
+	theFontMgr->addFont("Text", gameFonts[1], 50);
+	theFontMgr->addFont("drWho", gameFonts[2], 50);
+
 
 	// load game sounds
 	// Load Sound
 	LPCSTR gameSounds[3] = { "Audio/who10Edit.wav", "Audio/shot007.wav", "Audio/explosion2.wav" };
 	LPCSTR BGM[5] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav","Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav","Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav","Audio/BGM/wav/radio4_-.wav","Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav" };
-	LPCSTR SFX[6] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav" };
+	LPCSTR SFX[7] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav" };
 
 	//theSoundMgr->add("Theme", gameSounds[0]);
 	//theSoundMgr->add("Shot", gameSounds[1]);
@@ -170,7 +171,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("ricochet1SFX", SFX[2]);
 	theSoundMgr->add("ricochet2SFX", SFX[3]);
 	theSoundMgr->add("ricochet3SFX", SFX[4]);
-	theSoundMgr->add("targetHitSFX", SFX[4]);
+	theSoundMgr->add("targetHitSFX", SFX[5]);
+	theSoundMgr->add("emptyGunSFX", SFX[6]);
 
 
 
@@ -179,26 +181,23 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Create a camera
 	cCamera camera1;
-	camera1.setTheCameraPos(glm::vec3(0.0f, 0.0f, 75.0f));
+	camera1.setTheCameraPos(glm::vec3(0.0f, 0.0f, 5.0f));
 	camera1.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera1.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
 	camera1.setTheCameraAspectRatio(windowWidth, windowHeight);
 	camera1.setTheProjectionMatrix(45.0f, camera1.getTheCameraAspectRatio(), 0.1f, 300.0f);
 	camera1.update();
-
-	theCameraMgr->add("camera1",&camera1);
+	theCameraMgr->add("camera1", &camera1);
 
 	// Create another camera
 	cCamera camera2;
-	camera2.setTheCameraPos(glm::vec3(0.0f, 0.0f, 5.0f));
+	camera2.setTheCameraPos(glm::vec3(0.0f, 0.0f, 75.0f));
 	camera2.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera2.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
 	camera2.setTheCameraAspectRatio(windowWidth, windowHeight);
 	camera2.setTheProjectionMatrix(45.0f, camera2.getTheCameraAspectRatio(), 0.1f, 300.0f);
 	camera2.update();
-
 	theCameraMgr->add("camera2", &camera2);
-	//activeCamera = &camera1;
 
 	//Clear key buffers
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
@@ -242,14 +241,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->attachInputMgr(theInputMgr);
 
 	float tCount = 0.0f;
+
+	
 	string outputMsg;
-
-
-	std::vector<cLaser*> laserList;
-	std::vector<cLaser*>::iterator index;
+	colour3f textColor = (0.99f, 0.99f, 0.99f);
+	//std::vector<cLaser*> laserList;
+	//std::vector<cLaser*>::iterator index;
 
 	std::vector<cBullet*> bulletList;
 	std::vector<cBullet*>::iterator index2;
+
+
 
 
    //This is the mainloop, we render frames until isRunning returns false
@@ -315,14 +317,19 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 		}
 		
-		outputMsg = to_string(theEnemy.size()); // convert float to string
-		
+
+
+		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);//to_string(theEnemy.size()); // convert float to string
+		//glDisable(GL_LIGHTING);
 		glPushMatrix();
 		theOGLWnd.setOrtho2D(windowWidth, windowHeight);
-		theFontMgr->getFont("DrWho")->printText("Tardis Wars", FTPoint(10, 35, 0.0f), colour3f(0.0f,255.0f,0.0f));
-		theFontMgr->getFont("DrWho")->printText(outputMsg.c_str(), FTPoint(850, 35, 0.0f), colour3f(255.0f, 255.0f, 0.0f)); // uses c_str to convert string to LPCSTR
+
+		theFontMgr->getFont("Text")->printText("Crimson shooting", FTPoint(10, 50, 0.0f), textColor);
+		theFontMgr->getFont("Text")->printText("Bullets: ", FTPoint(690, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+		theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(900, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		glPopMatrix();
 
+		//glEnable(GL_LIGHTING);
 		pgmWNDMgr->swapBuffers();
 
 		tCount += elapsedTime;
