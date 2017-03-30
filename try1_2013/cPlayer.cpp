@@ -60,19 +60,19 @@ void cPlayer::update(float elapsedTime)
 		/*bullet*/
 		
 		glm::vec3 mdlBulletDirection;
-		mdlBulletDirection.x = -(float)glm::sin(glm::radians(this->getRotation()));
-		mdlBulletDirection.y = 0.0f;
-		mdlBulletDirection.z = (float)glm::cos(glm::radians(this->getRotation()));
+		mdlBulletDirection.x = 0.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
+		mdlBulletDirection.y = 0.0f;// (float)glm::cos(glm::radians(this->getRotation()));
+		mdlBulletDirection.z = -(float)glm::sin(glm::radians(this->getRotation()));
 		mdlBulletDirection *= -1;
 
 		// Add new bullet sprite to the vector array
 		theBullets.push_back(new cBullet);
 		int numBullets = theBullets.size() - 1;
 		theBullets[numBullets]->setDirection(mdlBulletDirection);
-		theBullets[numBullets]->setRotation(0.0f);
-		theBullets[numBullets]->setScale(glm::vec3(1, 1, 1));
-		theBullets[numBullets]->setSpeed(5.0f);
-		theBullets[numBullets]->setPosition(this->getPosition() + mdlBulletDirection);
+		theBullets[numBullets]->setRotation(90.0f);
+		theBullets[numBullets]->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
+		theBullets[numBullets]->setSpeed(100.0f);
+		theBullets[numBullets]->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y + 0.5f, this->getPosition().z) + mdlBulletDirection);
 		theBullets[numBullets]->setIsActive(true);
 		//theTardisLasers[numLasers]->setMdlDimensions(theLaser.getModelDimensions());
 		theBullets[numBullets]->update(elapsedTime);

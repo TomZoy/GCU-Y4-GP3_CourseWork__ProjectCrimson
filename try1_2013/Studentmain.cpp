@@ -292,8 +292,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		//tardisMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		//rifleMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+
+
 		thePlayer.update(elapsedTime);
 		
+		/*
 		for (vector<cLaser*>::iterator laserIterartor = theTardisLasers.begin(); laserIterartor != theTardisLasers.end(); ++laserIterartor)
 		{
 			if ((*laserIterartor)->isActive())
@@ -302,12 +305,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				(*laserIterartor)->update(elapsedTime);
 			}
 		}
-		
+		*/
 		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
 		{
 			if ((*bulletIterartor)->isActive())
 			{
-				theBullet.renderMdl((*bulletIterartor)->getPosition(), (*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
+				theBullet.renderMdl((*bulletIterartor)->getPosition(),(*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
 				(*bulletIterartor)->update(elapsedTime);
 			}
 		}
