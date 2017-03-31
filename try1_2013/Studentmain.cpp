@@ -111,8 +111,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cTexture starTexture;
 	starTexture.createTexture("Images/star.png");
 
-	cTexture background;
-	background.createTexture("Images/gun-range.jpg");
+
+
+	cTexture backgroundTexture;
+	backgroundTexture.createTexture("Images/gun-range.jpg");
 
 	cTexture targetTexture;
 	targetTexture.createTexture("Models/Crimson/target/textures/texture.jpg");
@@ -125,7 +127,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 	// the starfield
-	cStarfield theStarField(starTexture.getTexture(), glm::vec3(5.0f, 5.0f, 5.0f));
+	cStarfield theStarField(backgroundTexture.getTexture(), glm::vec3(5.0f, 5.0f, 5.0f));
 
 	// Create Materials for lights
 	cMaterial sunMaterial(lightColour4(0.0f, 0.0f, 0.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(0, 0, 0, 1.0f), 5.0f);
@@ -185,11 +187,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Create a camera
 	cCamera camera1;
-	camera1.setTheCameraPos(glm::vec3(0.0f, 0.0f, 5.0f));
+	camera1.setTheCameraPos(glm::vec3(0.0f, 0.0f, 8.0f));
 	camera1.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera1.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
 	camera1.setTheCameraAspectRatio(windowWidth, windowHeight);
-	camera1.setTheProjectionMatrix(45.0f, camera1.getTheCameraAspectRatio(), 0.1f, 300.0f);
+	camera1.setTheProjectionMatrix(0.0f, camera1.getTheCameraAspectRatio(), 0.1f, 500.0f);
 	camera1.update();
 	theCameraMgr->add("camera1", &camera1);
 
@@ -284,7 +286,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		//glLoadMatrixf((GLfloat*)&activeCamera->getTheViewMatrix());//.getTheViewMatrix());
 		glLoadMatrixf((GLfloat*)&(theCameraMgr->getCurrentCamera())->getTheViewMatrix());//.getTheViewMatrix());
 
+
 		theStarField.render(0.0f);
+
+
 		sunMaterial.useMaterial();
 		sunLight.lightOn();
 		lfLight.lightOn();
@@ -303,7 +308,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		
 		// target Y should be between 5.0f - 30.0f
-		targetMdl.renderMdl(glm::vec3(0.0f, 0.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//targetMdl.renderMdl(glm::vec3(0.0f, 0.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 		thePlayer.update(elapsedTime);
