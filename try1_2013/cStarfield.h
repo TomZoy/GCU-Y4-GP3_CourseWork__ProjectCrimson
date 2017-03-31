@@ -20,9 +20,10 @@ class cStarfield : public cShapes
 public:
 	cStarfield();
 	cStarfield(GLint theTextureID, glm::vec3 theFieldVolume);
-	virtual void render(float rotAngle);
+	virtual void render(float Roation);
 	virtual void initialise(cTexture theTexture);
 	virtual void initialise(GLint theTextureID, glm::vec3 theFieldVolume);
+	void renderFull(int windowWidth, int windowHeight);
 
 private:
 

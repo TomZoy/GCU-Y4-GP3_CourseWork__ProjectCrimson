@@ -22,7 +22,7 @@ private:
 protected:
 	cCameraMgr();
 	~cCameraMgr();
-	cCamera* cCameraMgr::getCamera(LPCSTR sndName);
+
 	bool firstCall = true;
 	cCamera *currentCamera;
 	map <LPCSTR, cCamera*> gameGameras;
@@ -31,10 +31,12 @@ protected:
 
 public:
 	void updateCamera();
+	cCamera* cCameraMgr::getCamera(LPCSTR sndName);
 	static cCameraMgr* getInstance();
 	void attachInputMgr(cInputMgr* inputMgr);
 	cCamera *getCurrentCamera();
 	void add(LPCSTR,cCamera*);
+	void updateCamera(glm::vec3 position);
 
 
 };

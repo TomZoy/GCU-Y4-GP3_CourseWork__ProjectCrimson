@@ -1,4 +1,5 @@
 #include "cPlayer.h"
+#include "cCameraMgr.h"
 
 cPlayer::cPlayer() : cModel()
 {
@@ -6,12 +7,20 @@ cPlayer::cPlayer() : cModel()
 	bulletsLeft = magazineSize;
 
 	autoFollowBullet = true;
+
+
 }
 
 void cPlayer::attachInputMgr(cInputMgr* inputMgr)
 {
 	m_InputMgr = inputMgr;
 }
+
+void cPlayer::attachCameraMgr(cCameraMgr* cameraMgr)
+{
+	theCameraMgr = cameraMgr;
+}
+
 
 void cPlayer::update(float elapsedTime)
 {
@@ -92,7 +101,7 @@ void cPlayer::update(float elapsedTime)
 			theBullets[numBullets]->setDirection(mdlBulletDirection);
 			theBullets[numBullets]->setRotation(90.0f);
 			theBullets[numBullets]->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
-			theBullets[numBullets]->setSpeed(80.0f);
+			theBullets[numBullets]->setSpeed(1.0f);//80.0f);
 			theBullets[numBullets]->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y + 0.5f, this->getPosition().z) + mdlBulletDirection);
 			theBullets[numBullets]->setIsActive(true);
 			theBullets[numBullets]->update(elapsedTime);
@@ -100,12 +109,21 @@ void cPlayer::update(float elapsedTime)
 			m_SoundMgr->getSnd("fireGunSFX")->playAudio(AL_TRUE);
 
 			bulletsLeft--;
+
+			
+
+
 		}
 		else
 		{
 			m_SoundMgr->getSnd("emptyGunSFX")->playAudio(AL_TRUE);
 		}
 
+	}
+
+	if (theBullets.size() > 1)
+	{
+		theCameraMgr->updateCamera(theBullets[1]->getPosition());
 	}
 
 	/*

@@ -34,22 +34,31 @@ cStarfield::cStarfield(GLint theTextureID, glm::vec3 theFieldVolume)
 	generateStarField();
 }
 
-void cStarfield::render(float rotAngle)
+void cStarfield::render(float rotation)
+{
+}
+
+void cStarfield::renderFull(int windowWidth, int windowHeight)
 {
 	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
+
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
+	glPushMatrix();
+	glLoadIdentity();
+	
 	glEnable(GL_POINT_SPRITE);
 	glTexEnvi(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glDepthMask(GL_FALSE);
-	//glEnable(GL_POINT_SIZE);
-	glPointSize(1000.0f);
+	glEnable(GL_POINT_SIZE);
+	glPointSize(10000.0f);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+
 	glm::vec3 pointInSpace;
 	glBegin(GL_POINTS);
 
@@ -59,9 +68,13 @@ void cStarfield::render(float rotAngle)
 		glVertex3f(pointInSpace.x, pointInSpace.y, pointInSpace.z);
 	}
 	glEnd();
-
+	
 	glDisable(GL_POINT_SIZE);
-	//glDisable(GL_POINT_SPRITE);
+	glDisable(GL_POINT_SPRITE);
+	
+
+
+
 	glDisable(GL_TEXTURE_2D);
 	glDepthMask(GL_TRUE);
 	glPopMatrix();
@@ -89,7 +102,7 @@ void cStarfield::generateStarField()
 
 	m_StarPos.x = 0.0f;
 	m_StarPos.y = 0.0f;
-	m_StarPos.z = 2.0f;
+	m_StarPos.z = -1.0f;
 	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, m_StarPos.z));
 
 

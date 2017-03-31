@@ -129,6 +129,7 @@ void cCamera::update()
 	setTheCameraDirection();
 	setTheCameraStrafe();
 	setTheCameraUpVector(glm::cross(m_cameraDirection, m_cameraStrafe));
-	setTheProjectionMatrix(45.0f, getTheCameraAspectRatio(), 0.1f, 300.0f);
+
+	//setTheProjectionMatrix(45.0f, getTheCameraAspectRatio(), 0.1f, 300.0f);
 	setCamViewMatrix();
 }

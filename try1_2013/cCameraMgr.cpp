@@ -17,6 +17,7 @@ Constructor
 cCameraMgr::cCameraMgr()
 {
 	cCamera *currentCamera = NULL;
+
 }
 
 /*
@@ -43,15 +44,17 @@ void cCameraMgr::attachInputMgr(cInputMgr* inputMgr)
 
 void cCameraMgr::updateCamera()
 {
+	
+
 	if (firstCall)
 	{
-		//currentCamera = getCamera("camera1");
 		currentCamera = getCamera(gameGameras.begin()->first);
 		firstCall = false;
 	};
 
 	if (m_InputMgr->isKeyDown(VK_TAB))
 	{
+
 		
 		cCamera *newCamera = getCamera("camera1");
 		if (newCamera != currentCamera)
@@ -60,11 +63,21 @@ void cCameraMgr::updateCamera()
 		}
 		else
 		{
+			//getCamera("camera2")->setTheCameraPos(glm::vec3(0.0f, 0.0f, 15.0f));
 			currentCamera = getCamera("camera2");
+
 		}
 		
 	};
 
+	currentCamera->update();
+
+}
+
+void cCameraMgr::updateCamera(glm::vec3 position)
+{
+	getCamera("camera2")->setTheCameraPos(glm::vec3(position.x + 1.0f, position.y + 1.0f, -position.z));
+	getCamera("camera2")->setTheCameraLookAt(glm::vec3(position.x, position.y-1.0f, -(position.z+15.0f)));
 
 }
 

@@ -196,7 +196,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theCameraMgr->add("camera1", &camera1);
 
 	// Create another camera
-	cCamera camera2;
+	cCamera camera2(windowWidth,windowHeight);
 	camera2.setTheCameraPos(glm::vec3(0.0f, 0.0f, 75.0f));
 	camera2.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera2.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
@@ -248,6 +248,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	thePlayer.setMdlDimensions(pistolMdl.getModelDimensions());
 	thePlayer.attachInputMgr(theInputMgr);
 	thePlayer.attachSoundMgr(theSoundMgr);
+	thePlayer.attachCameraMgr(theCameraMgr);
 	theSoundMgr->attachInputMgr(theInputMgr);
 
 	float tCount = 0.0f;
@@ -287,15 +288,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		glLoadMatrixf((GLfloat*)&(theCameraMgr->getCurrentCamera())->getTheViewMatrix());//.getTheViewMatrix());
 
 
-		theStarField.render(0.0f);
+		theStarField.renderFull(windowWidth, windowHeight);
 
 
 		sunMaterial.useMaterial();
+
+		
 		sunLight.lightOn();
 		lfLight.lightOn();
 		rfLight.lightOn();
 		cbLight.lightOn();
-
+		
 		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
 		{
 			if ((*enemyIterator)->isActive())
@@ -345,7 +348,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		}
 
 
-		//glDisable(GL_LIGHTING);
+		glDisable(GL_LIGHTING);
 		glPushMatrix();
 		theOGLWnd.setOrtho2D(windowWidth, windowHeight);
 
