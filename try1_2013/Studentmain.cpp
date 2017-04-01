@@ -48,10 +48,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	const int windowBPP = 16;
 
 
-	allowBaloons = false;
-	perfectCombo = false;
-
-
 	//This is our window
 	static cWNDManager* pgmWNDMgr = cWNDManager::getInstance();
 
@@ -99,8 +95,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	}
 
 	// Create Texture maps
-	//cTexture laserTexture;
-	//laserTexture.createTexture("Models/laser.tga");
 
 	cTexture bulletTexture;
 	bulletTexture.createTexture("Models/Crimson/bullet_rife/Brass.jpg");
@@ -155,8 +149,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
 	cLight rfLight(GL_LIGHT2, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(-30, 0, 50, 1),
 		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
-	//cLight cbLight(GL_LIGHT3, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(0, 0, -100, 1),
-	//		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
+
+
 	//Define Ambient light for scene
 	GLfloat g_Ambient[] = { 0.2, 0.2, 0.2, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, g_Ambient);
@@ -244,6 +238,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cModelLoader targetMdl;
 	targetMdl.loadModel("Models/Crimson/target/target2.obj", *targetTextureList.front());
 
+
+
+//RESET GAME SHOULD START FROM HERE...
+
+
+
+	allowBaloons = false;
+	perfectCombo = false;
+
 	//enemy spawn loop
 	for (int loop = 0; loop < 6; loop++)
 	{
@@ -290,21 +293,21 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	string targetHitText;
 	string autoFollowBulletText;
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
-	//std::vector<cLaser*> laserList;
-	//std::vector<cLaser*>::iterator index;
 
 	std::vector<cBullet*> bulletList;
 	std::vector<cBullet*>::iterator index2;
 
 
-	//This is the mainloop, we render frames until isRunning returns false
+//This is the mainloop, we render frames until isRunning returns false
 	while (pgmWNDMgr->isWNDRunning())
 	{
-		pgmWNDMgr->processWNDEvents(); //Process any window events
+		//Process any window events
+		pgmWNDMgr->processWNDEvents();
 
 		//We get the time that passed since the last frame
 		float elapsedTime = pgmWNDMgr->getElapsedSeconds();
 
+		//enable to switch the BGM
 		theSoundMgr->updateSound();
 
 
@@ -315,8 +318,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		glLoadIdentity();
 
 		theCameraMgr->updateCamera();
-		//glLoadMatrixf((GLfloat*)&activeCamera->getTheViewMatrix());//.getTheViewMatrix());
-		glLoadMatrixf((GLfloat*)&(theCameraMgr->getCurrentCamera())->getTheViewMatrix());//.getTheViewMatrix());
+		glLoadMatrixf((GLfloat*)&(theCameraMgr->getCurrentCamera())->getTheViewMatrix());
 
 
 		//theStarField.renderFull(windowWidth, windowHeight);
@@ -324,12 +326,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		sunMaterial.useMaterial();
 
-
+		//turn the light on
 		sunLight.lightOn();
 		lfLight.lightOn();
-		//rfLight.lightOn();
-		//cbLight.lightOn();
+		rfLight.lightOn();
 
+		//reder every target
 		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
 		{
 			if ((*enemyIterator)->isActive())
@@ -339,6 +341,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 		}
 
+		//render the player
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		thePlayer.update(elapsedTime);
 
@@ -390,6 +393,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		}
 
 
+		//render the UI
 		glDisable(GL_LIGHTING);
 		glPushMatrix();
 		theOGLWnd.setOrtho2D(windowWidth, windowHeight);
@@ -413,7 +417,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		//Clear key buffers
 		theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
-	}
+	} //game-loop ends here
 
 	theOGLWnd.shutdown(); //Free any resources
 	pgmWNDMgr->destroyWND(); //Destroy the program window
