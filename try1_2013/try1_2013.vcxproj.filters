@@ -105,6 +105,9 @@
     <ClCompile Include="cLaser.cpp">
       <Filter>depricated</Filter>
     </ClCompile>
+    <ClCompile Include="cBaloon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCamera.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="cLaser.h">
       <Filter>depricated</Filter>
+    </ClInclude>
+    <ClInclude Include="cBaloon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

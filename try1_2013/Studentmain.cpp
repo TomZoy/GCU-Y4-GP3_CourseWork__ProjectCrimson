@@ -48,6 +48,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	const int windowBPP = 16;
 
 
+	allowBaloons = false;
+
 
 	//This is our window
 	static cWNDManager* pgmWNDMgr = cWNDManager::getInstance();
@@ -96,14 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	}
 
 	// Create Texture maps
-	//cTexture tardisTexture;
-	//tardisTexture.createTexture("Models/tardis.png");
-	//cTexture spaceShipTexture;
-	//spaceShipTexture.createTexture("Models/SpaceShip/sh3.jpg");
-
-
-	cTexture laserTexture;
-	laserTexture.createTexture("Models/laser.tga");
+	//cTexture laserTexture;
+	//laserTexture.createTexture("Models/laser.tga");
 
 	cTexture bulletTexture;
 	bulletTexture.createTexture("Models/Crimson/bullet_rife/Brass.jpg");
@@ -229,23 +225,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	// Model
-	cModelLoader hitMdl;
-	hitMdl.loadModel("Models/Crimson/baloonZ.obj", hitTexture);
-
-	//// riffle
-	//cModelLoader rifleMdl;
-	//rifleMdl.loadModel("Models/Crimson/rifle/hunting_rifle.obj", rifleTexture); // Player
+	cModelLoader baloonMdl;
+	baloonMdl.loadModel("Models/Crimson/baloonZ.obj", hitTexture);
 
 	//// pistol
 	cModelLoader pistolMdl;
 	pistolMdl.loadModel("Models/Crimson/pistol/Handgun_obj.obj", pistolTexture); // Player
 
-
-	//cModelLoader spaceShipMdl;
-	//spaceShipMdl.loadModel("Models/SpaceShip/Sample_Ship.obj", spaceShipTexture); // Enemy
-	
-//	cModelLoader theLaser;
-//	theLaser.loadModel("Models/laser.obj", laserTexture);
 
 	cModelLoader theBullet;
 	theBullet.loadModel("Models/Crimson/bullet_rife/50_Barrett.obj", bulletTexture);
@@ -271,7 +257,22 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theEnemy[loop]->setPosition(glm::vec3(0.0f, 0.0f, 50.0f));
 
 		theEnemy[loop]->ID = loop;
-		theEnemy[loop]->randomise();
+		theEnemy[loop]->randomise(6, 0, 6); // they will spawn on X -3->+3 Y 0 Z -3->+3
+	}
+
+	//baloon spawn loop
+	for (int loop = 0; loop < 10; loop++)
+	{
+		theBaloonList.push_back(new cBaloon);
+
+		theBaloonList[loop]->setIsActive(false);
+		theBaloonList[loop]->setScale(glm::vec3(2, 2, 1));
+		theBaloonList[loop]->setMdlRadius(2.0f);
+		theBaloonList[loop]->setPosition(glm::vec3(0.0f, -15.0f, 10.0f));
+		theBaloonList[loop]->setDirection(glm::vec3(0,1,0));
+		theBaloonList[loop]->ID = loop;
+		theBaloonList[loop]->setSpeed(0.01f);
+		theBaloonList[loop]->randomise(22,6,0);
 	}
 
 
@@ -342,21 +343,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		
-		targetMdl.renderMdl(glm::vec3(100.0f, 0.5f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//debug model
+		//baloonMdl.renderMdl(glm::vec3(10.0f, -5.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 		thePlayer.update(elapsedTime);
 		
-		/* laser rendering
-		for (vector<cLaser*>::iterator laserIterartor = theTardisLasers.begin(); laserIterartor != theTardisLasers.end(); ++laserIterartor)
-		{
-			if ((*laserIterartor)->isActive())
-			{
-				theLaser.renderMdl((*laserIterartor)->getPosition(), (*laserIterartor)->getRotation(), (*laserIterartor)->getScale());
-				(*laserIterartor)->update(elapsedTime);
-			}
-		}
-		*/
+		//bullet rendering
 		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
 		{
 			if ((*bulletIterartor)->isActive())
@@ -366,7 +359,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 		}
 		
-
+		//abloon rendering
+		if (allowBaloons)
+		{
+			for (vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin(); baloonIterartor != theBaloonList.end(); ++baloonIterartor)
+			{
+				baloonMdl.renderMdl((*baloonIterartor)->getPosition(), (*baloonIterartor)->getRotation(), (*baloonIterartor)->getScale());
+				(*baloonIterartor)->update(elapsedTime);
+			}
+		}
 
 		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
 		targetHitText = to_string(targetHitCount);
@@ -390,6 +391,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		theFontMgr->getFont("TextSmall")->printText("Targets hit: ", FTPoint(10, 130, 0.0f), textColor);
 		theFontMgr->getFont("SevenSeg")->printText(targetHitText.c_str(), FTPoint(160, 130, 0.0f), textColor);
+		//if (perfectCombo)
+			theFontMgr->getFont("SevenSeg")->printText("PERFECT COMBO!", FTPoint(240, 130, 0.0f), textColor);
 
 		glPopMatrix();
 

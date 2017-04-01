@@ -10,7 +10,7 @@ public:
 	cEnemy();
 	int ID;
 
-	void randomise();
+	void randomise(int xRange, int yRange, int zRange);
 	virtual void update(float elapsedTime);
 
 
@@ -18,7 +18,7 @@ public:
 
 private:
 	const float m_EnemyMinSpeed = 3.0f;
-	const float m_EnemyMaxSpeed = 10.0f;
+	const float m_EnemyMaxSpeed = 6.0f;
 	const float m_EnemySpeedAdjustment = 2.5f;
 
 };

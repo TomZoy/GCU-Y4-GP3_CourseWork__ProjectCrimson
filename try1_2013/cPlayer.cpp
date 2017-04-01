@@ -186,6 +186,15 @@ void cPlayer::update(float elapsedTime)
 			++enemyIterartor;
 		}
 	}
+
+	if (theEnemy.size() == 0)
+	{
+		allowBaloons = true;
+		enableBaloons();
+	}
+
+
+
 	
 	// Find out what direction we should be thrusting, using rotation.
 	glm::vec3 mdlVelocityAdd;
