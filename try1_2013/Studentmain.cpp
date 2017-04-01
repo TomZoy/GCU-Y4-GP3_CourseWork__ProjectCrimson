@@ -115,7 +115,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	backgroundTexture.createTexture("Images/gun-range.jpg");
 
 	cTexture pistolTexture;
-	pistolTexture.createTexture("Models/Crimson/pistol/textures/handgun_C.jpg");
+	pistolTexture.createTexture("Models/Crimson/pistol/textures/simpleGrey.jpg"); //handgun_C.jpg");
 
 	vector<cTexture*> targetTextureList;
 
@@ -148,14 +148,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cMaterial sunMaterial(lightColour4(0.0f, 0.0f, 0.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(0, 0, 0, 1.0f), 5.0f);
 
 	// Create Light
+	
 	cLight sunLight(GL_LIGHT0, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(0, 0, 20, 1),
 		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
-	cLight lfLight(GL_LIGHT1, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(30, 0, 100, 1),
+	cLight lfLight(GL_LIGHT1, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(30, 0, 50, 1),
 		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
-	cLight rfLight(GL_LIGHT2, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(-30, 0, 100, 1),
+	cLight rfLight(GL_LIGHT2, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(-30, 0, 50, 1),
 		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
-	cLight cbLight(GL_LIGHT3, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(0, 0, -100, 1),
-		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
+	//cLight cbLight(GL_LIGHT3, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(0, 0, -100, 1),
+	//		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
 	//Define Ambient light for scene
 	GLfloat g_Ambient[] = { 0.2, 0.2, 0.2, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, g_Ambient);
@@ -328,8 +329,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		sunLight.lightOn();
 		lfLight.lightOn();
-		rfLight.lightOn();
-		cbLight.lightOn();
+		//rfLight.lightOn();
+		//cbLight.lightOn();
 
 		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
 		{
@@ -362,7 +363,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		//baloon rendering
 		if (allowBaloons) //if all the targets are eliminated, triggered by cPlayer check
 		{
-			int baloonsOutOfGame = 0;
+			int baloonsOutOfGame = 0; //how many baloos are already off the screen
 			for (vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin(); baloonIterartor != theBaloonList.end(); ++baloonIterartor)
 			{
 				if ((*baloonIterartor)->isActive())

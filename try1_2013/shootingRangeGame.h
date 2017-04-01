@@ -10,6 +10,7 @@ extern vector<cEnemy*> theEnemy;
 extern vector<cBaloon*> theBaloonList;
 extern vector<cBullet*> theBullets;
 
+extern enum gameScreen_enum { intro, guide, game, gameOver };
 
 
 void enableBaloons();
