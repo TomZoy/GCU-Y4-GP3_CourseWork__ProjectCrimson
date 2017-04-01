@@ -172,13 +172,18 @@ void cPlayer::update(float elapsedTime)
 			if ((*baloonIterator)->SphereSphereCollision((*bulletIterartor)->getPosition(), (*bulletIterartor)->getMdlRadius()))
 			{
 				// if a collision set the bullet and target to false
-				(*baloonIterator)->setIsActive(false);
+
 				(*bulletIterartor)->setIsActive(false);
 				// play the explosion sound.
 				if (perfectCombo)
+				{
 					m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+				}
 				else
+				{
 					m_SoundMgr->getSnd("bounce")->playAudio(AL_TRUE);
+					(*baloonIterator)->setIsActive(false);
+				}
 
 				//add a point
 				targetHitCount++;
