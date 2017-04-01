@@ -36,7 +36,7 @@ public:
 	void attachInputMgr(cInputMgr* inputMgr);
 	cCamera *getCurrentCamera();
 	void add(LPCSTR,cCamera*);
-	void updateCamera(glm::vec3 position);
+	void updateCameraPos(LPCSTR cameraName, glm::vec3 position);
 
 
 };

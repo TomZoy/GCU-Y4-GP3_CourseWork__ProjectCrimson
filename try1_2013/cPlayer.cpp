@@ -92,8 +92,8 @@ void cPlayer::update(float elapsedTime)
 			glm::vec3 mdlBulletDirection;
 			mdlBulletDirection.x = 0.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
 			mdlBulletDirection.y = 0.0f;// (float)glm::cos(glm::radians(this->getRotation()));
-			mdlBulletDirection.z = -(float)glm::sin(glm::radians(this->getRotation()));
-			mdlBulletDirection *= -1;
+			mdlBulletDirection.z = 1.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
+			//mdlBulletDirection *= -1;
 
 			// Add new bullet sprite to the vector array
 			theBullets.push_back(new cBullet);
@@ -123,7 +123,7 @@ void cPlayer::update(float elapsedTime)
 
 	if (theBullets.size() > 1)
 	{
-		theCameraMgr->updateCamera(theBullets[1]->getPosition());
+		theCameraMgr->updateCameraPos("camera2", theBullets[1]->getPosition());
 	}
 
 	/*

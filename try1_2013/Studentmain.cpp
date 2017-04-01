@@ -201,7 +201,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	camera2.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera2.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
 	camera2.setTheCameraAspectRatio(windowWidth, windowHeight);
-	camera2.setTheProjectionMatrix(45.0f, camera2.getTheCameraAspectRatio(), 0.1f, 300.0f);
+	camera2.setTheProjectionMatrix(25.0f, camera2.getTheCameraAspectRatio(), 0.0f, 300.0f);
 	camera2.update();
 	theCameraMgr->add("camera2", &camera2);
 
@@ -288,7 +288,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		glLoadMatrixf((GLfloat*)&(theCameraMgr->getCurrentCamera())->getTheViewMatrix());//.getTheViewMatrix());
 
 
-		theStarField.renderFull(windowWidth, windowHeight);
+		//theStarField.renderFull(windowWidth, windowHeight);
 
 
 		sunMaterial.useMaterial();

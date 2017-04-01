@@ -74,10 +74,10 @@ void cCameraMgr::updateCamera()
 
 }
 
-void cCameraMgr::updateCamera(glm::vec3 position)
+void cCameraMgr::updateCameraPos(LPCSTR cameraName, glm::vec3 position)
 {
-	getCamera("camera2")->setTheCameraPos(glm::vec3(position.x + 1.0f, position.y + 1.0f, -position.z));
-	getCamera("camera2")->setTheCameraLookAt(glm::vec3(position.x, position.y-1.0f, -(position.z+15.0f)));
+	getCamera(cameraName)->setTheCameraPos(glm::vec3(position.x + 2.0f, position.y, (-position.z) + 3.0f));
+	getCamera(cameraName)->setTheCameraLookAt(glm::vec3(position.x - 1.0f, position.y, -(position.z + 5.0f)));
 
 }
 
