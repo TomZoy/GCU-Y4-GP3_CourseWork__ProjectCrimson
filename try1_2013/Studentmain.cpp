@@ -172,7 +172,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// load game sounds
 	LPCSTR BGM[7] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav", "Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav", "Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav", "Audio/BGM/wav/radio4_-.wav", "Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav", "Audio/BGM/wav/menu-music_Ziklibrenbib_Alpha_Brutal_Alpha_Brutal_Alpha_Brutal_-_06_-_EPIC_SONG.wav", "Audio/BGM/wav/Finish_line-07_Home_at_Last.wav" };
-	LPCSTR SFX[9] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav", "Audio/SFX/wav/bounce.wav", "Audio/SFX/wav/Mario-coin-sound.wav" };
+	LPCSTR SFX[10] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav", "Audio/SFX/wav/bounce.wav", "Audio/SFX/wav/Mario-coin-sound.wav", "Audio/SFX/wav/smb_1-up.wav" };
 
 	theSoundMgr->add("BGM1", BGM[0]);
 	theSoundMgr->add("BGM2", BGM[1]);
@@ -195,6 +195,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("emptyGunSFX", SFX[6]);
 	theSoundMgr->add("bounce", SFX[7]);
 	theSoundMgr->add("marioCoin", SFX[8]);
+	theSoundMgr->add("mario10Coin", SFX[9]);
 
 
 

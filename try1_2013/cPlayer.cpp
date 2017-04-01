@@ -171,13 +171,18 @@ void cPlayer::update(float elapsedTime)
 		{
 			if ((*baloonIterator)->SphereSphereCollision((*bulletIterartor)->getPosition(), (*bulletIterartor)->getMdlRadius()))
 			{
-				// if a collision set the bullet and target to false
+				//add a point
+				targetHitCount++;
 
+				// set the bullet to false
 				(*bulletIterartor)->setIsActive(false);
-				// play the explosion sound.
+
+				// play the apropriate sound.
 				if (perfectCombo)
 				{
 					m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+					if (targetHitCount % 10 == 0)
+						m_SoundMgr->getSnd("mario10Coin")->playAudio(AL_TRUE);
 				}
 				else
 				{
@@ -185,8 +190,6 @@ void cPlayer::update(float elapsedTime)
 					(*baloonIterator)->setIsActive(false);
 				}
 
-				//add a point
-				targetHitCount++;
 			}
 		}
 	}
