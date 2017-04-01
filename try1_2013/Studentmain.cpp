@@ -185,11 +185,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Create a camera
 	cCamera camera1;
-	camera1.setTheCameraPos(glm::vec3(0.0f, 0.0f, 8.0f));
+	camera1.setTheCameraPos(glm::vec3(0.0f, 1.0f, 8.0f));
 	camera1.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera1.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
 	camera1.setTheCameraAspectRatio(windowWidth, windowHeight);
-	camera1.setTheProjectionMatrix(0.0f, camera1.getTheCameraAspectRatio(), 0.1f, 500.0f);
+	camera1.setTheProjectionMatrix(120.0f, camera1.getTheCameraAspectRatio(), 0.1f, 500.0f);
 	camera1.update();
 	theCameraMgr->add("camera1", &camera1);
 
@@ -232,12 +232,16 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	targetMdl.loadModel("Models/Crimson/target/target2.obj", targetTexture);
 
 
-	for (int loop = 0; loop < 5; loop++)
+	for (int loop = 0; loop < 1; loop++)
 	{
 		theEnemy.push_back(new cEnemy);
 		//theEnemy[loop]->randomise();
+		theEnemy[loop]->setIsActive(true);
 		theEnemy[loop]->setMdlDimensions(targetMdl.getModelDimensions());
-		theEnemy[loop]->setScale(glm::vec3(5, 5, 5));
+		//theEnemy[loop]->setRotation(90);
+		theEnemy[loop]->setScale(glm::vec3(3, 3, 1));
+		theEnemy[loop]->setMdlRadius(3.0f);
+		theEnemy[loop]->setPosition(glm::vec3(4.0f, 0.0f, 50.0f)); //target should spawn -4f - 4f on both x and y
 	}
 
 
@@ -308,13 +312,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		
-		// target Y should be between 5.0f - 30.0f
 		//targetMdl.renderMdl(glm::vec3(0.0f, 0.5f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 		thePlayer.update(elapsedTime);
 		
-		/*
+		/* laser rendering
 		for (vector<cLaser*>::iterator laserIterartor = theTardisLasers.begin(); laserIterartor != theTardisLasers.end(); ++laserIterartor)
 		{
 			if ((*laserIterartor)->isActive())
@@ -335,7 +338,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		
 
 
-		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);//to_string(theEnemy.size()); // convert float to string
+		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
 		if (autoFollowBullet)
 		{
 			autoFollowBulletText = "Follow bullet ENABLED";

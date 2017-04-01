@@ -101,10 +101,12 @@ void cPlayer::update(float elapsedTime)
 			theBullets[numBullets]->setDirection(mdlBulletDirection);
 			theBullets[numBullets]->setRotation(90.0f);
 			theBullets[numBullets]->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
-			theBullets[numBullets]->setSpeed(1.0f);//80.0f);
+			theBullets[numBullets]->setSpeed(5.0f);//80.0f);
 			theBullets[numBullets]->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y + 0.5f, this->getPosition().z) + mdlBulletDirection);
 			theBullets[numBullets]->setIsActive(true);
 			theBullets[numBullets]->update(elapsedTime);
+			theBullets[numBullets]->setMdlRadius(0.5f);
+
 			// play the firing sound
 			m_SoundMgr->getSnd("fireGunSFX")->playAudio(AL_TRUE);
 
@@ -121,6 +123,7 @@ void cPlayer::update(float elapsedTime)
 
 	}
 
+	//update camera2 position to follow the last bullet
 	if (theBullets.size() > 0)
 	{
 		theCameraMgr->updateCameraPos("camera2", theBullets[theBullets.size() - 1]->getPosition());
@@ -138,11 +141,13 @@ void cPlayer::update(float elapsedTime)
 		{
 			if ((*enemyIterator)->SphereSphereCollision((*bulletIterartor)->getPosition(), (*bulletIterartor)->getMdlRadius()))
 			{
-				// if a collision set the bullet and spaceship to false
+				// if a collision set the bullet and target to false
 				(*enemyIterator)->setIsActive(false);
 				(*bulletIterartor)->setIsActive(false);
 				// play the explosion sound.
 				m_SoundMgr->getSnd("targetHitSFX")->playAudio(AL_TRUE);
+				theCameraMgr->updateCameraPos("camera2", glm::vec3(0.0f, 1.0f, 8.0f));
+				theCameraMgr->setCurrentCamera("camera1");
 			}
 		}
 	}
@@ -172,7 +177,7 @@ void cPlayer::update(float elapsedTime)
 			++enemyIterartor;
 		}
 	}
-
+	
 	// Find out what direction we should be thrusting, using rotation.
 	glm::vec3 mdlVelocityAdd;
 	mdlVelocityAdd.x = -(float)glm::sin(glm::radians(m_mdlRotation));  // Remember to adjust for radians
@@ -189,6 +194,7 @@ void cPlayer::update(float elapsedTime)
 
 	rotationAngle = 0;
 	translationZ = 0;
+	
 }
 
 cPlayer::~cPlayer()

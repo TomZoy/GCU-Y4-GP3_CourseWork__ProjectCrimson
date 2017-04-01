@@ -95,6 +95,10 @@ void cCameraMgr::add(LPCSTR cameraName, cCamera * camera)
 }
 
 
+void cCameraMgr::setCurrentCamera(LPCSTR cam)
+{
+	currentCamera = getCamera(cam);
+}
 
 cCamera* cCameraMgr::getCurrentCamera()
 {
