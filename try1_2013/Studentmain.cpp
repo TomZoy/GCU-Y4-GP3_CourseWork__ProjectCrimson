@@ -37,9 +37,9 @@ cCamera *activeCamera;
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
-				   HINSTANCE hPrevInstance,
-				   LPSTR cmdLine,
-				   int cmdShow)
+	HINSTANCE hPrevInstance,
+	LPSTR cmdLine,
+	int cmdShow)
 {
 
 	//Set our window settings
@@ -66,7 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Camera manager
 	static cCameraMgr* theCameraMgr = cCameraMgr::getInstance();
-	
+
 	//The example OpenGL code
 	windowOGL theOGLWnd;
 
@@ -161,7 +161,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, g_Ambient);
 
 	// load game fonts
-	LPCSTR gameFonts[3] = { "Fonts/digital-7.ttf", "Fonts/gunplay-rg.ttf","Fonts/doctor_who.ttf" };
+	LPCSTR gameFonts[3] = { "Fonts/digital-7.ttf", "Fonts/gunplay-rg.ttf", "Fonts/doctor_who.ttf" };
 
 	theFontMgr->addFont("SevenSeg", gameFonts[0], 55);
 	theFontMgr->addFont("Text", gameFonts[1], 50);
@@ -170,9 +170,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 	// load game sounds
-	LPCSTR gameSounds[3] = { "Audio/who10Edit.wav", "Audio/shot007.wav", "Audio/explosion2.wav" };
-	LPCSTR BGM[5] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav","Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav","Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav","Audio/BGM/wav/radio4_-.wav","Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav" };
-	LPCSTR SFX[7] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav" };
+	//LPCSTR gameSounds[3] = { "Audio/who10Edit.wav", "Audio/shot007.wav", "Audio/explosion2.wav" };
+	LPCSTR BGM[5] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav", "Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav", "Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav", "Audio/BGM/wav/radio4_-.wav", "Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav" };
+	LPCSTR SFX[9] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav", "Audio/SFX/wav/bounce.wav", "Audio/SFX/wav/Mario-coin-sound.wav" };
 
 	//theSoundMgr->add("Theme", gameSounds[0]);
 	//theSoundMgr->add("Shot", gameSounds[1]);
@@ -183,7 +183,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("BGM3", BGM[2]);
 	theSoundMgr->add("BGM4", BGM[3]);
 	theSoundMgr->add("BGM5", BGM[4]);
-
 
 	theSoundMgr->add("fireGunSFX", SFX[0]);
 	theSoundMgr->add("reloadSFX", SFX[1]);
@@ -196,11 +195,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("targetHitSFX", SFX[5]);
 	theSoundMgr->hitSoundList.push_back("targetHitSFX");
 	theSoundMgr->add("emptyGunSFX", SFX[6]);
+	theSoundMgr->add("bounce", SFX[7]);
+	theSoundMgr->add("marioCoin", SFX[8]);
 
 
-
-	theSoundMgr->add("Shot", gameSounds[1]);
-	theSoundMgr->add("Explosion", gameSounds[2]);
 
 	// Create a camera
 	cCamera camera1;
@@ -213,7 +211,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theCameraMgr->add("camera1", &camera1);
 
 	// Create another camera
-	cCamera camera2(windowWidth,windowHeight);
+	cCamera camera2(windowWidth, windowHeight);
 	camera2.setTheCameraPos(glm::vec3(0.0f, 0.0f, 75.0f));
 	camera2.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera2.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
@@ -270,10 +268,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theBaloonList[loop]->setScale(glm::vec3(2, 2, 1));
 		theBaloonList[loop]->setMdlRadius(2.0f);
 		theBaloonList[loop]->setPosition(glm::vec3(0.0f, -15.0f, 10.0f));
-		theBaloonList[loop]->setDirection(glm::vec3(0,1,0));
+		theBaloonList[loop]->setDirection(glm::vec3(0, 1, 0));
 		theBaloonList[loop]->ID = loop;
 		theBaloonList[loop]->setSpeed(0.01f);
-		theBaloonList[loop]->randomise(22,6,0);
+		theBaloonList[loop]->randomise(22, 6, 0);
 	}
 
 
@@ -288,7 +286,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	float tCount = 0.0f;
 	targetHitCount = 0;
 
-	
+
 	string outputMsg;
 	string targetHitText;
 	string autoFollowBulletText;
@@ -300,19 +298,19 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	std::vector<cBullet*>::iterator index2;
 
 
-   //This is the mainloop, we render frames until isRunning returns false
+	//This is the mainloop, we render frames until isRunning returns false
 	while (pgmWNDMgr->isWNDRunning())
 	{
 		pgmWNDMgr->processWNDEvents(); //Process any window events
 
 		//We get the time that passed since the last frame
 		float elapsedTime = pgmWNDMgr->getElapsedSeconds();
-		
+
 		theSoundMgr->updateSound();
 
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		theOGLWnd.initOGL(windowWidth,windowHeight);
+		theOGLWnd.initOGL(windowWidth, windowHeight);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -327,12 +325,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		sunMaterial.useMaterial();
 
-		
+
 		sunLight.lightOn();
 		lfLight.lightOn();
 		rfLight.lightOn();
 		cbLight.lightOn();
-		
+
 		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
 		{
 			if ((*enemyIterator)->isActive())
@@ -344,31 +342,41 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		thePlayer.update(elapsedTime);
-		
+
 		//debug model
-		//baloonMdl.renderMdl(glm::vec3(10.0f, -5.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		baloonMdl.renderMdl(glm::vec3(0.0f, 8.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 
-		
+
 		//bullet rendering
 		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
 		{
 			if ((*bulletIterartor)->isActive())
 			{
-				theBullet.renderMdl((*bulletIterartor)->getPosition(),(*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
+				theBullet.renderMdl((*bulletIterartor)->getPosition(), (*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
 				(*bulletIterartor)->update(elapsedTime);
 			}
 		}
-		
+
 		//baloon rendering
 		if (allowBaloons) //if all the targets are eliminated, triggered by cPlayer check
 		{
+			int baloonsOutOfGame = 0;
 			for (vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin(); baloonIterartor != theBaloonList.end(); ++baloonIterartor)
 			{
-				baloonMdl.renderMdl((*baloonIterartor)->getPosition(), (*baloonIterartor)->getRotation(), (*baloonIterartor)->getScale());
-				(*baloonIterartor)->update(elapsedTime);
+				if ((*baloonIterartor)->isActive())
+				{
+					baloonMdl.renderMdl((*baloonIterartor)->getPosition(), (*baloonIterartor)->getRotation(), (*baloonIterartor)->getScale());
+					(*baloonIterartor)->update(elapsedTime);
+					
+					if ((*baloonIterartor)->getPosition().y > 8.0f)
+						baloonsOutOfGame++;
+				}
 			}
+
+			if (baloonsOutOfGame == theBaloonList.size()) //if all the baloons are out the srceen, is game over
+				isGameOver = true;
 		}
 
 		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);

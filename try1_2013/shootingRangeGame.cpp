@@ -14,8 +14,11 @@ int magazineSize;
 bool firstMagazine;
 int bulletsLeft;
 bool autoFollowBullet;
-bool allowBaloons;
-bool perfectCombo;
+bool allowBaloons;	//allow baloons to fly, once all targets are gone
+bool perfectCombo; //perfect combo if all 6 targets are hit without reloading
+
+bool isGameOver; //it's game over when all the baloons are gone
+
 
 int targetHitCount;
 

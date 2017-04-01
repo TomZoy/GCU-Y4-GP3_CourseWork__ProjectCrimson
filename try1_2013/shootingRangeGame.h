@@ -23,5 +23,6 @@ extern bool autoFollowBullet;
 extern bool allowBaloons;
 extern bool perfectCombo;
 extern bool firstMagazine;
+extern bool isGameOver; //it's game over when all the baloons are gone
 
 #endif

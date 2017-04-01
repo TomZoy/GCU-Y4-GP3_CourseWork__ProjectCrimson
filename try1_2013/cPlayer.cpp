@@ -133,7 +133,7 @@ void cPlayer::update(float elapsedTime)
 
 	/*
 	==============================================================
-	| Check for collisions
+	| Check for target collisions
 	==============================================================
 	*/
 	for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
@@ -159,8 +159,35 @@ void cPlayer::update(float elapsedTime)
 		}
 	}
 
+	/*
+	==============================================================
+	| Check for baloon collisions
+	==============================================================
+	*/
+	for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
+	{
+		(*bulletIterartor)->update(elapsedTime);
+		for (vector<cBaloon*>::iterator baloonIterator = theBaloonList.begin(); baloonIterator != theBaloonList.end(); ++baloonIterator)
+		{
+			if ((*baloonIterator)->SphereSphereCollision((*bulletIterartor)->getPosition(), (*bulletIterartor)->getMdlRadius()))
+			{
+				// if a collision set the bullet and target to false
+				(*baloonIterator)->setIsActive(false);
+				(*bulletIterartor)->setIsActive(false);
+				// play the explosion sound.
+				if (perfectCombo)
+					m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+				else
+					m_SoundMgr->getSnd("bounce")->playAudio(AL_TRUE);
+
+				//add a point
+				targetHitCount++;
+			}
+		}
+	}
 
 
+	//removing used bullets
 	vector<cBullet*>::iterator bulletIterartor = theBullets.begin();
 	while (bulletIterartor != theBullets.end())
 	{
@@ -177,6 +204,7 @@ void cPlayer::update(float elapsedTime)
 		}
 	}
 
+	//removing the destroyed targets
 	vector<cEnemy*>::iterator enemyIterartor = theEnemy.begin();
 	while (enemyIterartor != theEnemy.end())
 	{
@@ -190,13 +218,34 @@ void cPlayer::update(float elapsedTime)
 		}
 	}
 
+	//removing the destroyed baloons
+	if (allowBaloons) //only check if baloons are already enabled in the first place
+	{
+		if (perfectCombo == false) //only remove hit baloons if player not did a perfect combo
+		{
+			vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin();
+			while (baloonIterartor != theBaloonList.end())
+			{
+				if ((*baloonIterartor)->isActive() == false)
+				{
+					baloonIterartor = theBaloonList.erase(baloonIterartor);
+				}
+				else
+				{
+					++baloonIterartor;
+				}
+			}
+		}
+	}
+
 	//check for perfect-combo
 	if (firstMagazine && theEnemy.size() == 0)
 	{
 		perfectCombo = true;
 	}
 
-	if (theEnemy.size() == 0)
+	//enable the baloons once all targets are gone
+	if (theEnemy.size() == 0 && allowBaloons == false)
 	{
 		allowBaloons = true;
 		enableBaloons();
