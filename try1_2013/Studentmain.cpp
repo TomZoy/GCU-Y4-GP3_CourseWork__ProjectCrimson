@@ -243,7 +243,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 //RESET GAME SHOULD START FROM HERE...
 
 
-
+	gameScreen = intro;
 	allowBaloons = false;
 	perfectCombo = false;
 

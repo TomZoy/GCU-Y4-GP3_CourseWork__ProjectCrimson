@@ -11,6 +11,7 @@ extern vector<cBaloon*> theBaloonList;
 extern vector<cBullet*> theBullets;
 
 extern enum gameScreen_enum { intro, guide, game, gameOver };
+extern gameScreen_enum gameScreen;
 
 
 void enableBaloons();
