@@ -49,6 +49,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 	allowBaloons = false;
+	perfectCombo = false;
 
 
 	//This is our window
@@ -342,12 +343,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		}
 
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+		thePlayer.update(elapsedTime);
 		
 		//debug model
 		//baloonMdl.renderMdl(glm::vec3(10.0f, -5.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
-		thePlayer.update(elapsedTime);
+
 		
 		//bullet rendering
 		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
@@ -359,8 +361,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 		}
 		
-		//abloon rendering
-		if (allowBaloons)
+		//baloon rendering
+		if (allowBaloons) //if all the targets are eliminated, triggered by cPlayer check
 		{
 			for (vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin(); baloonIterartor != theBaloonList.end(); ++baloonIterartor)
 			{
@@ -391,7 +393,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		theFontMgr->getFont("TextSmall")->printText("Targets hit: ", FTPoint(10, 130, 0.0f), textColor);
 		theFontMgr->getFont("SevenSeg")->printText(targetHitText.c_str(), FTPoint(160, 130, 0.0f), textColor);
-		//if (perfectCombo)
+		if (perfectCombo)
 			theFontMgr->getFont("SevenSeg")->printText("PERFECT COMBO!", FTPoint(240, 130, 0.0f), textColor);
 
 		glPopMatrix();

@@ -21,5 +21,7 @@ extern int targetHitCount;
 extern bool autoFollowBullet;
 
 extern bool allowBaloons;
+extern bool perfectCombo;
+extern bool firstMagazine;
 
 #endif

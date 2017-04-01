@@ -8,7 +8,7 @@ cPlayer::cPlayer() : cModel()
 	bulletsLeft = magazineSize;
 
 	autoFollowBullet = true;
-
+	firstMagazine = true;
 
 }
 
@@ -60,6 +60,7 @@ void cPlayer::update(float elapsedTime)
 	{
 		bulletsLeft = magazineSize;
 		m_SoundMgr->getSnd("reloadSFX")->playAudio(AL_TRUE);
+		firstMagazine = false;
 	}
 
 	if (m_InputMgr->isKeyDown(VK_SPACE))
@@ -158,6 +159,8 @@ void cPlayer::update(float elapsedTime)
 		}
 	}
 
+
+
 	vector<cBullet*>::iterator bulletIterartor = theBullets.begin();
 	while (bulletIterartor != theBullets.end())
 	{
@@ -185,6 +188,12 @@ void cPlayer::update(float elapsedTime)
 		{
 			++enemyIterartor;
 		}
+	}
+
+	//check for perfect-combo
+	if (firstMagazine && theEnemy.size() == 0)
+	{
+		perfectCombo = true;
 	}
 
 	if (theEnemy.size() == 0)
