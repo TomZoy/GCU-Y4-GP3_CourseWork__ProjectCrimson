@@ -10,6 +10,8 @@ extern vector<cBullet*> theBullets;
 
 extern int magazineSize;
 extern int bulletsLeft;
+extern int targetHitCount;
+
 extern bool autoFollowBullet;
 
 #endif

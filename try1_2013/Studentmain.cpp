@@ -254,9 +254,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->attachInputMgr(theInputMgr);
 
 	float tCount = 0.0f;
+	targetHitCount = 0;
 
 	
 	string outputMsg;
+	string targetHitText;
 	string autoFollowBulletText;
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
 	//std::vector<cLaser*> laserList;
@@ -264,8 +266,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	std::vector<cBullet*> bulletList;
 	std::vector<cBullet*>::iterator index2;
-
-
 
 
    //This is the mainloop, we render frames until isRunning returns false
@@ -339,6 +339,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
+		targetHitText = to_string(targetHitCount);
 		if (autoFollowBullet)
 		{
 			autoFollowBulletText = "Follow bullet ENABLED";
@@ -357,9 +358,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theFontMgr->getFont("Text")->printText("Bullets: ", FTPoint(690, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(900, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 		theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+		theFontMgr->getFont("TextSmall")->printText("Targets hit: ", FTPoint(10, 130, 0.0f), textColor);
+		theFontMgr->getFont("SevenSeg")->printText(targetHitText.c_str(), FTPoint(160, 130, 0.0f), textColor);
+
 		glPopMatrix();
 
-		//glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHTING);
 		pgmWNDMgr->swapBuffers();
 
 		tCount += elapsedTime;
