@@ -92,7 +92,6 @@
     <ClCompile Include="GameConstants.cpp" />
     <ClCompile Include="shootingRangeGame.cpp" />
     <ClCompile Include="Studentmain.cpp" />
-    <ClCompile Include="tardisWarsGame.cpp" />
     <ClCompile Include="windowOGL.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +123,6 @@
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="shootingRangeGame.h" />
-    <ClInclude Include="tardisWarsGame.h" />
     <ClInclude Include="wglext.h" />
     <ClInclude Include="windowOGL.h" />
   </ItemGroup>

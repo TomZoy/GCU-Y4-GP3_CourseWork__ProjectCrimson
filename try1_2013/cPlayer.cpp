@@ -121,9 +121,9 @@ void cPlayer::update(float elapsedTime)
 
 	}
 
-	if (theBullets.size() > 1)
+	if (theBullets.size() > 0)
 	{
-		theCameraMgr->updateCameraPos("camera2", theBullets[1]->getPosition());
+		theCameraMgr->updateCameraPos("camera2", theBullets[theBullets.size() - 1]->getPosition());
 	}
 
 	/*

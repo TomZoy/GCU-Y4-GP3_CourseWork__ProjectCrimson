@@ -2,10 +2,10 @@
 #define _SHOOTINGRANGEGAME_H
 
 // ShootingRange Game headers
-//#include "cEnemy.h"
+#include "cEnemy.h"
 #include "cBullet.h"
 
-//extern vector<cEnemy*> theEnemy;
+extern vector<cEnemy*> theEnemy;
 extern vector<cBullet*> theBullets;
 
 extern int magazineSize;

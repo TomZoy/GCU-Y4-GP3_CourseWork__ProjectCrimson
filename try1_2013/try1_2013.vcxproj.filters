@@ -87,9 +87,6 @@
     <ClCompile Include="Studentmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tardisWarsGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="windowOGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -174,9 +171,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameConstants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tardisWarsGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wglext.h">

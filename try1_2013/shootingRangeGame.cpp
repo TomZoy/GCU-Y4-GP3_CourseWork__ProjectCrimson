@@ -6,7 +6,7 @@ ShootingRangeGame.cpp
 
 #include "shootingRangeGame.h"
 
-//vector<cEnemy*> theEnemy;
+vector<cEnemy*> theEnemy;
 vector<cBullet*> theBullets;
 
 int magazineSize;

@@ -25,7 +25,7 @@
 #include "cPlayer.h"
 #include "cEnemy.h"
 #include "cLaser.h"
-#include "tardisWarsGame.h"
+
 
 #include "cBackground.h"
 #include "cCameraMgr.h"
@@ -146,7 +146,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, g_Ambient);
 
 	// load game fonts
-	// Load Fonts
 	LPCSTR gameFonts[3] = { "Fonts/digital-7.ttf", "Fonts/gunplay-rg.ttf","Fonts/doctor_who.ttf" };
 
 	theFontMgr->addFont("SevenSeg", gameFonts[0], 55);
@@ -156,7 +155,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 	// load game sounds
-	// Load Sound
 	LPCSTR gameSounds[3] = { "Audio/who10Edit.wav", "Audio/shot007.wav", "Audio/explosion2.wav" };
 	LPCSTR BGM[5] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav","Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav","Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav","Audio/BGM/wav/radio4_-.wav","Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav" };
 	LPCSTR SFX[7] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav" };
@@ -311,7 +309,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		
 		// target Y should be between 5.0f - 30.0f
-		//targetMdl.renderMdl(glm::vec3(0.0f, 0.0f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//targetMdl.renderMdl(glm::vec3(0.0f, 0.5f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 		thePlayer.update(elapsedTime);

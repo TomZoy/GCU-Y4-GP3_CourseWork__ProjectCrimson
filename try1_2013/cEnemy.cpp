@@ -7,6 +7,7 @@ cEnemy::cEnemy() : cModel()
 
 void cEnemy::randomise()
 {
+	/*
 	if (rand() % 2 == 0)
 	{
 		cModel::m_mdlPosition.x = -PLAYFIELDX;
@@ -22,10 +23,12 @@ void cEnemy::randomise()
 	//cModel::m_mdlDirection.z = (float)glm::cos(cModel::m_mdlRotation);
 	cModel::m_mdlSpeed = m_EnemyMinSpeed + rand() / (float)RAND_MAX * m_EnemyMaxSpeed;
 	cModel::m_IsActive = true;
+	*/
 }
 
 void cEnemy::update(float elapsedTime)
 {
+	/*
 	cModel::m_mdlPosition += cModel::m_mdlDirection * cModel::m_mdlSpeed * elapsedTime;
 	if (cModel::m_mdlPosition.x > PLAYFIELDX)
 		cModel::m_mdlPosition.x -= 2 * PLAYFIELDX;
@@ -35,6 +38,7 @@ void cEnemy::update(float elapsedTime)
 		cModel::m_mdlPosition.z -= 2 * PLAYFIELDZ;
 	if (cModel::m_mdlPosition.z < -PLAYFIELDZ)
 		cModel::m_mdlPosition.z += 2 * PLAYFIELDZ;
+		*/
 }
 
 cEnemy::~cEnemy()
