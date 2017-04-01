@@ -8,9 +8,11 @@ class cEnemy : public cModel
 {
 public:
 	cEnemy();
+	int ID;
 
 	void randomise();
 	virtual void update(float elapsedTime);
+
 
 	~cEnemy();
 

@@ -9,6 +9,11 @@ void cBullet::update(float elapsedTime)
 {
 	cBullet::m_mdlPosition += cBullet::m_mdlDirection * cBullet::m_mdlSpeed * elapsedTime;
 
+	
+	if (cModel::m_mdlPosition.z > 60)
+	{
+		cModel::m_IsActive = false;
+	}
 	/*
 	if (cModel::m_mdlPosition.x > PLAYFIELDX ||
 		cModel::m_mdlPosition.x < -PLAYFIELDX ||

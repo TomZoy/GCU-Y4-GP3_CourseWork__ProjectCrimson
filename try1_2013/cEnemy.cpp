@@ -5,8 +5,39 @@ cEnemy::cEnemy() : cModel()
 	
 }
 
+
+//void cEnemy::setModel(cModelLoader model)
+//{
+//	model = model;
+//	this->setMdlDimensions(model.getModelDimensions());
+//	//theEnemy[loop]->setMdlDimensions(targetModelList.front()->getModelDimensions());
+//}
+//
+//void cEnemy::render()
+//{
+//	this->model.renderMdl(this->getPosition(), this->getRotation(), this->getScale());
+//	//renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
+//}
+
+
+
+
 void cEnemy::randomise()
 {
+	//target should spawn -4f - 4f on both x and y
+
+	int targetX = (rand() % 7) - 6;
+	cModel::m_mdlPosition.x = targetX;
+
+	//int targetY = (rand() % 3) - 2;
+	//cModel::m_mdlPosition.y = targetY;
+
+	int targetZ = (rand() % 6) - 5;
+	cModel::m_mdlPosition.z = 50 + targetZ;
+
+	//	cModel::m_mdlSpeed = m_EnemyMinSpeed + rand() / (float)RAND_MAX * m_EnemyMaxSpeed;
+
+
 	/*
 	if (rand() % 2 == 0)
 	{

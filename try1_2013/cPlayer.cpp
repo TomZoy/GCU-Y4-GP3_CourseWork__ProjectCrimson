@@ -149,7 +149,7 @@ void cPlayer::update(float elapsedTime)
 				m_SoundMgr->getSnd("targetHitSFX")->playAudio(AL_TRUE);
 
 				//reset the follow-camera
-				theCameraMgr->updateCameraPos("camera2", glm::vec3(0.0f, 1.0f, 8.0f));
+				theCameraMgr->updateCameraPos("camera2", theCameraMgr->getCamera("camera1")->getTheCameraPos());// glm::vec3(0.0f, 1.0f, 8.0f));
 				theCameraMgr->setCurrentCamera("camera1");
 
 				//add a point
@@ -164,6 +164,9 @@ void cPlayer::update(float elapsedTime)
 		if ((*bulletIterartor)->isActive() == false)
 		{
 			bulletIterartor = theBullets.erase(bulletIterartor);
+			//reset the follow-camera
+			theCameraMgr->updateCameraPos("camera2", theCameraMgr->getCamera("camera1")->getTheCameraPos());//  glm::vec3(0.0f, 1.0f, 8.0f));
+			theCameraMgr->setCurrentCamera("camera1");
 		}
 		else
 		{
