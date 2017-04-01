@@ -22,6 +22,7 @@ private:
 	ALCdevice *m_OALDevice;
 	cInputMgr* m_InputMgr;
 
+
 protected:
 	cSoundMgr();
 	~cSoundMgr();
@@ -39,7 +40,8 @@ public:
 	static cSoundMgr* getInstance();
 	void attachInputMgr(cInputMgr* inputMgr);
 	void updateSound();
-
+	LPCSTR getHitSnd();
+	vector<LPCSTR> hitSoundList;
 
 };
 #endif

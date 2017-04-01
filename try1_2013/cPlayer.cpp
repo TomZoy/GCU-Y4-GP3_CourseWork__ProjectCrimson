@@ -146,7 +146,7 @@ void cPlayer::update(float elapsedTime)
 				(*enemyIterator)->setIsActive(false);
 				(*bulletIterartor)->setIsActive(false);
 				// play the explosion sound.
-				m_SoundMgr->getSnd("targetHitSFX")->playAudio(AL_TRUE);
+				m_SoundMgr->getSnd(m_SoundMgr->getHitSnd())->playAudio(AL_TRUE); //"targetHitSFX")->playAudio(AL_TRUE);
 
 				//reset the follow-camera
 				theCameraMgr->updateCameraPos("camera2", theCameraMgr->getCamera("camera1")->getTheCameraPos());// glm::vec3(0.0f, 1.0f, 8.0f));

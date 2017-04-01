@@ -95,11 +95,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		return 1;
 	}
 
-	// Create Texture map
-	cTexture tardisTexture;
-	tardisTexture.createTexture("Models/tardis.png");
-	cTexture spaceShipTexture;
-	spaceShipTexture.createTexture("Models/SpaceShip/sh3.jpg");
+	// Create Texture maps
+	//cTexture tardisTexture;
+	//tardisTexture.createTexture("Models/tardis.png");
+	//cTexture spaceShipTexture;
+	//spaceShipTexture.createTexture("Models/SpaceShip/sh3.jpg");
 
 
 	cTexture laserTexture;
@@ -108,21 +108,39 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cTexture bulletTexture;
 	bulletTexture.createTexture("Models/Crimson/bullet_rife/Brass.jpg");
 
-	cTexture starTexture;
-	starTexture.createTexture("Images/star.png");
+	//cTexture starTexture;
+	//starTexture.createTexture("Images/star.png");
 
-
+	cTexture hitTexture;
+	hitTexture.createTexture("Models/Crimson/hitText.jpg");
 
 	cTexture backgroundTexture;
 	backgroundTexture.createTexture("Images/gun-range.jpg");
 
-	cTexture targetTexture;
-	targetTexture.createTexture("Models/Crimson/target/textures/texture.jpg");
-
-	cTexture rifleTexture;
-	rifleTexture.createTexture("Models/Crimson/rifle/texture/steel.jpg");
 	cTexture pistolTexture;
 	pistolTexture.createTexture("Models/Crimson/pistol/textures/handgun_C.jpg");
+
+	vector<cTexture*> targetTextureList;
+
+	cTexture targetTexture1;
+	targetTexture1.createTexture("Models/Crimson/target/textures/texture1.jpg");
+	targetTextureList.push_back(&targetTexture1);
+	cTexture targetTexture2;
+	targetTexture2.createTexture("Models/Crimson/target/textures/texture2.jpg");
+	targetTextureList.push_back(&targetTexture2);
+	cTexture targetTexture3;
+	targetTexture3.createTexture("Models/Crimson/target/textures/texture3.jpg");
+	targetTextureList.push_back(&targetTexture3);
+	cTexture targetTexture4;
+	targetTexture4.createTexture("Models/Crimson/target/textures/texture4.jpg");
+	targetTextureList.push_back(&targetTexture4);
+	cTexture targetTexture5;
+	targetTexture5.createTexture("Models/Crimson/target/textures/texture5.jpg");
+	targetTextureList.push_back(&targetTexture5);
+	cTexture targetTexture6;
+	targetTexture1.createTexture("Models/Crimson/target/textures/texture6.jpg");
+	targetTextureList.push_back(&targetTexture6);
+
 
 
 
@@ -173,9 +191,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("fireGunSFX", SFX[0]);
 	theSoundMgr->add("reloadSFX", SFX[1]);
 	theSoundMgr->add("ricochet1SFX", SFX[2]);
+	theSoundMgr->hitSoundList.push_back("ricochet1SFX");
 	theSoundMgr->add("ricochet2SFX", SFX[3]);
+	theSoundMgr->hitSoundList.push_back("ricochet2SFX");
 	theSoundMgr->add("ricochet3SFX", SFX[4]);
+	theSoundMgr->hitSoundList.push_back("ricochet3SFX");
 	theSoundMgr->add("targetHitSFX", SFX[5]);
+	theSoundMgr->hitSoundList.push_back("targetHitSFX");
 	theSoundMgr->add("emptyGunSFX", SFX[6]);
 
 
@@ -185,7 +207,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Create a camera
 	cCamera camera1;
-	camera1.setTheCameraPos(glm::vec3(0.0f, 1.0f, 8.0f));
+	camera1.setTheCameraPos(glm::vec3(0.0f, 3.0f, 15.0f));
 	camera1.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	camera1.setTheCameraUpVector(glm::vec3(0.0f, 1.0f, 0.0f)); // pointing upwards in world space
 	camera1.setTheCameraAspectRatio(windowWidth, windowHeight);
@@ -207,8 +229,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	// Model
-	//cModelLoader tardisMdl;
-	//tardisMdl.loadModel("Models/tardis1314.obj", tardisTexture); // Player
+	cModelLoader hitMdl;
+	hitMdl.loadModel("Models/Crimson/baloonZ.obj", hitTexture);
 
 	//// riffle
 	//cModelLoader rifleMdl;
@@ -216,32 +238,40 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//// pistol
 	cModelLoader pistolMdl;
-	pistolMdl.loadModel("Models/Crimson/pistol/Handgun_obj.obj", rifleTexture); // Player
+	pistolMdl.loadModel("Models/Crimson/pistol/Handgun_obj.obj", pistolTexture); // Player
 
 
 	//cModelLoader spaceShipMdl;
 	//spaceShipMdl.loadModel("Models/SpaceShip/Sample_Ship.obj", spaceShipTexture); // Enemy
 	
-	cModelLoader theLaser;
-	theLaser.loadModel("Models/laser.obj", laserTexture);
+//	cModelLoader theLaser;
+//	theLaser.loadModel("Models/laser.obj", laserTexture);
 
 	cModelLoader theBullet;
 	theBullet.loadModel("Models/Crimson/bullet_rife/50_Barrett.obj", bulletTexture);
 
+	vector<cModelLoader*> targetModelList;
+	for (unsigned i = 0; i < targetTextureList.size(); i++)
+	{
+		targetModelList.push_back(new cModelLoader);
+		targetModelList[i]->loadModel("Models/Crimson/target/target2.obj", *targetTextureList[i]);
+	}
+
 	cModelLoader targetMdl;
-	targetMdl.loadModel("Models/Crimson/target/target2.obj", targetTexture);
+	targetMdl.loadModel("Models/Crimson/target/target2.obj", *targetTextureList.front());
 
-
-	for (int loop = 0; loop < 1; loop++)
+	//enemy spawn loop
+	for (int loop = 0; loop < 6; loop++)
 	{
 		theEnemy.push_back(new cEnemy);
-		//theEnemy[loop]->randomise();
+
 		theEnemy[loop]->setIsActive(true);
-		theEnemy[loop]->setMdlDimensions(targetMdl.getModelDimensions());
-		//theEnemy[loop]->setRotation(90);
-		theEnemy[loop]->setScale(glm::vec3(3, 3, 1));
-		theEnemy[loop]->setMdlRadius(3.0f);
-		theEnemy[loop]->setPosition(glm::vec3(4.0f, 0.0f, 50.0f)); //target should spawn -4f - 4f on both x and y
+		theEnemy[loop]->setScale(glm::vec3(2, 2, 1));
+		theEnemy[loop]->setMdlRadius(2.0f);
+		theEnemy[loop]->setPosition(glm::vec3(0.0f, 0.0f, 50.0f));
+
+		theEnemy[loop]->ID = loop;
+		theEnemy[loop]->randomise();
 	}
 
 
@@ -305,14 +335,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		{
 			if ((*enemyIterator)->isActive())
 			{
-				targetMdl.renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
+				targetModelList.at((*enemyIterator)->ID)->renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
 				(*enemyIterator)->update(elapsedTime);
 			}
 		}
 
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		
-		//targetMdl.renderMdl(glm::vec3(0.0f, 0.5f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		targetMdl.renderMdl(glm::vec3(100.0f, 0.5f, 5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 		thePlayer.update(elapsedTime);

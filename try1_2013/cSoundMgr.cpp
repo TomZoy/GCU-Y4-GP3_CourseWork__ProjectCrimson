@@ -77,6 +77,19 @@ cSound* cSoundMgr::getSnd(LPCSTR sndName)
 	}
 }
 
+
+LPCSTR cSoundMgr::getHitSnd()
+{
+	int size = hitSoundList.size();
+	if (rand() % 2 == 0)
+		return hitSoundList[(rand() % size)];
+	else
+		return hitSoundList[(size-1)];
+}
+
+
+
+
 void cSoundMgr::deleteSnd()
 {
 	for (map<LPCSTR, cSound*>::iterator snd = gameSnds.begin(); snd != gameSnds.end(); ++snd)
