@@ -173,6 +173,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cLight rfLight(GL_LIGHT2, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(-30, 0, 50, 1),
 		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
 
+	cLight introLight(GL_LIGHT3, lightColour4(0, 0, 0, 1), lightColour4(1, 1, 1, 1), lightColour4(1, 1, 1, 1), glm::vec4(0, -2, -5, 1),
+		glm::vec3(0.0, 0.0, 1.0), 0.0f, 180.0f, 1.0f, 0.0f, 0.0f);
+
 
 	//Define Ambient light for scene
 	GLfloat g_Ambient[] = { 0.2, 0.2, 0.2, 1.0 };
@@ -309,6 +312,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	string debugText;
 	LPCSTR proTip;
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
+	float introModelRotAngle = 0.0f;
 
 	std::vector<cBullet*> bulletList;
 	std::vector<cBullet*>::iterator index2;
@@ -396,6 +400,21 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		switch (gameScreen)
 		{
 		case intro:
+
+			sunMaterial.useMaterial();
+
+			//turn the light on
+			sunLight.lightOn();
+			lfLight.lightOn();
+			introLight.lightOn();
+
+			//rotating dragon model:
+
+			boss1Mdl.renderMdl(glm::vec3(0.0f, -2.0f, 5.0f), introModelRotAngle, glm::vec3(5.0f, 5.0f, 5.0f));
+			introModelRotAngle += 20 * elapsedTime;
+
+
+			glDisable(GL_LIGHTING);
 
 			glPushMatrix();
 			theOGLWnd.setOrtho2D(windowWidth, windowHeight);
