@@ -295,7 +295,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = intro;
+	gameScreen = gameOver;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;
@@ -363,7 +363,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// **-- This is the mainloop, we render frames until isRunning returns false --**
 
-	while (pgmWNDMgr->isWNDRunning())
+	while (pgmWNDMgr->isWNDRunning() && gameScreen != quitGame)
 	{
 		//Process any window events
 		pgmWNDMgr->processWNDEvents();
@@ -445,7 +445,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 			theFontMgr->getFont("TextSmall")->printText("press space key...", FTPoint(450, 730, 0.0f), textColor);
-
 			glPopMatrix();
 
 			pgmWNDMgr->swapBuffers();
@@ -456,21 +455,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			break;
 		case game:
 
-
-
 			sunMaterial.useMaterial();
 
 			//turn the light on
 			sunLight.lightOn();
 			lfLight.lightOn();
 			rfLight.lightOn();
-
-
-
-
-
-
-
 
 			//render the player
 			pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
@@ -528,7 +518,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 
 
-			//render the UI
+			//render the game UI
 			outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
 			targetHitText = to_string(targetHitCount);
 			if (autoFollowBullet)
@@ -567,7 +557,35 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 		case gameOver:
+
+			glPushMatrix();
+			theOGLWnd.setOrtho2D(windowWidth, windowHeight);
+
+
+
+			targetHitText = to_string(targetHitCount);
+
+			theFontMgr->getFont("TextHuge")->printText("Crimson Shooting", FTPoint(140, 120, 0.0f), textColor);
+			theFontMgr->getFont("Text")->printText("1988", FTPoint(450, 190, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+			theFontMgr->getFont("TextSmall")->printText("press space key to quit...", FTPoint(430, 730, 0.0f), textColor);
+
+			theFontMgr->getFont("TextSmall")->printText("Final Score: ", FTPoint(250, 350, 0.0f), textColor);
+			theFontMgr->getFont("Text")->printText(targetHitText.c_str(), FTPoint(650, 350, 0.0f), textColor);
+
+
+
+			glPopMatrix();
+
+			pgmWNDMgr->swapBuffers();
+
+
+
 			break;
+
+		case quitGame:
+
+			break;
+
 		default:
 			break;
 		}

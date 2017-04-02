@@ -72,7 +72,10 @@ void cSceneMgr::takeInput()
 
 		break;
 	case gameOver:
-
+		if (m_InputMgr->isKeyDown(VK_SPACE))
+		{
+			gameScreen = quitGame;
+		}
 		break;
 	default:
 		break;
