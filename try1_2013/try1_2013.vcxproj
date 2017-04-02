@@ -82,6 +82,7 @@
     <ClCompile Include="cModelLoader.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cPyramid.cpp" />
+    <ClCompile Include="cSceneMgr.cpp" />
     <ClCompile Include="cShapes.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="cModelLoader.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cPyramid.h" />
+    <ClInclude Include="cSceneMgr.h" />
     <ClInclude Include="cShapes.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />

@@ -113,12 +113,7 @@ void cSoundMgr::updateSound()
 		break;
 	case game:
 
-		if (firstCall)
-		{
-			currentSnd = getSnd("BGM1");
-			currentSnd->playAudio(AL_LOOPING);
-			firstCall = false;
-		};
+		switchSound("BGM1");
 
 		if (m_InputMgr->isKeyDown(VK_NUMPAD1))
 		{

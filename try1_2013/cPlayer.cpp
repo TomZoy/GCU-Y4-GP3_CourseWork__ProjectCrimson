@@ -1,6 +1,7 @@
 #include "cPlayer.h"
 #include "cCameraMgr.h"
 #include "shootingRangeGame.h"
+#include "GameConstants.h"
 
 cPlayer::cPlayer() : cModel()
 {
@@ -25,14 +26,6 @@ void cPlayer::attachCameraMgr(cCameraMgr* cameraMgr)
 
 void cPlayer::update(float elapsedTime)
 {
-	//if (m_InputMgr->isKeyDown('W'))
-	//{
-	//	translationX += 1.0f;
-	//}
-	//if (m_InputMgr->isKeyDown('S'))
-	//{
-	//	translationX -= 1.0f;
-	//}
 
 	if (m_InputMgr->isKeyDown('F'))
 	{
