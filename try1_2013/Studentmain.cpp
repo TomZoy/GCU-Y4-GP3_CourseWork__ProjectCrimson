@@ -103,8 +103,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	cTexture bulletTexture;
 	bulletTexture.createTexture("Models/Crimson/bullet_rife/Brass.jpg");
 
-	//cTexture starTexture;
-	//starTexture.createTexture("Images/star.png");
+	cTexture starTexture;
+	starTexture.createTexture("Images/playerDamage.png");
 
 	cTexture hitTexture;
 	hitTexture.createTexture("Models/Crimson/hitText.jpg");
@@ -152,10 +152,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 
-
-
-	// the starfield
-	cStarfield theStarField(backgroundTexture.getTexture(), glm::vec3(5.0f, 5.0f, 5.0f));
+	// Player HIT effect!
+	cStarfield theStarField(starTexture.getTexture(), glm::vec3(5.0f, 5.0f, 0.0f));
 
 
 
@@ -597,6 +595,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			}
 
 			sunMaterial.useMaterial();
+
+
+			// render this for Player HIT effect!
+			//theStarField.renderFull(windowWidth, windowHeight);
 
 			//turn the light on
 			sunLight.lightOn();

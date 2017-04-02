@@ -96,46 +96,78 @@ void cStarfield::initialise(GLint theTextureID, glm::vec3 theFieldVolume)
 
 }
 
+//generate the PlayerHit effect
 void cStarfield::generateStarField()
 {
+	float rowHeight = 0.0f;
 
+	//middle ROW
+	m_StarPos.x = 0.0f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = -0.275f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = -0.55f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = 0.276f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = 0.551f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	//top ROW
+
+	rowHeight = 0.276f;
 
 	m_StarPos.x = 0.0f;
-	m_StarPos.y = 0.0f;
-	m_StarPos.z = -1.0f;
-	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, m_StarPos.z));
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
 
+	m_StarPos.x = -0.275f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
 
+	m_StarPos.x = -0.55f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
 
-	// generate starfield
-	/*
-	for (int loop = 0; loop < m_NumStars; loop++)
-	{
-		if (rand() % 3 == 0)
-		{
-			m_StarPos.x = -(rand() % (int)m_FieldVolume.x);
-		}
-		else
-		{
-			m_StarPos.x = (rand() % (int)m_FieldVolume.x);
-		}
-		if (rand() % 3 == 1)
-		{
-			m_StarPos.y = -(rand() % (int)m_FieldVolume.y);
-		}
-		else
-		{
-			m_StarPos.y = (rand() % (int)m_FieldVolume.y);
-		}
-		if (rand() % 3 == 2)
-		{
-			m_StarPos.z = -(rand() % (int)m_FieldVolume.z);
-		}
-		else
-		{
-			m_StarPos.z = (rand() % (int)m_FieldVolume.z);
-		}
-		m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, m_StarPos.z));
-	}
-	*/
+	m_StarPos.x = 0.276f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = 0.551f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	//bottom ROW
+
+	rowHeight = -0.275f;
+
+	m_StarPos.x = 0.0f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = -0.275f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = -0.55f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = 0.276f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
+	m_StarPos.x = 0.551f;
+	m_StarPos.y = rowHeight;
+	m_StarField.push_back(glm::vec3(m_StarPos.x, m_StarPos.y, -1.0f));
+
 }
