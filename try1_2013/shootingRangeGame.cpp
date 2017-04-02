@@ -22,10 +22,6 @@ float fastBulletSpeed = 50.0f;
 float currentBulletSpeed = 5.0f;
 
 
-
-bool isGameOver; //it's game over when all the baloons are gone
-
-
 int targetHitCount; //aka points
 
 

@@ -296,7 +296,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = boss;
+	gameScreen = intro;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;
@@ -307,6 +307,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	string targetHitText;
 	string autoFollowBulletText;
 	string debugText;
+	LPCSTR proTip;
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
 
 	std::vector<cBullet*> bulletList;
@@ -404,7 +405,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 			theFontMgr->getFont("TextHuge")->printText("Crimson Shooting", FTPoint(140, 120, 0.0f), textColor);
 			theFontMgr->getFont("Text")->printText("1988", FTPoint(450, 190, 0.0f), textColor); // uses c_str to convert string to LPCSTR
-			theFontMgr->getFont("TextSmall")->printText("press space key...", FTPoint(450, 730, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("press N key...", FTPoint(450, 730, 0.0f), textColor);
 
 			glPopMatrix();
 
@@ -446,7 +447,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 
-			theFontMgr->getFont("TextSmall")->printText("press space key...", FTPoint(450, 730, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("press N key...", FTPoint(450, 730, 0.0f), textColor);
 			glPopMatrix();
 
 			pgmWNDMgr->swapBuffers();
@@ -516,8 +517,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 					}
 				}
 
-				if (baloonsOutOfGame == theBaloonList.size()) //if all the baloons are out the srceen, is game over
-					isGameOver = true;
+				if (baloonsOutOfGame == theBaloonList.size()) //if all the baloons are out the srceen, is normal-game over
+					if (targetHitCount > 39)
+					{
+						gameScreen = boss;
+					}
+					else
+					{
+						gameScreen = gameOver;
+					}
 			}
 
 
@@ -610,25 +618,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				}
 			}
 
-			//baloon rendering
-			if (allowBaloons) //if all the targets are eliminated, triggered by cPlayer check
-			{
-				int baloonsOutOfGame = 0; //how many baloos are already off the screen
-				for (vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin(); baloonIterartor != theBaloonList.end(); ++baloonIterartor)
-				{
-					if ((*baloonIterartor)->isActive())
-					{
-						baloonMdl.renderMdl((*baloonIterartor)->getPosition(), (*baloonIterartor)->getRotation(), (*baloonIterartor)->getScale());
-						(*baloonIterartor)->update(elapsedTime);
-
-						if ((*baloonIterartor)->getPosition().y > 8.0f)
-							baloonsOutOfGame++;
-					}
-				}
-
-				if (baloonsOutOfGame == theBaloonList.size()) //if all the baloons are out the srceen, is game over
-					isGameOver = true;
-			}
 
 
 			//render the game UI
@@ -681,10 +670,24 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 			theFontMgr->getFont("TextHuge")->printText("Crimson Shooting", FTPoint(140, 120, 0.0f), textColor);
 			theFontMgr->getFont("Text")->printText("1988", FTPoint(450, 190, 0.0f), textColor); // uses c_str to convert string to LPCSTR
-			theFontMgr->getFont("TextSmall")->printText("press space key to quit...", FTPoint(430, 730, 0.0f), textColor);
 
 			theFontMgr->getFont("TextSmall")->printText("Final Score: ", FTPoint(250, 350, 0.0f), textColor);
 			theFontMgr->getFont("Text")->printText(targetHitText.c_str(), FTPoint(650, 350, 0.0f), textColor);
+
+
+			//debug end
+
+			if (!perfectCombo)
+				proTip = "pro tip: next time try to hit all 6 initial targets without reloading!";
+			else if (targetHitCount < 40)
+				proTip = "pro tip: next time try to earn at least 40 points!";
+			else
+				proTip = "";
+
+			theFontMgr->getFont("TextSmall")->printText(proTip, FTPoint(100, 650, 0.0f), textColor);
+			
+			theFontMgr->getFont("TextSmall")->printText("press N key to quit...", FTPoint(430, 730, 0.0f), textColor);
+
 
 
 

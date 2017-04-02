@@ -52,7 +52,7 @@ void cSceneMgr::takeInput()
 	switch (gameScreen)
 	{
 	case intro:
-		if (m_InputMgr->isKeyDown(VK_SPACE))
+		if (m_InputMgr->isKeyDown('N'))
 		{
 			gameScreen = guide;
 		}
@@ -60,7 +60,7 @@ void cSceneMgr::takeInput()
 
 		break;
 	case guide:
-		if (m_InputMgr->isKeyDown(VK_SPACE))
+		if (m_InputMgr->isKeyDown('N'))
 		{
 			gameScreen = game;
 		}
@@ -72,7 +72,7 @@ void cSceneMgr::takeInput()
 
 		break;
 	case gameOver:
-		if (m_InputMgr->isKeyDown(VK_SPACE))
+		if (m_InputMgr->isKeyDown('N'))
 		{
 			gameScreen = quitGame;
 		}
