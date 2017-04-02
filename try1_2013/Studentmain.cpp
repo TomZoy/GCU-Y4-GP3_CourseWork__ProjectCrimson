@@ -357,8 +357,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 
-	// **-- setting up the Player - normal --**
-
+	// **-- setting up the Player --**
 	cPlayer thePlayer;
 	thePlayer.initialise(glm::vec3(0, 0, 0), 90.0f, glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 5.0f, true);
 	thePlayer.setMdlDimensions(pistolMdl.getModelDimensions());
@@ -366,6 +365,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	thePlayer.attachSoundMgr(theSoundMgr);
 	thePlayer.attachCameraMgr(theCameraMgr);
 
+	// **-- setting up the BOSS --**
+	cBoss theBoss;
+	theBoss.initialise(glm::vec3(0, 0, 15), 0.0f, glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), 5.0f, true);
+	theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
+	theBoss.attachSoundMgr(theSoundMgr);
 
 
 	// **-- This is the mainloop, we render frames until isRunning returns false --**
@@ -610,6 +614,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			riffleMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 			thePlayer.update(elapsedTime);
 
+
+			//render the BOSS
+			theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
+			boss1Mdl.renderMdl(theBoss.getPosition(), theBoss.getRotation(), theBoss.getScale());
+			theBoss.update(elapsedTime);
+
+
+
 			//debug model section 
 
 			//baloonMdl.renderMdl(glm::vec3(0.0f, 8.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -680,12 +692,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 			theFontMgr->getFont("TextSmall")->printText("BOSS health:", FTPoint(15, 700, 0.0f), textColor);
-			//BOSSHealthDisplay = "";
-			//for (int i = 0; i < thePlayer.healthPoints; i++)
-			//{
-			//	if (i % 10 == 0)
-			//		BOSSHealthDisplay += "#";
-			//}
+			BOSSHealthDisplay = "";
+			for (int i = 0; i < theBoss.healthPoints; i++)
+			{
+				if (i % 10 == 0)
+					BOSSHealthDisplay += "#";
+			}
 			theFontMgr->getFont("SevenSeg")->printText(BOSSHealthDisplay.c_str(), FTPoint(183, 710, 0.0f), textColor);
 
 			glPopMatrix();

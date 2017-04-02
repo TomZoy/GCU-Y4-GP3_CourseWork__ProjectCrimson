@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClCompile Include="cBackground.cpp" />
     <ClCompile Include="cBaloon.cpp" />
+    <ClCompile Include="cBoss.cpp" />
     <ClCompile Include="cBullet.cpp" />
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCameraMgr.cpp" />
@@ -99,6 +100,7 @@
   <ItemGroup>
     <ClInclude Include="cBaloon.h" />
     <ClInclude Include="cBackground.h" />
+    <ClInclude Include="cBoss.h" />
     <ClInclude Include="cBullet.h" />
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cCameraMgr.h" />

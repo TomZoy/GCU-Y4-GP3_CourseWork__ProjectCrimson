@@ -5,6 +5,7 @@
 #include "cEnemy.h"
 #include "cBullet.h"
 #include "cBaloon.h"
+#include "cBoss.h"
 #include "GameConstants.h"
 
 extern vector<cEnemy*> theEnemy;
