@@ -1,4 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
+﻿#define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 
 #define GLX_GLXEXT_LEGACY //Must be declared so that our local glxext.h is picked up, rather than the system one
@@ -299,7 +299,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = intro;
+	gameScreen = boss;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;
@@ -311,6 +311,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	string autoFollowBulletText;
 	string debugText;
 	LPCSTR proTip;
+	string playerHealthDisplay;
+	string BOSSHealthDisplay;
+
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
 	float introModelRotAngle = 0.0f;
 
@@ -429,7 +432,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			glPopMatrix();
 
 			pgmWNDMgr->swapBuffers();
-
 
 
 			break;
@@ -657,12 +659,32 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 			theFontMgr->getFont("Text")->printText("Crimson shooting", FTPoint(10, 50, 0.0f), textColor);
 			theFontMgr->getFont("Text")->printText("Bullets: ", FTPoint(690, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
-			theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(900, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+			theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(880, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 			theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 			theFontMgr->getFont("TextSmall")->printText("Targets hit: ", FTPoint(10, 130, 0.0f), textColor);
 			theFontMgr->getFont("SevenSeg")->printText(targetHitText.c_str(), FTPoint(160, 130, 0.0f), textColor);
 			if (perfectCombo)
 				theFontMgr->getFont("SevenSeg")->printText("PERFECT COMBO!", FTPoint(240, 130, 0.0f), textColor);
+
+
+			theFontMgr->getFont("TextSmall")->printText("player health:", FTPoint(15, 730, 0.0f), textColor);
+			playerHealthDisplay = "";
+			for (int i = 0; i < thePlayer.healthPoints; i++)
+			{
+				if (i % 10 == 0)
+					playerHealthDisplay += "#";
+			}
+			theFontMgr->getFont("SevenSeg")->printText(playerHealthDisplay.c_str(), FTPoint(183, 740, 0.0f), textColor);
+
+
+			theFontMgr->getFont("TextSmall")->printText("BOSS health:", FTPoint(15, 700, 0.0f), textColor);
+			//BOSSHealthDisplay = "";
+			//for (int i = 0; i < thePlayer.healthPoints; i++)
+			//{
+			//	if (i % 10 == 0)
+			//		BOSSHealthDisplay += "#";
+			//}
+			theFontMgr->getFont("SevenSeg")->printText(BOSSHealthDisplay.c_str(), FTPoint(183, 710, 0.0f), textColor);
 
 			glPopMatrix();
 

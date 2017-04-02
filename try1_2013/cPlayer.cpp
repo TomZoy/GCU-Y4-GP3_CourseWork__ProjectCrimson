@@ -10,6 +10,7 @@ cPlayer::cPlayer() : cModel()
 
 	autoFollowBullet = true;
 	firstMagazine = true;
+	healthPoints = 100;
 
 
 	float currentBulletSpeed = normalBulletSpeed;

@@ -19,6 +19,7 @@ public:
 	void attachCameraMgr(cCameraMgr* cameraMgr);
 	virtual void update(float elapsedTime);
 	void switchToBossMode();
+	int healthPoints;
 
 	~cPlayer();
 };
