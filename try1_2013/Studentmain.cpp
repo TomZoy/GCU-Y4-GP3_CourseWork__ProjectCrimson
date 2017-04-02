@@ -72,9 +72,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// Attach the keyboard manager
 	pgmWNDMgr->attachInputMgr(theInputMgr);
 
-	// Attach the keyboard manager
-	theCameraMgr->attachInputMgr(theInputMgr);
-
 
 
 	//Attempt to create the window
@@ -212,6 +209,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("marioCoin", SFX[8]);
 	theSoundMgr->add("mario10Coin", SFX[9]);
 
+	//ebable sounds to be changed from the keyboard
+	theSoundMgr->attachInputMgr(theInputMgr);
+
+
 
 // **-- Create and set up cameras --**
 	cCamera camera1;
@@ -232,6 +233,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	camera2.setTheProjectionMatrix(25.0f, camera2.getTheCameraAspectRatio(), 0.0f, 300.0f);
 	camera2.update();
 	theCameraMgr->add("camera2", &camera2);
+
+	// Attach the keyboard manager
+	theCameraMgr->attachInputMgr(theInputMgr);
 
 
 // **-- Load 3D models --**
@@ -345,9 +349,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	thePlayer.attachInputMgr(theInputMgr);
 	thePlayer.attachSoundMgr(theSoundMgr);
 	thePlayer.attachCameraMgr(theCameraMgr);
-	theSoundMgr->attachInputMgr(theInputMgr);
-
-
 
 
 
@@ -473,6 +474,21 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		pgmWNDMgr->swapBuffers();
 
 		tCount += elapsedTime;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		//Clear key buffers
 		theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);

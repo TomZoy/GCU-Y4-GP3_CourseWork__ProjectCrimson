@@ -21,7 +21,7 @@ bool isGameOver; //it's game over when all the baloons are gone
 
 
 int targetHitCount; //aka points
-gameScreen_enum gameScreen; //state-enum for the state machine
+
 
 
 void enableBaloons()

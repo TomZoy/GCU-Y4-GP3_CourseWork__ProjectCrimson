@@ -5,13 +5,13 @@
 #include "cEnemy.h"
 #include "cBullet.h"
 #include "cBaloon.h"
+#include "GameConstants.h"
 
 extern vector<cEnemy*> theEnemy;
 extern vector<cBaloon*> theBaloonList;
 extern vector<cBullet*> theBullets;
 
-extern enum gameScreen_enum { intro, guide, game, gameOver };
-extern gameScreen_enum gameScreen;
+
 
 
 void enableBaloons();

@@ -101,41 +101,66 @@ void cSoundMgr::deleteSnd()
 
 void cSoundMgr::updateSound()
 {
-	if (firstCall)
-	{
-		currentSnd = getSnd("BGM1");
-		currentSnd->playAudio(AL_LOOPING);
-		firstCall = false;
-	};
+	
 
-	if (m_InputMgr->isKeyDown(VK_NUMPAD1))
-	{
-		switchSound("BGM1");
-	};
-	if (m_InputMgr->isKeyDown(VK_NUMPAD2))
-	{
-		switchSound("BGM2");
-	};
 
-	if (m_InputMgr->isKeyDown(VK_NUMPAD3))
+	switch (gameScreen)
 	{
-		switchSound("BGM3");
-	};
+	case intro:
+		switchSound("BGM6-intro");
+		break;
+	case guide:
+		break;
+	case game:
 
-	if (m_InputMgr->isKeyDown(VK_NUMPAD4))
-	{
-		switchSound("BGM4");
-	};
+		if (firstCall)
+		{
+			currentSnd = getSnd("BGM1");
+			currentSnd->playAudio(AL_LOOPING);
+			firstCall = false;
+		};
 
-	if (m_InputMgr->isKeyDown(VK_NUMPAD5))
-	{
-		switchSound("BGM5");
-	};
+		if (m_InputMgr->isKeyDown(VK_NUMPAD1))
+		{
+			switchSound("BGM1");
+		};
+		if (m_InputMgr->isKeyDown(VK_NUMPAD2))
+		{
+			switchSound("BGM2");
+		};
 
-	if (m_InputMgr->isKeyDown(VK_NUMPAD0))
-	{
-		currentSnd->stopAudio();
-	};
+		if (m_InputMgr->isKeyDown(VK_NUMPAD3))
+		{
+			switchSound("BGM3");
+		};
+
+		if (m_InputMgr->isKeyDown(VK_NUMPAD4))
+		{
+			switchSound("BGM4");
+		};
+
+		if (m_InputMgr->isKeyDown(VK_NUMPAD5))
+		{
+			switchSound("BGM5");
+		};
+
+		if (m_InputMgr->isKeyDown(VK_NUMPAD0))
+		{
+			currentSnd->stopAudio();
+		};
+
+		break;
+	case gameOver:
+		switchSound("BGM7-endGame");
+		break;
+	default:
+		break;
+	}
+	
+
+
+
+
 
 }
 
@@ -145,7 +170,11 @@ void cSoundMgr::switchSound(LPCSTR sndName)
 	cSound *newsound = getSnd(sndName);
 	if (newsound != currentSnd)
 	{
-		currentSnd->stopAudio();
+		if (currentSnd != NULL)
+		{
+			currentSnd->stopAudio();
+		}
+
 		currentSnd = getSnd(sndName);
 		currentSnd->playAudio(AL_LOOPING);
 	}

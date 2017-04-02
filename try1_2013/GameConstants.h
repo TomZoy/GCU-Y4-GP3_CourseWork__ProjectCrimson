@@ -81,4 +81,8 @@ extern float translationZ;
 extern bool fire;
 
 
+extern enum gameScreen_enum { intro, guide, game, gameOver };
+extern gameScreen_enum gameScreen;
+
+
 #endif
