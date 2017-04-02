@@ -258,7 +258,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//riffle
 	cModelLoader riffleMdl;
-	riffleMdl.loadModel("Models/Crimson/assaRiffle1/GUN_1.obj", pistolTexture); // Player
+	riffleMdl.loadModel("Models/Crimson/assaRiffle1/GUN_1flat.obj", pistolTexture); // Player
 
 
 
@@ -301,6 +301,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	perfectCombo = false;
 	targetHitCount = 0;
 	bulletsLeft = magazineSize;
+	bool switchingToBoss = true;
 
 	string outputMsg;
 	string targetHitText;
@@ -350,7 +351,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 
-	// **-- setting up the Player --**
+	// **-- setting up the Player - normal --**
 
 	cPlayer thePlayer;
 	thePlayer.initialise(glm::vec3(0, 0, 0), 90.0f, glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 5.0f, true);
@@ -358,7 +359,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	thePlayer.attachInputMgr(theInputMgr);
 	thePlayer.attachSoundMgr(theSoundMgr);
 	thePlayer.attachCameraMgr(theCameraMgr);
-
 
 
 
@@ -561,6 +561,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		case boss:
 
+			if (switchingToBoss)
+			{
+				thePlayer.switchToBossMode();
+				switchingToBoss = false;
+			}
+
 			sunMaterial.useMaterial();
 
 			//turn the light on
@@ -569,7 +575,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			rfLight.lightOn();
 
 			//render the player
-			pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+			thePlayer.setMdlDimensions(riffleMdl.getModelDimensions());
+			riffleMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 			thePlayer.update(elapsedTime);
 
 			//debug model section 

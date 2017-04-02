@@ -11,6 +11,9 @@ cPlayer::cPlayer() : cModel()
 	autoFollowBullet = true;
 	firstMagazine = true;
 
+
+	float currentBulletSpeed = normalBulletSpeed;
+
 }
 
 void cPlayer::attachInputMgr(cInputMgr* inputMgr)
@@ -21,6 +24,19 @@ void cPlayer::attachInputMgr(cInputMgr* inputMgr)
 void cPlayer::attachCameraMgr(cCameraMgr* cameraMgr)
 {
 	theCameraMgr = cameraMgr;
+}
+
+
+void cPlayer::switchToBossMode()
+{
+	//make the rifle bigger
+	setScale(glm::vec3(2, 2, 2));
+	
+	//increase the magazine size and reaload the rifle
+	magazineSize = 30;
+	bulletsLeft = magazineSize;
+	currentBulletSpeed = fastBulletSpeed;
+
 }
 
 
@@ -96,7 +112,7 @@ void cPlayer::update(float elapsedTime)
 			theBullets[numBullets]->setDirection(mdlBulletDirection);
 			theBullets[numBullets]->setRotation(90.0f);
 			theBullets[numBullets]->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
-			theBullets[numBullets]->setSpeed(5.0f);//80.0f);
+			theBullets[numBullets]->setSpeed(currentBulletSpeed);//80.0f);
 			theBullets[numBullets]->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y + 0.5f, this->getPosition().z) + mdlBulletDirection);
 			theBullets[numBullets]->setIsActive(true);
 			theBullets[numBullets]->update(elapsedTime);

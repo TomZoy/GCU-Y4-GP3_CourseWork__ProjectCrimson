@@ -12,11 +12,13 @@ class cPlayer : public cModel
 private:
 	cInputMgr* m_InputMgr;
 	cCameraMgr* theCameraMgr;
+
 public:
 	cPlayer();
 	void attachInputMgr(cInputMgr* inputMgr);
 	void attachCameraMgr(cCameraMgr* cameraMgr);
 	virtual void update(float elapsedTime);
+	void switchToBossMode();
 
 	~cPlayer();
 };
