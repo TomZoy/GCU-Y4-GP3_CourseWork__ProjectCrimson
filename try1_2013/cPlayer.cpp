@@ -141,11 +141,11 @@ void cPlayer::update(float elapsedTime)
 		theCameraMgr->updateCameraPos("camera2", theBullets[theBullets.size() - 1]->getPosition());
 	}
 
-	/*
-	==============================================================
-	| Check for target collisions
-	==============================================================
-	*/
+/*
+==============================================================
+| Check for target collisions
+==============================================================
+*/
 	for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
 	{
 		(*bulletIterartor)->update(elapsedTime);
@@ -169,11 +169,11 @@ void cPlayer::update(float elapsedTime)
 		}
 	}
 
-	/*
-	==============================================================
-	| Check for baloon collisions
-	==============================================================
-	*/
+/*
+==============================================================
+| Check for baloon collisions
+==============================================================
+*/
 	for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
 	{
 		(*bulletIterartor)->update(elapsedTime);
@@ -204,6 +204,40 @@ void cPlayer::update(float elapsedTime)
 		}
 	}
 
+
+/*
+==============================================================
+| Check for BOSS collisions
+==============================================================
+*/
+	if (gameScreen == boss)
+	{
+		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
+		{
+			(*bulletIterartor)->update(elapsedTime);
+
+			//for (vector<cBaloon*>::iterator baloonIterator = theBaloonList.begin(); baloonIterator != theBaloonList.end(); ++baloonIterator)
+			
+				if (theBossPointer->SphereSphereCollision((*bulletIterartor)->getPosition(), (*bulletIterartor)->getMdlRadius()))
+				{
+					//add a point
+					targetHitCount++;
+
+					// set the bullet to false
+					(*bulletIterartor)->setIsActive(false);
+
+					// play the apropriate sound.
+
+						m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+
+					// take away BOSS health
+					theBossPointer->healthPoints--;
+
+				}
+			
+		}
+
+	}
 
 	//removing used bullets
 	vector<cBullet*>::iterator bulletIterartor = theBullets.begin();

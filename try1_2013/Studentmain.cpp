@@ -367,9 +367,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// **-- setting up the BOSS --**
 	cBoss theBoss;
-	theBoss.initialise(glm::vec3(0, 0, 15), 0.0f, glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), 5.0f, true);
+	theBoss.initialise(glm::vec3(0, 2, 5), 0.0f, glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), 5.0f, true);
+	theBoss.setMdlRadius(5.0f);
 	theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
 	theBoss.attachSoundMgr(theSoundMgr);
+	theBossPointer = &theBoss; //need to pass the object for player->boss collision-detection
 
 
 	// **-- This is the mainloop, we render frames until isRunning returns false --**

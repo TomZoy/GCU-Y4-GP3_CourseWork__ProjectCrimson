@@ -12,6 +12,8 @@ extern vector<cEnemy*> theEnemy;
 extern vector<cBaloon*> theBaloonList;
 extern vector<cBullet*> theBullets;
 
+extern cBoss *theBossPointer;
+
 
 
 
