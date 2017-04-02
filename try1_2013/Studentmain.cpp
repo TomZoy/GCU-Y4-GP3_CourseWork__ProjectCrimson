@@ -246,6 +246,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//riffle
 	cModelLoader riffleMdl;
+	riffleMdl.loadModel("Models/Crimson/assaRiffle1/GUN_1.obj", pistolTexture); // Player
+
+
 
 	//the bullet
 	cModelLoader theBullet;
@@ -264,30 +267,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//boss1
 	cModelLoader boss1Mdl;
-
-
-	//boss2
-	cModelLoader boss2Mdl;
-
-
-
-	//boss3
-	cModelLoader boss3Mdl;
-
-
-
-	//mini-boss
-	cModelLoader miniBossMdl;
-
-
+	boss1Mdl.loadModel("Models/Crimson/boss1/boss1.obj", hitTexture);
 
 	//turret
 	cModelLoader turretMdl;
-
-
-
-	//missle
-	cModelLoader missleMdl;
+	turretMdl.loadModel("Models/Crimson/AI-turret/turret.obj", hitTexture);
 
 
 
@@ -406,9 +390,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		thePlayer.update(elapsedTime);
 
-		//debug model
-		//baloonMdl.renderMdl(glm::vec3(0.0f, 8.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//debug model section 
 
+		//baloonMdl.renderMdl(glm::vec3(0.0f, 8.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//boss1Mdl.renderMdl(glm::vec3(0.0f, 0.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//turretMdl.renderMdl(glm::vec3(0.0f, 0.0f, -5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		//riffleMdl.renderMdl(glm::vec3(0.0f, 0.0f, -5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+		//debug model section  end
 
 		//bullet rendering
 		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
