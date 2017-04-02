@@ -52,23 +52,28 @@ void cCameraMgr::updateCamera()
 		firstCall = false;
 	};
 
-	if (m_InputMgr->isKeyDown(VK_TAB))
+	if (gameScreen == game) //allow keyboard-input only ingame
 	{
-
-		
-		cCamera *newCamera = getCamera("camera1");
-		if (newCamera != currentCamera)
+		if (m_InputMgr->isKeyDown(VK_TAB))
 		{
-			currentCamera = getCamera("camera1");
-		}
-		else
-		{
-			//getCamera("camera2")->setTheCameraPos(glm::vec3(0.0f, 0.0f, 15.0f));
-			currentCamera = getCamera("camera2");
 
-		}
-		
-	};
+
+			cCamera *newCamera = getCamera("camera1");
+			if (newCamera != currentCamera)
+			{
+				currentCamera = getCamera("camera1");
+			}
+			else
+			{
+				//getCamera("camera2")->setTheCameraPos(glm::vec3(0.0f, 0.0f, 15.0f));
+				currentCamera = getCamera("camera2");
+
+			}
+
+		};
+	}
+
+
 
 	currentCamera->update();
 
