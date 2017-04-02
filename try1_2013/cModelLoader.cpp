@@ -66,5 +66,6 @@ mdlDimensions cModelLoader::getModelDimensions()
 
 cModelLoader::~cModelLoader()
 {
-	glmDelete(m_model);
+	if (m_model != NULL)
+		glmDelete(m_model);
 }

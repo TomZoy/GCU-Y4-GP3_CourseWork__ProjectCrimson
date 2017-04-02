@@ -94,8 +94,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		return 1;
 	}
 
-	// Create Texture maps
 
+
+// **-- Create and load in Texture maps --**
 	cTexture bulletTexture;
 	bulletTexture.createTexture("Models/Crimson/bullet_rife/Brass.jpg");
 
@@ -132,12 +133,31 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	targetTexture1.createTexture("Models/Crimson/target/textures/texture6.jpg");
 	targetTextureList.push_back(&targetTexture6);
 
+	//boss1
+	cTexture boss1Texture;
+	hitTexture.createTexture("Models/Crimson/hitText.jpg"); //this is the default, "placeholder" texture file
+	//boss2
+	cTexture boss2Texture;
+	hitTexture.createTexture("Models/Crimson/hitText.jpg"); //this is the default, "placeholder" texture file
+	//boss3
+	cTexture boss3Texture;
+	hitTexture.createTexture("Models/Crimson/hitText.jpg"); //this is the default, "placeholder" texture file
+	//mini-boss
+	cTexture miniBossTexture;
+	hitTexture.createTexture("Models/Crimson/hitText.jpg"); //this is the default, "placeholder" texture file
+
+
+
 
 
 
 	// the starfield
 	cStarfield theStarField(backgroundTexture.getTexture(), glm::vec3(5.0f, 5.0f, 5.0f));
 
+
+
+
+// **-- Create Lights --**
 	// Create Materials for lights
 	cMaterial sunMaterial(lightColour4(0.0f, 0.0f, 0.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(1.0f, 1.0f, 1.0f, 1.0f), lightColour4(0, 0, 0, 1.0f), 5.0f);
 
@@ -155,7 +175,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	GLfloat g_Ambient[] = { 0.2, 0.2, 0.2, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, g_Ambient);
 
-	// load game fonts
+
+// **-- Load Fonts --**
 	LPCSTR gameFonts[3] = { "Fonts/digital-7.ttf", "Fonts/gunplay-rg.ttf", "Fonts/doctor_who.ttf" };
 
 	theFontMgr->addFont("SevenSeg", gameFonts[0], 55);
@@ -164,7 +185,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theFontMgr->addFont("drWho", gameFonts[2], 50);
 
 
-	// load game sounds
+// **-- Load Sounds --**
 	LPCSTR BGM[7] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav", "Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav", "Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav", "Audio/BGM/wav/radio4_-.wav", "Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav", "Audio/BGM/wav/menu-music_Ziklibrenbib_Alpha_Brutal_Alpha_Brutal_Alpha_Brutal_-_06_-_EPIC_SONG.wav", "Audio/BGM/wav/Finish_line-07_Home_at_Last.wav" };
 	LPCSTR SFX[10] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav", "Audio/SFX/wav/bounce.wav", "Audio/SFX/wav/Mario-coin-sound.wav", "Audio/SFX/wav/smb_1-up.wav" };
 
@@ -192,8 +213,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("mario10Coin", SFX[9]);
 
 
-
-	// Create a camera
+// **-- Create and set up cameras --**
 	cCamera camera1;
 	camera1.setTheCameraPos(glm::vec3(0.0f, 3.0f, 15.0f));
 	camera1.setTheCameraLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -213,21 +233,25 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	camera2.update();
 	theCameraMgr->add("camera2", &camera2);
 
-	//Clear key buffers
-	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
-	// Model
+// **-- Load 3D models --**
+
+	// baloons
 	cModelLoader baloonMdl;
 	baloonMdl.loadModel("Models/Crimson/baloonZ.obj", hitTexture);
 
-	//// pistol
+	// pistol - player
 	cModelLoader pistolMdl;
 	pistolMdl.loadModel("Models/Crimson/pistol/Handgun_obj.obj", pistolTexture); // Player
 
+	//riffle
+	cModelLoader riffleMdl;
 
+	//the bullet
 	cModelLoader theBullet;
 	theBullet.loadModel("Models/Crimson/bullet_rife/50_Barrett.obj", bulletTexture);
 
+	//normal targets
 	vector<cModelLoader*> targetModelList;
 	for (unsigned i = 0; i < targetTextureList.size(); i++)
 	{
@@ -235,19 +259,67 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		targetModelList[i]->loadModel("Models/Crimson/target/target2.obj", *targetTextureList[i]);
 	}
 
-	cModelLoader targetMdl;
-	targetMdl.loadModel("Models/Crimson/target/target2.obj", *targetTextureList.front());
+	//cModelLoader targetMdl;
+	//targetMdl.loadModel("Models/Crimson/target/target2.obj", *targetTextureList.front());
+
+	//boss1
+	cModelLoader boss1Mdl;
+
+
+	//boss2
+	cModelLoader boss2Mdl;
+
+
+
+	//boss3
+	cModelLoader boss3Mdl;
+
+
+
+	//mini-boss
+	cModelLoader miniBossMdl;
+
+
+
+	//turret
+	cModelLoader turretMdl;
+
+
+
+	//missle
+	cModelLoader missleMdl;
+
+
+
 
 
 
 //RESET GAME SHOULD START FROM HERE...
 
+	//Clear key buffers
+	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
+	//reset counters
 	gameScreen = intro;
 	allowBaloons = false;
 	perfectCombo = false;
+	targetHitCount = 0;
+	bulletsLeft = magazineSize;
 
-	//enemy spawn loop
+	string outputMsg;
+	string targetHitText;
+	string autoFollowBulletText;
+	colour3f textColor = (0.99f, 0.99f, 0.99f);
+
+	std::vector<cBullet*> bulletList;
+	std::vector<cBullet*>::iterator index2;
+	float tCount = 0.0f;
+
+
+
+// **-- instentiating all types of target-lists --**
+
+	//normal target spawn loop
 	for (int loop = 0; loop < 6; loop++)
 	{
 		theEnemy.push_back(new cEnemy);
@@ -276,6 +348,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theBaloonList[loop]->randomise(22, 6, 0);
 	}
 
+	//boss instentition goes here!
+
+
+
+
+// **-- setting up the Player --**
 
 	cPlayer thePlayer;
 	thePlayer.initialise(glm::vec3(0, 0, 0), 90.0f, glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 5.0f, true);
@@ -285,20 +363,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	thePlayer.attachCameraMgr(theCameraMgr);
 	theSoundMgr->attachInputMgr(theInputMgr);
 
-	float tCount = 0.0f;
-	targetHitCount = 0;
 
 
-	string outputMsg;
-	string targetHitText;
-	string autoFollowBulletText;
-	colour3f textColor = (0.99f, 0.99f, 0.99f);
-
-	std::vector<cBullet*> bulletList;
-	std::vector<cBullet*>::iterator index2;
 
 
-//This is the mainloop, we render frames until isRunning returns false
+
+// **-- This is the mainloop, we render frames until isRunning returns false --**
+
 	while (pgmWNDMgr->isWNDRunning())
 	{
 		//Process any window events
@@ -331,24 +402,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		lfLight.lightOn();
 		rfLight.lightOn();
 
-		//reder every target
-		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
-		{
-			if ((*enemyIterator)->isActive())
-			{
-				targetModelList.at((*enemyIterator)->ID)->renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
-				(*enemyIterator)->update(elapsedTime);
-			}
-		}
-
 		//render the player
 		pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		thePlayer.update(elapsedTime);
 
 		//debug model
 		//baloonMdl.renderMdl(glm::vec3(0.0f, 8.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
-
 
 
 		//bullet rendering
@@ -358,6 +417,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			{
 				theBullet.renderMdl((*bulletIterartor)->getPosition(), (*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
 				(*bulletIterartor)->update(elapsedTime);
+			}
+		}
+
+
+		//reder every normal-target
+		for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
+		{
+			if ((*enemyIterator)->isActive())
+			{
+				targetModelList.at((*enemyIterator)->ID)->renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
+				(*enemyIterator)->update(elapsedTime);
 			}
 		}
 
@@ -381,6 +451,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				isGameOver = true;
 		}
 
+
+//render the UI
 		outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
 		targetHitText = to_string(targetHitCount);
 		if (autoFollowBullet)
@@ -392,8 +464,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			autoFollowBulletText = "Follow bullet DISABLED";
 		}
 
-
-		//render the UI
 		glDisable(GL_LIGHTING);
 		glPushMatrix();
 		theOGLWnd.setOrtho2D(windowWidth, windowHeight);
@@ -418,6 +488,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	} //game-loop ends here
+
+
+
+
+
 
 	theOGLWnd.shutdown(); //Free any resources
 	pgmWNDMgr->destroyWND(); //Destroy the program window
