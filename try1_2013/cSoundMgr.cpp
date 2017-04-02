@@ -145,6 +145,11 @@ void cSoundMgr::updateSound()
 		};
 
 		break;
+
+	case boss:
+		switchSound("BGM8-boss");
+		break;
+
 	case gameOver:
 		switchSound("BGM7-endGame");
 		break;

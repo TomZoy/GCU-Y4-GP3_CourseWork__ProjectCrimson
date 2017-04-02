@@ -190,7 +190,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 	// **-- Load Sounds --**
-	LPCSTR BGM[7] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav", "Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav", "Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav", "Audio/BGM/wav/radio4_-.wav", "Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav", "Audio/BGM/wav/menu-music_Ziklibrenbib_Alpha_Brutal_Alpha_Brutal_Alpha_Brutal_-_06_-_EPIC_SONG.wav", "Audio/BGM/wav/Finish_line-07_Home_at_Last.wav" };
+	LPCSTR BGM[8] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav", "Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav", "Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav", "Audio/BGM/wav/radio4_-.wav", "Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav", "Audio/BGM/wav/AllofUs.wav", "Audio/BGM/wav/Finish_line-07_Home_at_Last.wav", "Audio/BGM/wav/Ziklibrenbib_Alpha_Brutal_Alpha_Brutal_Alpha_Brutal_-_06_-_EPIC_SONG.wav" };
 	LPCSTR SFX[10] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav", "Audio/SFX/wav/bounce.wav", "Audio/SFX/wav/Mario-coin-sound.wav", "Audio/SFX/wav/smb_1-up.wav" };
 
 	theSoundMgr->add("BGM1", BGM[0]);
@@ -200,6 +200,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("BGM5", BGM[4]);
 	theSoundMgr->add("BGM6-intro", BGM[5]);
 	theSoundMgr->add("BGM7-endGame", BGM[6]);
+	theSoundMgr->add("BGM8-boss", BGM[7]);
 
 	theSoundMgr->add("fireGunSFX", SFX[0]);
 	theSoundMgr->add("reloadSFX", SFX[1]);
@@ -295,7 +296,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = gameOver;
+	gameScreen = boss;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;
@@ -412,6 +413,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 			break;
+
 		case guide:
 
 			glPushMatrix();
@@ -424,13 +426,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			theFontMgr->getFont("Text")->printText("1988", FTPoint(450, 190, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 			theFontMgr->getFont("TextSmall")->printText("keys", FTPoint(480, 300, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 
-			theFontMgr->getFont("TextSmall")->printText("move left",	FTPoint(250, 350, 0.0f), textColor);
-			theFontMgr->getFont("TextSmall")->printText("move rigth",	FTPoint(250, 400, 0.0f), textColor);
-			theFontMgr->getFont("TextSmall")->printText("FIRE",			FTPoint(250, 450, 0.0f), textColor);
-			theFontMgr->getFont("TextSmall")->printText("reload",		FTPoint(250, 500, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("move left", FTPoint(250, 350, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("move rigth", FTPoint(250, 400, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("FIRE", FTPoint(250, 450, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("reload", FTPoint(250, 500, 0.0f), textColor);
 
 			theFontMgr->getFont("TextSmall")->printText("select music", FTPoint(250, 550, 0.0f), textColor);
-			theFontMgr->getFont("TextSmall")->printText("mute music",	FTPoint(250, 600, 0.0f), textColor);
+			theFontMgr->getFont("TextSmall")->printText("mute music", FTPoint(250, 600, 0.0f), textColor);
 			theFontMgr->getFont("TextSmall")->printText("enable follow bullet", FTPoint(250, 650, 0.0f), textColor);
 
 			theFontMgr->getFont("TextSmall")->printText("A", FTPoint(650, 350, 0.0f), textColor);
@@ -453,6 +455,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 			break;
+
 		case game:
 
 			sunMaterial.useMaterial();
@@ -556,6 +559,110 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			break;
 
 
+		case boss:
+
+			sunMaterial.useMaterial();
+
+			//turn the light on
+			sunLight.lightOn();
+			lfLight.lightOn();
+			rfLight.lightOn();
+
+			//render the player
+			pistolMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
+			thePlayer.update(elapsedTime);
+
+			//debug model section 
+
+			//baloonMdl.renderMdl(glm::vec3(0.0f, 8.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+			//boss1Mdl.renderMdl(glm::vec3(0.0f, 0.0f, 10.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+			//turretMdl.renderMdl(glm::vec3(0.0f, 0.0f, -5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+			//riffleMdl.renderMdl(glm::vec3(0.0f, 0.0f, -5.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+			//debug model section  end
+
+			//bullet rendering
+			for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
+			{
+				if ((*bulletIterartor)->isActive())
+				{
+					theBullet.renderMdl((*bulletIterartor)->getPosition(), (*bulletIterartor)->getRotation(), (*bulletIterartor)->getScale());
+					(*bulletIterartor)->update(elapsedTime);
+				}
+			}
+
+
+			//reder every normal-target
+			for (vector<cEnemy*>::iterator enemyIterator = theEnemy.begin(); enemyIterator != theEnemy.end(); ++enemyIterator)
+			{
+				if ((*enemyIterator)->isActive())
+				{
+					targetModelList.at((*enemyIterator)->ID)->renderMdl((*enemyIterator)->getPosition(), (*enemyIterator)->getRotation(), (*enemyIterator)->getScale());
+					(*enemyIterator)->update(elapsedTime);
+				}
+			}
+
+			//baloon rendering
+			if (allowBaloons) //if all the targets are eliminated, triggered by cPlayer check
+			{
+				int baloonsOutOfGame = 0; //how many baloos are already off the screen
+				for (vector<cBaloon*>::iterator baloonIterartor = theBaloonList.begin(); baloonIterartor != theBaloonList.end(); ++baloonIterartor)
+				{
+					if ((*baloonIterartor)->isActive())
+					{
+						baloonMdl.renderMdl((*baloonIterartor)->getPosition(), (*baloonIterartor)->getRotation(), (*baloonIterartor)->getScale());
+						(*baloonIterartor)->update(elapsedTime);
+
+						if ((*baloonIterartor)->getPosition().y > 8.0f)
+							baloonsOutOfGame++;
+					}
+				}
+
+				if (baloonsOutOfGame == theBaloonList.size()) //if all the baloons are out the srceen, is game over
+					isGameOver = true;
+			}
+
+
+			//render the game UI
+			outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
+			targetHitText = to_string(targetHitCount);
+			if (autoFollowBullet)
+			{
+				autoFollowBulletText = "Follow bullet ENABLED";
+			}
+			else
+			{
+				autoFollowBulletText = "Follow bullet DISABLED";
+			}
+
+			glDisable(GL_LIGHTING);
+			glPushMatrix();
+			theOGLWnd.setOrtho2D(windowWidth, windowHeight);
+
+			theFontMgr->getFont("Text")->printText("Crimson shooting", FTPoint(10, 50, 0.0f), textColor);
+			theFontMgr->getFont("Text")->printText("Bullets: ", FTPoint(690, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+			theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(900, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+			theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
+			theFontMgr->getFont("TextSmall")->printText("Targets hit: ", FTPoint(10, 130, 0.0f), textColor);
+			theFontMgr->getFont("SevenSeg")->printText(targetHitText.c_str(), FTPoint(160, 130, 0.0f), textColor);
+			if (perfectCombo)
+				theFontMgr->getFont("SevenSeg")->printText("PERFECT COMBO!", FTPoint(240, 130, 0.0f), textColor);
+
+			glPopMatrix();
+
+			glEnable(GL_LIGHTING);
+			pgmWNDMgr->swapBuffers();
+
+			tCount += elapsedTime;
+
+
+
+
+			break;
+
+
+
 		case gameOver:
 
 			glPushMatrix();
@@ -583,22 +690,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			break;
 
 		case quitGame:
-
+			//this case is not used, the game-loop terminates if this case is set
 			break;
 
 		default:
 			break;
-		}
 
-
-
-
-
-
-
-
-
-
+		} //end of game-scene switch
 
 		//Clear key buffers
 		theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
