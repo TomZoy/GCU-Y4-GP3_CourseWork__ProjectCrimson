@@ -21,9 +21,6 @@ void cBoss::update(float elapsedTime)
 {
 	mdlDimensions tmp = {5.0f,5.0f,5.0f};
 	cModel::setMdlDimensions(tmp);
-	//float yPos = (cModel::m_mdlSpeed / 4) * elapsedTime;
-	//cModel::m_mdlPosition.y += yPos;
-
 
 
 	if (healthPoints <= 0) 	//check if dead
@@ -59,9 +56,11 @@ void cBoss::update(float elapsedTime)
 	//move about + attack
 
 	debug++;
-	if (debug % 30 == 0)
+	if (debug % 200 == 0)
 	{
-		attack(elapsedTime);
+		//attack(elapsedTime);
+		doTeleport = true;
+		teleport();
 
 	}
 
@@ -89,7 +88,7 @@ void cBoss::attack(float elapsedTime)
 	theBulletList->at(numBullets)->setDirection(mdlBulletDirection);
 	theBulletList->at(numBullets)->setRotation(-90.0f);
 	theBulletList->at(numBullets)->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
-	theBulletList->at(numBullets)->setSpeed(2.0f);
+	theBulletList->at(numBullets)->setSpeed(10.0f);
 	theBulletList->at(numBullets)->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y, this->getPosition().z-2.0f) + mdlBulletDirection);
 	theBulletList->at(numBullets)->setIsActive(true);
 	theBulletList->at(numBullets)->update(elapsedTime);
@@ -99,11 +98,42 @@ void cBoss::attack(float elapsedTime)
 }
 
 
+/* 
+VALID POSITIPON COORDINATES (x,y,z):
+
+10,0,35
+-10,0,35
+7,0,5
+-7,0,5
+
+*/
+
 void cBoss::teleport()
 {
 	if (doTeleport)
 	{
+		//rand() % 30 + 1985 the range 1985-2014
+		float x = rand() % 4 + 7;
+		float z = 5;
 
+		if (x == 7)
+			z = 5;
+		else if (x == 8)
+			z = 15;
+		else if (x == 9)
+			z = 25;
+		else
+			z = 35;
+
+
+		if (rand() % 2 == 0)
+			x = x*(-1);
+
+		//play BOSS teleport sound
+		m_SoundMgr->getSnd("mario10Coin")->playAudio(AL_TRUE);
+
+		cModel::m_mdlPosition.x = x;
+		cModel::m_mdlPosition.z = z;
 	}
 
 }
