@@ -265,7 +265,7 @@ void cPlayer::update(float elapsedTime)
 				(*bulletIterartor)->setIsActive(false);
 
 				// play the apropriate sound.
-				m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+				m_SoundMgr->getSnd("PlayerTakesDamage")->playAudio(AL_TRUE);
 
 			}
 
@@ -360,6 +360,8 @@ void cPlayer::update(float elapsedTime)
 	//check if Player is still alive
 	if (healthPoints < 1)
 	{
+		m_SoundMgr->getSnd("PlayerDies")->playAudio(AL_TRUE);
+		
 		gameScreen = gameOver;
 	}
 

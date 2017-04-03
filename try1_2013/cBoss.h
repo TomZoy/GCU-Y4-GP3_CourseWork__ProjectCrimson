@@ -33,6 +33,9 @@ public:
 	float moovingSpeed;
 	float fastMoovingSpeed;
 	bool doTeleport;
+
+	void startLevel();
+
 	~cBoss();
 
 

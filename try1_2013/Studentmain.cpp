@@ -194,6 +194,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPCSTR BGM[8] = { "Audio/BGM/wav/radio1-_01_A_Night_Of_Dizzy_Spells.wav", "Audio/BGM/wav/radio2_-01_The_Misadventure_Begins.wav", "Audio/BGM/wav/radio3_-04_Cold_as_Steel.wav", "Audio/BGM/wav/radio4_-.wav", "Audio/BGM/wav/radio5_-09_The_Day_Time_Ran_Away.wav", "Audio/BGM/wav/AllofUs.wav", "Audio/BGM/wav/Finish_line-07_Home_at_Last.wav", "Audio/BGM/wav/Ziklibrenbib_Alpha_Brutal_Alpha_Brutal_Alpha_Brutal_-_06_-_EPIC_SONG.wav" };
 	LPCSTR SFX[10] = { "Audio/SFX/wav/fireGun.wav", "Audio/SFX/wav/reload.wav", "Audio/SFX/wav/ricochet1.wav", "Audio/SFX/wav/ricochet2.wav", "Audio/SFX/wav/ricochet3.wav", "Audio/SFX/wav/targetHit.wav", "Audio/SFX/wav/gunEmpty.wav", "Audio/SFX/wav/bounce.wav", "Audio/SFX/wav/Mario-coin-sound.wav", "Audio/SFX/wav/smb_1-up.wav" };
 
+	LPCSTR BossLvlSFX[7] = { "Audio/SFX/wav/bossLevel_init_smb_warning.wav", "Audio/SFX/wav/playerDies.wav", "Audio/SFX/wav/playerWinsBoss_smb_world_clear.wav", "Audio/SFX/wav/bossFires_smb_bowserfire.wav", "Audio/SFX/wav/bossPoweupps_smb_powerup_appears.wav", "Audio/SFX/wav/bossShrink_smb_flagpole.wav", "Audio/SFX/wav/PlayerTakesDamage_smb_breakblock.wav" };
+
 	theSoundMgr->add("BGM1", BGM[0]);
 	theSoundMgr->add("BGM2", BGM[1]);
 	theSoundMgr->add("BGM3", BGM[2]);
@@ -202,6 +204,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theSoundMgr->add("BGM6-intro", BGM[5]);
 	theSoundMgr->add("BGM7-endGame", BGM[6]);
 	theSoundMgr->add("BGM8-boss", BGM[7]);
+
+	theSoundMgr->add("BossLvlInit", BossLvlSFX[0]);	
+	theSoundMgr->add("PlayerDies", BossLvlSFX[1]);	//active
+	theSoundMgr->add("PlayerWins", BossLvlSFX[2]);	//active
+	theSoundMgr->add("BossFires", BossLvlSFX[3]); // active
+	theSoundMgr->add("BossPoweUp", BossLvlSFX[4]); //active
+	theSoundMgr->add("BossShrink", BossLvlSFX[5]);	//active
+	theSoundMgr->add("PlayerTakesDamage", BossLvlSFX[6]);	//active
 
 	theSoundMgr->add("fireGunSFX", SFX[0]);
 	theSoundMgr->add("reloadSFX", SFX[1]);
@@ -547,7 +557,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				if (baloonsOutOfGame == theBaloonList.size()) //if all the baloons are out the srceen, is normal-game over
 					if (targetHitCount > 39)
 					{
-						gameScreen = boss;
+						theBoss.startLevel();
+
 					}
 					else
 					{

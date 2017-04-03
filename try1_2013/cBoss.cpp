@@ -17,6 +17,12 @@ void cBoss::attachBulletList(vector<cBullet*> *theBullets)
 	theBulletList = theBullets;
 }
 
+void cBoss::startLevel()
+{
+	gameScreen = boss;
+	m_SoundMgr->getSnd("BossLvlInit")->playAudio(AL_TRUE);
+}
+
 void cBoss::update(float elapsedTime)
 {
 	mdlDimensions tmp = {5.0f,5.0f,5.0f};
@@ -26,7 +32,7 @@ void cBoss::update(float elapsedTime)
 	if (healthPoints <= 0) 	//check if dead
 	{
 		//play victory sound
-		m_SoundMgr->getSnd("mario10Coin")->playAudio(AL_TRUE);
+		m_SoundMgr->getSnd("PlayerWins")->playAudio(AL_TRUE);
 		gameScreen = gameOver;
 	}
 	else if (healthPoints < 11)
@@ -36,17 +42,20 @@ void cBoss::update(float elapsedTime)
 		cModel::setMdlDimensions(tmp);
 		setMdlRadius(2.5f);
  		setScale(glm::vec3(2.0f,2.0f,2.0f));
+		m_SoundMgr->getSnd("BossShrink")->playAudio(AL_TRUE);
 
 	}
 	else if (healthPoints < 26)
 	{
 		//start teleporting
 		doTeleport = true;
+		m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
 	}
 	else if (healthPoints < 51)
 	{
 		//speed up
 		moovingSpeed = fastMoovingSpeed;
+		m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
 	}
 	else
 	{
@@ -75,7 +84,7 @@ void cBoss::update(float elapsedTime)
 void cBoss::attack(float elapsedTime)
 {
 	//play attackSound
-	m_SoundMgr->getSnd("mario10Coin")->playAudio(AL_TRUE);
+	m_SoundMgr->getSnd("BossFires")->playAudio(AL_TRUE);
 
 
 	/*bullet*/
