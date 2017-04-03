@@ -228,7 +228,7 @@ void cPlayer::update(float elapsedTime)
 
 					// play the apropriate sound.
 
-						m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+					m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
 
 					// take away BOSS health
 					theBossPointer->healthPoints--;
@@ -240,7 +240,35 @@ void cPlayer::update(float elapsedTime)
 	}
 
 
+/*
+==============================================================
+| Check for Player collisions
+==============================================================
+*/
+	if (gameScreen == boss)
+	{
+		for (vector<cBullet*>::iterator bulletIterartor = theBullets.begin(); bulletIterartor != theBullets.end(); ++bulletIterartor)
+		{
+			(*bulletIterartor)->update(elapsedTime);
 
+			//basically if a bullet is behind the player
+			if ((*bulletIterartor)->getPosition().z < -5.0f)
+			{
+
+				//take damage
+				healthPoints--;
+
+				// set the bullet to false
+				(*bulletIterartor)->setIsActive(false);
+
+				// play the apropriate sound.
+				m_SoundMgr->getSnd("marioCoin")->playAudio(AL_TRUE);
+
+			}
+
+		}
+
+	}
 
 	//removing used bullets
 	vector<cBullet*>::iterator bulletIterartor = theBullets.begin();
@@ -325,7 +353,13 @@ void cPlayer::update(float elapsedTime)
 
 	rotationAngle = 0;
 	translationZ = 0;
-	
+
+	//check if Player is still alive
+	if (healthPoints < 1)
+	{
+		gameScreen = gameOver;
+	}
+
 }
 
 cPlayer::~cPlayer()

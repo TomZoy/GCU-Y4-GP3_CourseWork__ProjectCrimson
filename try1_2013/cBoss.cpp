@@ -59,7 +59,7 @@ void cBoss::update(float elapsedTime)
 	//move about + attack
 
 	debug++;
-	if (debug % 300 == 0)
+	if (debug % 30 == 0)
 	{
 		attack(elapsedTime);
 
