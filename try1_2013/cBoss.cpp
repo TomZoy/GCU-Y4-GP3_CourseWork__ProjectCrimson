@@ -8,7 +8,14 @@ cBoss::cBoss() : cEnemy()
 	fastMoovingSpeed = 25.0f; //THIS NEEDS TESTING
 	doTeleport = false;
 
+	//DEBUG THIS SHOULD BE FALSE!
+	isSpawTriggered = true;
+
 	debug = 0;
+
+	bool speedUpped = false;
+	bool teleporting = false;
+	bool shrinked = false;
 }
 
 
@@ -17,10 +24,28 @@ void cBoss::attachBulletList(vector<cBullet*> *theBullets)
 	theBulletList = theBullets;
 }
 
+//move the model to the game area
+void cBoss::spawn(float elapsedTime)
+{
+	if (isSpawTriggered)
+	{
+		float zPos = (moovingSpeed *2 ) * elapsedTime;
+		cModel::m_mdlPosition.z -= zPos;
+
+		if (cModel::m_mdlPosition.z < 35)
+			isSpawTriggered = false;
+
+		//terminate isSpawTriggered once in play area
+	}
+
+}
+
 void cBoss::startLevel()
 {
 	gameScreen = boss;
 	m_SoundMgr->getSnd("BossLvlInit")->playAudio(AL_TRUE);
+	isSpawTriggered = true;
+
 }
 
 void cBoss::update(float elapsedTime)
@@ -28,56 +53,79 @@ void cBoss::update(float elapsedTime)
 	mdlDimensions tmp = {5.0f,5.0f,5.0f};
 	cModel::setMdlDimensions(tmp);
 
+	if (isSpawTriggered)
+		spawn(elapsedTime);
 
-	if (healthPoints <= 0) 	//check if dead
-	{
-		//play victory sound
-		m_SoundMgr->getSnd("PlayerWins")->playAudio(AL_TRUE);
-		gameScreen = gameOver;
-	}
-	else if (healthPoints < 11)
-	{
-		//shrink
-		mdlDimensions tmp = { 2.0f, 2.0f, 2.0f };
-		cModel::setMdlDimensions(tmp);
-		setMdlRadius(2.5f);
- 		setScale(glm::vec3(2.0f,2.0f,2.0f));
-		m_SoundMgr->getSnd("BossShrink")->playAudio(AL_TRUE);
-
-	}
-	else if (healthPoints < 26)
-	{
-		//start teleporting
-		doTeleport = true;
-		m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
-	}
-	else if (healthPoints < 51)
-	{
-		//speed up
-		moovingSpeed = fastMoovingSpeed;
-		m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
-	}
 	else
 	{
 
+
+		if (healthPoints <= 0) 	//check if dead
+		{
+			//play victory sound
+			m_SoundMgr->getSnd("PlayerWins")->playAudio(AL_TRUE);
+			gameScreen = gameOver;
+		}
+		else if (healthPoints < 11)
+		{
+			if (!shrinked)
+			{
+				//shrink
+				mdlDimensions tmp = { 2.0f, 2.0f, 2.0f };
+				cModel::setMdlDimensions(tmp);
+				setMdlRadius(2.5f);
+				setScale(glm::vec3(2.0f, 2.0f, 2.0f));
+				m_SoundMgr->getSnd("BossShrink")->playAudio(AL_TRUE);
+
+				shrinked = true;
+			}
+
+		}
+		else if (healthPoints < 26)
+		{
+			if (!teleporting)
+			{
+				//start teleporting
+				doTeleport = true;
+				m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
+
+				teleporting = true;
+			}
+		}
+		else if (healthPoints < 51)
+		{
+			if (!speedUpped)
+			{
+				//speed up
+				moovingSpeed = fastMoovingSpeed;
+				m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
+
+				speedUpped = true;
+			}
+		}
+		else
+		{
+
+		}
+
+
+
+		//move about + attack
+
+		debug++;
+		if (debug % 500 == 0)
+		{
+			//attack(elapsedTime);
+
+			//doTeleport = true;
+			//teleport();
+
+			//move(elapsedTime);
+
+		}
+
+
 	}
-
-	//move about + attack
-
-	debug++;
-	if (debug % 500 == 0)
-	{
-		attack(elapsedTime);
-
-		//doTeleport = true;
-		//teleport();
-
-		//move(elapsedTime);
-
-	}
-
-
-
 }
 
 

@@ -15,8 +15,15 @@ private:
 	void teleport();
 	void move(float elapsedTime);
 	vector<cBullet*> *theBulletList;
+	bool isSpawTriggered;
 
 	int debug;
+
+	//switches for one-time sound triggering
+	bool speedUpped;
+	bool teleporting;
+	bool shrinked;
+
 
 
 
@@ -33,6 +40,8 @@ public:
 	float moovingSpeed;
 	float fastMoovingSpeed;
 	bool doTeleport;
+
+	void spawn(float elapsedTime);
 
 	void startLevel();
 

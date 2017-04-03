@@ -307,7 +307,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = boss;
+	gameScreen = intro;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;
@@ -378,7 +378,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// **-- setting up the BOSS --**
 	cBoss theBoss;
-	theBoss.initialise(glm::vec3(10, 2, 35), 0.0f, glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), 5.0f, true);
+	theBoss.initialise(glm::vec3(0, 2, 180), 0.0f, glm::vec3(5, 5, 5), glm::vec3(0, 0, 0), 5.0f, true);
 	theBoss.setMdlRadius(5.0f);
 	theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
 	theBoss.attachSoundMgr(theSoundMgr);
@@ -610,7 +610,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			if (switchingToBoss)
 			{
 				thePlayer.switchToBossMode();
-				switchingToBoss = false;
+				switchingToBoss = false; //ti limit this to go only once
 			}
 
 			sunMaterial.useMaterial();
