@@ -13,6 +13,8 @@ cBoss::cBoss() : cEnemy()
 
 	debug = 0;
 
+	actionSpeed = 300;
+
 	bool speedUpped = false;
 	bool teleporting = false;
 	bool shrinked = false;
@@ -83,17 +85,7 @@ void cBoss::update(float elapsedTime)
 			}
 
 		}
-		else if (healthPoints < 26)
-		{
-			if (!teleporting)
-			{
-				//start teleporting
-				doTeleport = true;
-				m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
 
-				teleporting = true;
-			}
-		}
 		else if (healthPoints < 51)
 		{
 			if (!speedUpped)
@@ -102,7 +94,21 @@ void cBoss::update(float elapsedTime)
 				moovingSpeed = fastMoovingSpeed;
 				m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
 
+				actionSpeed = 200;
+
 				speedUpped = true;
+			}
+		}
+
+		else if (healthPoints < 90)
+		{
+			if (!teleporting)
+			{
+				//start teleporting
+				doTeleport = true;
+				m_SoundMgr->getSnd("BossPoweUp")->playAudio(AL_TRUE);
+
+				teleporting = true;
 			}
 		}
 		else
@@ -115,14 +121,17 @@ void cBoss::update(float elapsedTime)
 		//move about + attack
 
 		debug++;
-		if (debug % 500 == 0)
+		if (debug % actionSpeed == 0)
 		{
-			attack(elapsedTime);
+			if ((rand() % 100 + 1) < 40)
+				attack(elapsedTime);
+			else
+			{
+				if ((rand() % 100 +1) < 50)
+					teleport();
+			}
 
-			//doTeleport = true;
-			//teleport();
-
-			move(elapsedTime);
+			debug = 0;
 
 		}
 
@@ -206,6 +215,7 @@ void cBoss::teleport()
 
 void cBoss::move(float elapsedTime)
 {
+	/*
 	float xPos = 0;
 	float zPos = 0;
 
@@ -225,17 +235,17 @@ void cBoss::move(float elapsedTime)
 	if ((m_mdlPosition.z + zPos) > 35 || (m_mdlPosition.z + zPos) < 5)
 		setDirection(glm::vec3((getDirection().x), (getDirection().y), getDirection().z * -1));
 
-	/*
-	if (glm::normalize(cModel::m_mdlPosition.x))
-	{
-
-	}
-	*/
+	
+	//if (glm::normalize(cModel::m_mdlPosition.x))
+	
+	
 
 
 
 	cModel::m_mdlPosition.x += xPos;
 	cModel::m_mdlPosition.z += zPos;
+
+	*/
 }
 
 

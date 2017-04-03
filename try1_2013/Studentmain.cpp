@@ -308,7 +308,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = boss;
+	gameScreen = intro;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;

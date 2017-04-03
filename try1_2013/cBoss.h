@@ -19,6 +19,8 @@ private:
 
 	int debug;
 
+	int actionSpeed;
+
 	//switches for one-time sound triggering
 	bool speedUpped;
 	bool teleporting;
