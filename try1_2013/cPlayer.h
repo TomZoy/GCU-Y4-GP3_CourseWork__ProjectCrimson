@@ -20,6 +20,7 @@ public:
 	virtual void update(float elapsedTime);
 	void switchToBossMode();
 	int healthPoints;
+	bool tookDamage;
 
 	~cPlayer();
 };

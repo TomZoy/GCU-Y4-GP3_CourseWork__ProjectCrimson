@@ -311,6 +311,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPCSTR proTip;
 	string playerHealthDisplay;
 	string BOSSHealthDisplay;
+	int playerDamageEffectTimeout = 30;
 
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
 	float introModelRotAngle = 0.0f;
@@ -605,7 +606,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 
 			// render this for Player HIT effect!
-			//theStarField.renderFull(windowWidth, windowHeight);
+			if (thePlayer.tookDamage)
+			{
+				theStarField.renderFull(windowWidth, windowHeight);
+				playerDamageEffectTimeout--;
+
+				if (playerDamageEffectTimeout < 1)
+				{
+					thePlayer.tookDamage = false;
+					playerDamageEffectTimeout = 30;
+				}
+			}
 
 			//turn the light on
 			sunLight.lightOn();

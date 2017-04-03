@@ -11,6 +11,7 @@ cPlayer::cPlayer() : cModel()
 	autoFollowBullet = true;
 	firstMagazine = true;
 	healthPoints = 100;
+	tookDamage = false;
 
 
 	float currentBulletSpeed = normalBulletSpeed;
@@ -257,6 +258,8 @@ void cPlayer::update(float elapsedTime)
 
 				//take damage
 				healthPoints--;
+
+				tookDamage = true;
 
 				// set the bullet to false
 				(*bulletIterartor)->setIsActive(false);

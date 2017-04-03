@@ -13,7 +13,7 @@ class cBoss : public cEnemy
 private:
 	void attack(float elapsedTime);
 	void teleport();
-	void move();
+	void move(float elapsedTime);
 	vector<cBullet*> *theBulletList;
 
 	int debug;

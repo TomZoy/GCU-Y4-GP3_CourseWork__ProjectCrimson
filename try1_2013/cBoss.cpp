@@ -56,11 +56,14 @@ void cBoss::update(float elapsedTime)
 	//move about + attack
 
 	debug++;
-	if (debug % 200 == 0)
+	if (debug % 500 == 0)
 	{
-		//attack(elapsedTime);
-		doTeleport = true;
-		teleport();
+		attack(elapsedTime);
+
+		//doTeleport = true;
+		//teleport();
+
+		//move(elapsedTime);
 
 	}
 
@@ -137,9 +140,13 @@ void cBoss::teleport()
 	}
 
 }
-void cBoss::move()
+
+
+
+void cBoss::move(float elapsedTime)
 {
-	
+	float yPos = (moovingSpeed / 4) * elapsedTime;
+	cModel::m_mdlPosition.y += yPos;
 }
 
 
