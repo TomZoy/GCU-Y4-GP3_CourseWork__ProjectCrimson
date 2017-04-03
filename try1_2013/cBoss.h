@@ -13,6 +13,11 @@ public:
 	virtual void update(float elapsedTime);
 
 	int healthPoints;
+	int maxHealthPoints;
+
+	float moovingSpeed;
+	float fastMoovingSpeed;
+	bool doTeleport;
 	~cBoss();
 
 
