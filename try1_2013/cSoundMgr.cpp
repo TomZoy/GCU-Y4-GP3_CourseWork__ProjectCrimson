@@ -17,6 +17,8 @@ Constructor
 cSoundMgr::cSoundMgr()
 {
 	createContext();
+	muteBGM = false;
+	initialLoading = true;
 }
 
 /*
@@ -107,58 +109,81 @@ void cSoundMgr::updateSound()
 	switch (gameScreen)
 	{
 	case intro:
-		switchSound("BGM6-intro");
+		if (!muteBGM)
+			switchSound("BGM6-intro");
 		break;
 	case guide:
 		break;
 	case game:
 
-		switchSound("BGM1");
-
-		if (m_InputMgr->isKeyDown(VK_NUMPAD1))
-		{
-			switchSound("BGM1");
-		};
-		if (m_InputMgr->isKeyDown(VK_NUMPAD2))
-		{
-			switchSound("BGM2");
-		};
-
-		if (m_InputMgr->isKeyDown(VK_NUMPAD3))
-		{
-			switchSound("BGM3");
-		};
-
-		if (m_InputMgr->isKeyDown(VK_NUMPAD4))
-		{
-			switchSound("BGM4");
-		};
-
-		if (m_InputMgr->isKeyDown(VK_NUMPAD5))
-		{
-			switchSound("BGM5");
-		};
-
-		if (m_InputMgr->isKeyDown(VK_NUMPAD0))
+		if (!muteBGM && initialLoading)
 		{
 			currentSnd->stopAudio();
-		};
+			currentSnd = getSnd("BGM1");
+			currentSnd->playAudio(AL_LOOPING);
+			initialLoading = false;
+		}
+
+
+		if (!muteBGM)
+		{
+			if (m_InputMgr->isKeyDown(VK_NUMPAD1))
+			{
+				switchSound("BGM1");
+			};
+			if (m_InputMgr->isKeyDown(VK_NUMPAD2))
+			{
+				switchSound("BGM2");
+			};
+
+			if (m_InputMgr->isKeyDown(VK_NUMPAD3))
+			{
+				switchSound("BGM3");
+			};
+
+			if (m_InputMgr->isKeyDown(VK_NUMPAD4))
+			{
+				switchSound("BGM4");
+			};
+
+			if (m_InputMgr->isKeyDown(VK_NUMPAD5))
+			{
+				switchSound("BGM5");
+			};
+		}
 
 		break;
 
 	case boss:
-		switchSound("BGM8-boss");
+		if (!muteBGM)
+			switchSound("BGM8-boss");
 		break;
 
 	case gameOver:
-		switchSound("BGM7-endGame");
+		if (!muteBGM)
+			switchSound("BGM7-endGame");
 		break;
 	default:
 		break;
 	}
 	
 
+	//enable muting the music on all screens
+	if (m_InputMgr->isKeyDown(VK_NUMPAD0))
+	{
 
+		if (muteBGM)
+		{
+			muteBGM = false;
+			currentSnd->playAudio(AL_LOOPING);
+		}
+		else
+		{
+			muteBGM = true;
+			currentSnd->stopAudio();
+		}
+
+	};
 
 
 

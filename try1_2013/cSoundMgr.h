@@ -23,6 +23,9 @@ private:
 	ALCdevice *m_OALDevice;
 	cInputMgr* m_InputMgr;
 
+	bool muteBGM;
+	bool initialLoading;
+
 
 protected:
 	cSoundMgr();

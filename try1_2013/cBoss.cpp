@@ -9,7 +9,7 @@ cBoss::cBoss() : cEnemy()
 	doTeleport = false;
 
 	//DEBUG THIS SHOULD BE FALSE!
-	isSpawTriggered = true;
+	isSpawTriggered = false;
 
 	debug = 0;
 
