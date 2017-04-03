@@ -194,7 +194,7 @@ void cBoss::teleport()
 			x = x*(-1);
 
 		//play BOSS teleport sound
-		m_SoundMgr->getSnd("mario10Coin")->playAudio(AL_TRUE);
+		m_SoundMgr->getSnd("BossTeleport")->playAudio(AL_TRUE);
 
 		cModel::m_mdlPosition.x = x;
 		cModel::m_mdlPosition.z = z;
