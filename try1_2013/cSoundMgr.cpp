@@ -189,6 +189,17 @@ void cSoundMgr::updateSound()
 
 }
 
+void cSoundMgr::stopBGM()
+{
+	muteBGM = true;
+	currentSnd->stopAudio();
+}
+
+void cSoundMgr::unMuteBGM()
+{
+	muteBGM = false;
+}
+
 
 void cSoundMgr::switchSound(LPCSTR sndName)
 {

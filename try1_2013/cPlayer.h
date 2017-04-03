@@ -21,6 +21,9 @@ public:
 	void switchToBossMode();
 	int healthPoints;
 	bool tookDamage;
+	void Die();
+
+	bool enableInput;
 
 	~cPlayer();
 };

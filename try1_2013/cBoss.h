@@ -35,6 +35,8 @@ public:
 	int healthPoints;
 	int maxHealthPoints;
 
+	bool enableAttack;
+
 	void attachBulletList(vector<cBullet*> *theBullets);
 
 	float moovingSpeed;
@@ -44,6 +46,8 @@ public:
 	void spawn(float elapsedTime);
 
 	void startLevel();
+
+	void Die();
 
 	~cBoss();
 

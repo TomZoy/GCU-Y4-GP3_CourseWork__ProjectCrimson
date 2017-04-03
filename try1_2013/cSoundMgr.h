@@ -46,6 +46,8 @@ public:
 	void updateSound();
 	LPCSTR getHitSnd();
 	vector<LPCSTR> hitSoundList;
+	void stopBGM();
+	void unMuteBGM();
 
 };
 #endif

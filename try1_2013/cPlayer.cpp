@@ -12,6 +12,7 @@ cPlayer::cPlayer() : cModel()
 	firstMagazine = true;
 	healthPoints = 100;
 	tookDamage = false;
+	enableInput = true;
 
 
 	float currentBulletSpeed = normalBulletSpeed;
@@ -44,96 +45,99 @@ void cPlayer::switchToBossMode()
 
 void cPlayer::update(float elapsedTime)
 {
-
-	if (m_InputMgr->isKeyDown('F'))
+	if (enableInput)
 	{
-		if (autoFollowBullet)
+
+		if (m_InputMgr->isKeyDown('F'))
 		{
-			autoFollowBullet = false;
-		}
-		else
-		{
-			autoFollowBullet = true;
-		}
-	}
-
-
-	if (m_InputMgr->isKeyDown('A'))
-	{
-		translationZ += 1.0f;
-	}
-	if (m_InputMgr->isKeyDown('D'))
-	{
-		translationZ -= 1.0f;
-	}
-
-	if (m_InputMgr->isKeyDown('R'))
-	{
-		bulletsLeft = magazineSize;
-		m_SoundMgr->getSnd("reloadSFX")->playAudio(AL_TRUE);
-		firstMagazine = false;
-	}
-
-	if (m_InputMgr->isKeyDown(VK_SPACE))
-	{
-		if (bulletsLeft > 0)
-		{
-			/*laser*/
-			/*
-			glm::vec3 mdlLaserDirection;
-			mdlLaserDirection.x = -(float)glm::sin(glm::radians(this->getRotation()));
-			mdlLaserDirection.y = 0.0f;
-			mdlLaserDirection.z = (float)glm::cos(glm::radians(this->getRotation()));
-			mdlLaserDirection *= -1;
-
-			// Add new bullet sprite to the vector array
-			theBullets.push_back(new cLaser);
-			int numLasers = theBullets.size() - 1;
-			theBullets[numLasers]->setDirection(mdlLaserDirection);
-			theBullets[numLasers]->setRotation(0.0f);
-			theBullets[numLasers]->setScale(glm::vec3(1, 1, 1));
-			theBullets[numLasers]->setSpeed(5.0f);
-			theBullets[numLasers]->setPosition(this->getPosition() + mdlLaserDirection);
-			theBullets[numLasers]->setIsActive(true);
-			//theBullets[numLasers]->setMdlDimensions(theLaser.getModelDimensions());
-			theBullets[numLasers]->update(elapsedTime);
-			// play the firing sound
-			m_SoundMgr->getSnd("Shot")->playAudio(AL_TRUE);
-			*/
-
-			/*bullet*/
-			glm::vec3 mdlBulletDirection;
-			mdlBulletDirection.x = 0.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
-			mdlBulletDirection.y = 0.0f;// (float)glm::cos(glm::radians(this->getRotation()));
-			mdlBulletDirection.z = 1.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
-			//mdlBulletDirection *= -1;
-
-			// Add new bullet sprite to the vector array
-			theBullets.push_back(new cBullet);
-			int numBullets = theBullets.size() - 1;
-			theBullets[numBullets]->setDirection(mdlBulletDirection);
-			theBullets[numBullets]->setRotation(90.0f);
-			theBullets[numBullets]->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
-			theBullets[numBullets]->setSpeed(currentBulletSpeed);//80.0f);
-			theBullets[numBullets]->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y + 0.5f, this->getPosition().z) + mdlBulletDirection);
-			theBullets[numBullets]->setIsActive(true);
-			theBullets[numBullets]->update(elapsedTime);
-			theBullets[numBullets]->setMdlRadius(0.5f);
-
-			// play the firing sound
-			m_SoundMgr->getSnd("fireGunSFX")->playAudio(AL_TRUE);
-
-			bulletsLeft--;
-
-			
-
-
-		}
-		else
-		{
-			m_SoundMgr->getSnd("emptyGunSFX")->playAudio(AL_TRUE);
+			if (autoFollowBullet)
+			{
+				autoFollowBullet = false;
+			}
+			else
+			{
+				autoFollowBullet = true;
+			}
 		}
 
+
+		if (m_InputMgr->isKeyDown('A'))
+		{
+			translationZ += 1.0f;
+		}
+		if (m_InputMgr->isKeyDown('D'))
+		{
+			translationZ -= 1.0f;
+		}
+
+		if (m_InputMgr->isKeyDown('R'))
+		{
+			bulletsLeft = magazineSize;
+			m_SoundMgr->getSnd("reloadSFX")->playAudio(AL_TRUE);
+			firstMagazine = false;
+		}
+
+		if (m_InputMgr->isKeyDown(VK_SPACE))
+		{
+			if (bulletsLeft > 0)
+			{
+				/*laser*/
+				/*
+				glm::vec3 mdlLaserDirection;
+				mdlLaserDirection.x = -(float)glm::sin(glm::radians(this->getRotation()));
+				mdlLaserDirection.y = 0.0f;
+				mdlLaserDirection.z = (float)glm::cos(glm::radians(this->getRotation()));
+				mdlLaserDirection *= -1;
+
+				// Add new bullet sprite to the vector array
+				theBullets.push_back(new cLaser);
+				int numLasers = theBullets.size() - 1;
+				theBullets[numLasers]->setDirection(mdlLaserDirection);
+				theBullets[numLasers]->setRotation(0.0f);
+				theBullets[numLasers]->setScale(glm::vec3(1, 1, 1));
+				theBullets[numLasers]->setSpeed(5.0f);
+				theBullets[numLasers]->setPosition(this->getPosition() + mdlLaserDirection);
+				theBullets[numLasers]->setIsActive(true);
+				//theBullets[numLasers]->setMdlDimensions(theLaser.getModelDimensions());
+				theBullets[numLasers]->update(elapsedTime);
+				// play the firing sound
+				m_SoundMgr->getSnd("Shot")->playAudio(AL_TRUE);
+				*/
+
+				/*bullet*/
+				glm::vec3 mdlBulletDirection;
+				mdlBulletDirection.x = 0.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
+				mdlBulletDirection.y = 0.0f;// (float)glm::cos(glm::radians(this->getRotation()));
+				mdlBulletDirection.z = 1.0f;//-(float)glm::sin(glm::radians(this->getRotation()));
+				//mdlBulletDirection *= -1;
+
+				// Add new bullet sprite to the vector array
+				theBullets.push_back(new cBullet);
+				int numBullets = theBullets.size() - 1;
+				theBullets[numBullets]->setDirection(mdlBulletDirection);
+				theBullets[numBullets]->setRotation(90.0f);
+				theBullets[numBullets]->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
+				theBullets[numBullets]->setSpeed(currentBulletSpeed);//80.0f);
+				theBullets[numBullets]->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y + 0.5f, this->getPosition().z) + mdlBulletDirection);
+				theBullets[numBullets]->setIsActive(true);
+				theBullets[numBullets]->update(elapsedTime);
+				theBullets[numBullets]->setMdlRadius(0.5f);
+
+				// play the firing sound
+				m_SoundMgr->getSnd("fireGunSFX")->playAudio(AL_TRUE);
+
+				bulletsLeft--;
+
+
+
+
+			}
+			else
+			{
+				m_SoundMgr->getSnd("emptyGunSFX")->playAudio(AL_TRUE);
+			}
+
+		}
 	}
 
 	//update camera2 position to follow the last bullet
@@ -256,10 +260,17 @@ void cPlayer::update(float elapsedTime)
 			if ((*bulletIterartor)->getPosition().z < -5.0f)
 			{
 
+
+				//it's the last bullet
+				if (healthPoints == 5)
+					tookDamage = true;
+
+
+
 				//take damage
 				healthPoints = healthPoints - 5;
 
-				tookDamage = true;
+
 
 				// set the bullet to false
 				(*bulletIterartor)->setIsActive(false);
@@ -357,14 +368,18 @@ void cPlayer::update(float elapsedTime)
 	rotationAngle = 0;
 	translationZ = 0;
 
-	//check if Player is still alive
-	if (healthPoints < 1)
-	{
-		m_SoundMgr->getSnd("PlayerDies")->playAudio(AL_TRUE);
-		
-		gameScreen = gameOver;
-	}
+	//check if Player is still alivestopBGM
 
+
+}
+
+
+void cPlayer::Die()
+{
+	theBossPointer->enableAttack = false;
+
+	m_SoundMgr->stopBGM();
+	m_SoundMgr->getSnd("PlayerDies")->playAudio(AL_TRUE);
 }
 
 cPlayer::~cPlayer()

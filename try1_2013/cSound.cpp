@@ -65,8 +65,9 @@ void cSound::playAudio(ALboolean sndLoop)
 
 	//play
 	alSourcePlay(m_OALSource);
-
 	isPlaying = true;
+
+
 }
 
 void cSound::stopAudio()

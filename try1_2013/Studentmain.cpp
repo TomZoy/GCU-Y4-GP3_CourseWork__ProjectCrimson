@@ -307,7 +307,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
 
 	//reset counters
-	gameScreen = intro;
+	gameScreen = boss;
 	allowBaloons = false;
 	perfectCombo = false;
 	targetHitCount = 0;
@@ -323,7 +323,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPCSTR proTip;
 	string playerHealthDisplay;
 	string BOSSHealthDisplay;
-	int playerDamageEffectTimeout = 30;
+	int playerDamageEffectTimeout = 1200;
+	int bossDamageEffectTimeout = 1300;
 
 	colour3f textColor = (0.99f, 0.99f, 0.99f);
 	float introModelRotAngle = 0.0f;
@@ -631,25 +632,52 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			thePlayer.update(elapsedTime);
 
 
-			//render the BOSS
-			theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
-			boss1Mdl.renderMdl(theBoss.getPosition(), theBoss.getRotation(), theBoss.getScale());
-			theBoss.update(elapsedTime);
+			if (theBoss.healthPoints > 0)
+			{
+				//render the BOSS
+				theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
+				boss1Mdl.renderMdl(theBoss.getPosition(), theBoss.getRotation(), theBoss.getScale());
+				theBoss.update(elapsedTime);
+			}
 
-
-			// render this for Player HIT effect!
-			if (thePlayer.tookDamage && debug ==0)
+			// render this before the boss is killed off
+			if (thePlayer.tookDamage)
 			{
 				theStarField.renderFull(windowWidth, windowHeight);
+
+
+				if (playerDamageEffectTimeout == 1200)
+					thePlayer.Die();
+				
 				playerDamageEffectTimeout--;
 
-				if (playerDamageEffectTimeout < 1)
+				if (playerDamageEffectTimeout < 1 )
 				{
-					thePlayer.tookDamage = false;
-					playerDamageEffectTimeout = 30;
-					debug = 1;
+					theSoundMgr->unMuteBGM();
+					gameScreen = gameOver;
 				}
 			}
+
+
+
+			if (theBoss.healthPoints <= 0) 	//check if dead
+			{
+				thePlayer.enableInput = false;
+
+				if (bossDamageEffectTimeout == 1300)
+					theBoss.Die();
+
+				bossDamageEffectTimeout--;
+
+				if (bossDamageEffectTimeout < 1)
+				{
+					theSoundMgr->unMuteBGM();
+					thePlayer.enableInput = true;
+					gameScreen = gameOver;
+				}
+
+			}
+
 
 
 			//debug model section 
@@ -687,7 +715,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 			//render the game UI
 			outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
-			targetHitText = to_string(targetHitCount);
+			targetHitText = to_string(tCount);//to_string(targetHitCount);
 
 
 			glDisable(GL_LIGHTING);
