@@ -9,7 +9,7 @@ cBoss::cBoss() : cEnemy()
 	doTeleport = false;
 
 	//DEBUG THIS SHOULD BE FALSE!
-	isSpawTriggered = false;
+	isSpawTriggered = true;
 
 	debug = 0;
 
@@ -122,7 +122,7 @@ void cBoss::update(float elapsedTime)
 			//doTeleport = true;
 			//teleport();
 
-			//move(elapsedTime);
+			move(elapsedTime);
 
 		}
 
@@ -206,8 +206,36 @@ void cBoss::teleport()
 
 void cBoss::move(float elapsedTime)
 {
-	float yPos = (moovingSpeed / 4) * elapsedTime;
-	cModel::m_mdlPosition.y += yPos;
+	float xPos = 0;
+	float zPos = 0;
+
+
+	if (rand() % 10 == 0)
+		xPos = (moovingSpeed / 4) * elapsedTime * getDirection().x;
+
+	if (rand() % 10 == 0)
+		zPos = (moovingSpeed / 4) * elapsedTime * getDirection().z;
+
+
+	//maximum X boundary
+	if ((m_mdlPosition.x + xPos) > 10 || (m_mdlPosition.x + xPos) < -10)
+		setDirection(glm::vec3((getDirection().x * -1), (getDirection().y), getDirection().z));
+
+	//maximum Z boundary
+	if ((m_mdlPosition.z + zPos) > 35 || (m_mdlPosition.z + zPos) < 5)
+		setDirection(glm::vec3((getDirection().x), (getDirection().y), getDirection().z * -1));
+
+	/*
+	if (glm::normalize(cModel::m_mdlPosition.x))
+	{
+
+	}
+	*/
+
+
+
+	cModel::m_mdlPosition.x += xPos;
+	cModel::m_mdlPosition.z += zPos;
 }
 
 
