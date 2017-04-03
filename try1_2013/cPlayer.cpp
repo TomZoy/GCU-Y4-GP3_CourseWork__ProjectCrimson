@@ -128,7 +128,9 @@ void cPlayer::update(float elapsedTime)
 
 				bulletsLeft--;
 
-
+				//only for the first 6 targets and only if function enabled
+				if (targetHitCount < 6 && autoFollowBullet)
+				theCameraMgr->setCurrentCamera("camera2");
 
 
 			}
