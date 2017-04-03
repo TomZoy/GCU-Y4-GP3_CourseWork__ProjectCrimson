@@ -115,7 +115,7 @@ void cBoss::update(float elapsedTime)
 		debug++;
 		if (debug % 500 == 0)
 		{
-			//attack(elapsedTime);
+			attack(elapsedTime);
 
 			//doTeleport = true;
 			//teleport();
@@ -147,8 +147,8 @@ void cBoss::attack(float elapsedTime)
 	int numBullets = theBulletList->size() - 1;
 	theBulletList->at(numBullets)->setDirection(mdlBulletDirection);
 	theBulletList->at(numBullets)->setRotation(-90.0f);
-	theBulletList->at(numBullets)->setScale(glm::vec3(0.2f, 0.2f, 0.15f));
-	theBulletList->at(numBullets)->setSpeed(10.0f);
+	theBulletList->at(numBullets)->setScale(glm::vec3(0.4f, 0.4f, 0.4f));
+	theBulletList->at(numBullets)->setSpeed(5.0f);
 	theBulletList->at(numBullets)->setPosition(glm::vec3(this->getPosition().x, this->getPosition().y, this->getPosition().z-2.0f) + mdlBulletDirection);
 	theBulletList->at(numBullets)->setIsActive(true);
 	theBulletList->at(numBullets)->update(elapsedTime);

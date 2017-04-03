@@ -290,7 +290,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//boss1
 	cModelLoader boss1Mdl;
-	boss1Mdl.loadModel("Models/Crimson/boss1/boss1.obj", hitTexture);
+	boss1Mdl.loadModel("Models/Crimson/boss1/boss1v2.obj", hitTexture);
 
 	//turret
 	cModelLoader turretMdl;
@@ -313,6 +313,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	targetHitCount = 0;
 	bulletsLeft = magazineSize;
 	bool switchingToBoss = true;
+
+	int debug = 0;
 
 	string outputMsg;
 	string targetHitText;
@@ -616,18 +618,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			sunMaterial.useMaterial();
 
 
-			// render this for Player HIT effect!
-			if (thePlayer.tookDamage)
-			{
-				theStarField.renderFull(windowWidth, windowHeight);
-				playerDamageEffectTimeout--;
 
-				if (playerDamageEffectTimeout < 1)
-				{
-					thePlayer.tookDamage = false;
-					playerDamageEffectTimeout = 30;
-				}
-			}
 
 			//turn the light on
 			sunLight.lightOn();
@@ -645,6 +636,20 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			boss1Mdl.renderMdl(theBoss.getPosition(), theBoss.getRotation(), theBoss.getScale());
 			theBoss.update(elapsedTime);
 
+
+			// render this for Player HIT effect!
+			if (thePlayer.tookDamage && debug ==0)
+			{
+				theStarField.renderFull(windowWidth, windowHeight);
+				playerDamageEffectTimeout--;
+
+				if (playerDamageEffectTimeout < 1)
+				{
+					thePlayer.tookDamage = false;
+					playerDamageEffectTimeout = 30;
+					debug = 1;
+				}
+			}
 
 
 			//debug model section 
@@ -683,14 +688,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			//render the game UI
 			outputMsg = to_string(bulletsLeft) + "/" + to_string(magazineSize);
 			targetHitText = to_string(targetHitCount);
-			if (autoFollowBullet)
-			{
-				autoFollowBulletText = "Follow bullet ENABLED";
-			}
-			else
-			{
-				autoFollowBulletText = "Follow bullet DISABLED";
-			}
+
 
 			glDisable(GL_LIGHTING);
 			glPushMatrix();
@@ -699,12 +697,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			theFontMgr->getFont("Text")->printText("Crimson shooting", FTPoint(10, 50, 0.0f), textColor);
 			theFontMgr->getFont("Text")->printText("Bullets: ", FTPoint(690, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 			theFontMgr->getFont("SevenSeg")->printText(outputMsg.c_str(), FTPoint(880, 50, 0.0f), textColor); // uses c_str to convert string to LPCSTR
-			theFontMgr->getFont("TextSmall")->printText(autoFollowBulletText.c_str(), FTPoint(750, 130, 0.0f), textColor); // uses c_str to convert string to LPCSTR
 			theFontMgr->getFont("TextSmall")->printText("Targets hit: ", FTPoint(10, 130, 0.0f), textColor);
 			theFontMgr->getFont("SevenSeg")->printText(targetHitText.c_str(), FTPoint(160, 130, 0.0f), textColor);
-			if (perfectCombo)
-				theFontMgr->getFont("SevenSeg")->printText("PERFECT COMBO!", FTPoint(240, 130, 0.0f), textColor);
-
 
 			theFontMgr->getFont("TextSmall")->printText("player health:", FTPoint(15, 730, 0.0f), textColor);
 			playerHealthDisplay = "";

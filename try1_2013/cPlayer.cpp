@@ -257,7 +257,7 @@ void cPlayer::update(float elapsedTime)
 			{
 
 				//take damage
-				healthPoints--;
+				healthPoints = healthPoints - 5;
 
 				tookDamage = true;
 
