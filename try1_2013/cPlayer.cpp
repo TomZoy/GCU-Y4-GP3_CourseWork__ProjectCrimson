@@ -239,6 +239,9 @@ void cPlayer::update(float elapsedTime)
 
 	}
 
+
+
+
 	//removing used bullets
 	vector<cBullet*>::iterator bulletIterartor = theBullets.begin();
 	while (bulletIterartor != theBullets.end())

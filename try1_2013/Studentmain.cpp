@@ -372,6 +372,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	theBoss.setMdlDimensions(boss1Mdl.getModelDimensions());
 	theBoss.attachSoundMgr(theSoundMgr);
 	theBossPointer = &theBoss; //need to pass the object for player->boss collision-detection
+	theBossPointer->attachBulletList(&theBullets);
 
 
 	// **-- This is the mainloop, we render frames until isRunning returns false --**
