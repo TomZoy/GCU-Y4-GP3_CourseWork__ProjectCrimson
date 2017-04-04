@@ -5,6 +5,7 @@
 
 
 //#include <windows.h>
+#include <math.h>
 #include "GameConstants.h"
 #include "windowOGL.h"
 #include "cWNDManager.h"
@@ -334,6 +335,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	std::vector<cBullet*>::iterator index2;
 	float tCount = 0.0f;
 
+	float tCountText = 0.0f;
+
 
 
 	// **-- instentiating all types of target-lists --**
@@ -442,16 +445,19 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			glPushMatrix();
 			theOGLWnd.setOrtho2D(windowWidth, windowHeight);
 
-			//might add rotating dragon model here...
 			//might make "press any key" flashing
 
 			theFontMgr->getFont("TextHuge")->printText("Crimson Shooting", FTPoint(140, 120, 0.0f), textColor);
 			theFontMgr->getFont("Text")->printText("1988", FTPoint(450, 190, 0.0f), textColor); // uses c_str to convert string to LPCSTR
-			theFontMgr->getFont("TextSmall")->printText("press N key...", FTPoint(450, 730, 0.0f), textColor);
+			
+			//render flashing text
+			if (!((fmod(tCountText,1)) <= 0.5))  //eg: printf ( "fmod of 5.3 / 2 is %f\n", fmod (5.3,2) );
+				theFontMgr->getFont("TextSmall")->printText("press N key...", FTPoint(450, 730, 0.0f), textColor);
 
 			glPopMatrix();
 
 			pgmWNDMgr->swapBuffers();
+
 
 
 			break;
@@ -487,8 +493,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			theFontMgr->getFont("TextSmall")->printText("F", FTPoint(650, 650, 0.0f), textColor);
 
 
-
-			theFontMgr->getFont("TextSmall")->printText("press N key...", FTPoint(450, 730, 0.0f), textColor);
+			//render flashing text
+			if (!((fmod(tCountText, 1)) <= 0.5))  //eg: printf ( "fmod of 5.3 / 2 is %f\n", fmod (5.3,2) );
+				theFontMgr->getFont("TextSmall")->printText("press N key...", FTPoint(450, 730, 0.0f), textColor);
+			
 			glPopMatrix();
 
 			pgmWNDMgr->swapBuffers();
@@ -789,7 +797,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 			theFontMgr->getFont("TextSmall")->printText(proTip, FTPoint(100, 650, 0.0f), textColor);
 			
-			theFontMgr->getFont("TextSmall")->printText("press N key to quit...", FTPoint(430, 730, 0.0f), textColor);
+			//render flashing text
+			if (!((fmod(tCountText, 1)) <= 0.5))  //eg: printf ( "fmod of 5.3 / 2 is %f\n", fmod (5.3,2) );
+				theFontMgr->getFont("TextSmall")->printText("press N key to quit...", FTPoint(430, 730, 0.0f), textColor);
 
 
 
@@ -810,6 +820,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			break;
 
 		} //end of game-scene switch
+
+
+		tCountText += elapsedTime;
 
 		//Clear key buffers
 		theInputMgr->clearBuffers(theInputMgr->KEYS_DOWN_BUFFER | theInputMgr->KEYS_PRESSED_BUFFER);
